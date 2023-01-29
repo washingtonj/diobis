@@ -7,15 +7,16 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
-  "devDependencies": {
-    "nuxt": "^3.1.0"
-  },
   "dependencies": {
     "@heroicons/vue": "^2.0.13",
-    "@nuxt/content": "^2.3.0",
     "@nuxtjs/i18n": "^8.0.0-beta.8",
     "@nuxtjs/tailwindcss": "^6.2.0",
     "@pinia/nuxt": "^0.4.6",
-    "@vueuse/nuxt": "^9.11.1"
+    "@vueuse/nuxt": "^9.11.1",
+    "marked": "^4.2.12",
+    "nuxt": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/marked": "^4.0.8"
   }
 }

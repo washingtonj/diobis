@@ -37,8 +37,6 @@ export function useLocaleTimeAgo(date: Date) {
     invalid: '',
   };
 
-  console.log(I18N_MESSAGES);
-
   return formatTimeAgo(date, {
     fullDateFormatter: (date: Date) => date.toLocaleDateString(),
     messages: I18N_MESSAGES,

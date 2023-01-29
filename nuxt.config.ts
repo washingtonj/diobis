@@ -6,8 +6,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@vueuse/nuxt',
     '@pinia/nuxt',
-    '@nuxtjs/i18n',
-    '@nuxt/content'
+    '@nuxtjs/i18n'
   ],
   i18n: {
     vueI18n: {

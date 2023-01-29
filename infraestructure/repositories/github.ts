@@ -22,7 +22,7 @@ const Transform = {
 }
 
 export const GitHubRepository: GitHubRepo = {
-  getAll: async (group: string, repo: string) => {
+  getAll: async (group, repo) => {
     const storageKey = `gh/${group}/${repo}`
     const storageData = await useStorage().getItem<JobEntity[]>(storageKey)
 
@@ -30,12 +30,22 @@ export const GitHubRepository: GitHubRepo = {
       Logger('GitHubRepository', `Using cache for ${storageKey}`)
       return storageData
     }
-    
+
     const rawJobs = await $fetch<any[]>(`${GITHUB_BASE_URL}/${group}/${repo}/issues`, { params: GITHUB_PARAMS })
     const transformedJobs = rawJobs.map((item: any) => Transform.toJobEntity(item, group))
-    
+
     await useStorage().setItem(storageKey, transformedJobs)
 
     return transformedJobs
-  }
+  },
+
+  getById: async (group, repo, id) => {
+    const jobsFromGroup = await GitHubRepository.getAll(group, repo)
+    const job = jobsFromGroup.find((item) => item.id === id)
+
+    if (job) return job
+    
+    return $fetch<any>(`${GITHUB_BASE_URL}/${group}/${repo}/issues/${id}`)
+      .then((data) => Transform.toJobEntity(data, group))
+  },
 }

@@ -13,7 +13,7 @@ const navbar = [
   },
 ];
 
-const currentPageId = ref<string | null>(navbar[0].id);
+const currentPageId = ref<string>(navbar[0].id);
 
 useHead({
   meta: [{ name: "theme-color", content: theme }],
