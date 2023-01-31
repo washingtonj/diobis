@@ -26,6 +26,16 @@ export const GitHubRepository: GitHubRepo = {
     const storageKey = `gh/${group}/${repo}`
     const storageData = await useStorage().getItem<JobEntity[]>(storageKey)
 
+    // revalidate cache after 1 hour
+    const lastValidated = await useStorage().getItem<number>(`${storageKey}/lastValidated`)
+    const isInvalid = new Date().getTime() - (lastValidated || 0) > 3600000
+
+    if (storageData && isInvalid) {
+      Logger('GitHubRepository', `Revalidating cache for ${storageKey}`)
+      await useStorage().setItem(`${storageKey}/lastValidated`, new Date().getTime())
+      await useStorage().removeItem(storageKey)
+    }
+
     if (storageData) {
       Logger('GitHubRepository', `Using cache for ${storageKey}`)
       return storageData
@@ -44,7 +54,7 @@ export const GitHubRepository: GitHubRepo = {
     const job = jobsFromGroup.find((item) => item.id === id)
 
     if (job) return job
-    
+
     return $fetch<any>(`${GITHUB_BASE_URL}/${group}/${repo}/issues/${id}`)
       .then((data) => Transform.toJobEntity(data, group))
   },
