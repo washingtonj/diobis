@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const searchText = ref("");
 const { data, pending } = useFetch("/api/jobs", { server: false });
 </script>
 
@@ -14,4 +15,5 @@ const { data, pending } = useFetch("/api/jobs", { server: false });
       <jobs-card-skeleton v-for="item in [...Array(12).keys()]" :key="item" />
     </template>
   </jobs-masonry-root>
+  <gadget-search v-model="searchText"   />
 </template>

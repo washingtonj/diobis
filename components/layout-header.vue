@@ -5,6 +5,8 @@ import {
   MoonIcon,
 } from "@heroicons/vue/24/solid";
 
+import { HEADER_GADGET_PORTAL } from "@/consts/globals";
+
 interface Props {
   isDarkMode: boolean;
   navbar: { id: string; title: string; path: string }[];
@@ -24,14 +26,17 @@ const emits = defineEmits(["pageChange", "darkMode"]);
     <div
       class="container md:min-h-[3.5rem] mx-auto flex items-center flex-col md:flex-row"
     >
-      <div class="flex w-full items-center justify-between">
-        <div class="flex items-center">
+      <div class="w-full grid grid-cols-6 gap-x-4 md:grid-cols-12">
+        <nuxt-link
+          class="flex col-span-2 col-start-1 items-center cursor-pointer"
+          to="/"
+        >
           <MagnifyingGlassCircleIcon
             class="w-5 h-5 mr-2 fill-blue-600 text-white"
           />
           <layout-logo class="fill-black dark:fill-white" />
-        </div>
-        <nav class="flex flex-1 justify-start mt-[0.5px]">
+        </nuxt-link>
+        <nav class="flex col-start-3 col-span-3 justify-start mt-[0.5px]">
           <ul class="flex">
             <nuxt-link
               v-for="item in props.navbar"
@@ -50,7 +55,9 @@ const emits = defineEmits(["pageChange", "darkMode"]);
           </ul>
         </nav>
         <client-only>
-          <div class="flex items-center mr-4">
+          <div
+            class="flex md:col-start-13 md:row-start-1 items-center justify-end"
+          >
             <button id="toggleDarkMode">
               <Component
                 :is="props.isDarkMode ? SunIcon : MoonIcon"
@@ -59,17 +66,18 @@ const emits = defineEmits(["pageChange", "darkMode"]);
               />
             </button>
           </div>
+          <div
+            :id="HEADER_GADGET_PORTAL"
+            class="gadget row-start-2 md:row-start-1 col-span-full md:col-start-9 md:col-end-13"
+          />
         </client-only>
       </div>
-      <client-only>
-        <div id="header-gadget" class="w-full md:w-fit"></div>
-      </client-only>
     </div>
   </header>
 </template>
 
-<style lang="postcss">
-#header-gadget > :first-child {
-  @apply mt-4 md:mt-0 md:w-96;
+<style lang="postcss" scoped>
+.gadget > :first-child {
+  @apply mt-4 md:mt-0;
 }
 </style>
