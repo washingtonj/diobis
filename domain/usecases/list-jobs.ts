@@ -7,7 +7,13 @@ export function ListJobs(GitHubRepo: GitHubRepo) {
       GitHubRepo.getAll('backend-br', 'vagas')
     ])
 
-    return data.flat().sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt))
+    const FourMonthsAgo = new Date()
+    FourMonthsAgo.setMonth(FourMonthsAgo.getMonth() - 4)
+
+    return data
+      .flat() 
+      .sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt))
+      .filter((job) => +new Date(job.createdAt) > +FourMonthsAgo)
   }
 }
 
