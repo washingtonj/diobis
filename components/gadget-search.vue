@@ -1,47 +1,22 @@
 <script setup lang="ts">
 import { HEADER_GADGET_PORTAL } from "@/consts/globals";
+import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/vue/24/solid";
 
 interface Props {
   modelValue: string;
-  // checkeds: Array<string>;
-  // repositories: Array<{ id: string; title: string; description: string }>;
 }
 
 const props = defineProps<Props>();
 
-const emit = defineEmits(["update:modelValue", "filter"]);
-
-// const checkeds = ref(props.checkeds);
-
-// const openModal = ref(false);
-
-// const buttonText = computed(() =>
-//   checkeds.value.length > 1 ? `${checkeds.value.length} fontes` : "1 fonte"
-// );
-
-// const isLastItem = computed((value) => checkeds.value.length === 1);
+const emit = defineEmits(["update:modelValue"]);
 
 function onModelValueChange(event: Event) {
   emit("update:modelValue", (event.target as HTMLInputElement).value);
 }
 
-// function handleChecked(id: string) {
-//   const isChecked = checkeds.value.findIndex((item) => item === id);
-
-//   if (isChecked === -1) {
-//     checkeds.value = [...checkeds.value, id];
-//     return;
-//   }
-
-//   if (isLastItem.value) return;
-//   checkeds.value = checkeds.value.filter((item) => item !== id);
-// }
-
-// watch(openModal, (isOpened) => {
-//   if (!isOpened) {
-//     emit("filter", checkeds.value);
-//   }
-// });
+function onClear() {
+  emit("update:modelValue", "");
+}
 </script>
 
 <template>
@@ -51,6 +26,14 @@ function onModelValueChange(event: Event) {
         <div
           class="flex w-full rounded-md p-2.5 bg-slate-500/10 dark:bg-slate-400/10"
         >
+          <span
+            class="flex items-center cursor-pointer mr-2 pr-2 border-r-[1px] border-slate-500/20 dark:border-slate-400/20"
+            aria-label="search"
+          >
+            <magnifying-glass-icon
+              class="h-4 text-slate-600 dark:text-slate-400"
+            />
+          </span>
           <input
             class="w-full bg-transparent rouded-md text-sm outline-none dark:text-white dark:placeholder:text-slate-400 placeholder:text-slate-600"
             type="text"
@@ -58,43 +41,16 @@ function onModelValueChange(event: Event) {
             :value="props.modelValue"
             @change="onModelValueChange"
           />
-          <!-- <div
-            class="relative w-28 px-2 text-center rounded-md text-sm bg-slate-200 dark:bg-slate-700"
+          <span
+            aria-label="clear"
+            class="cursor-pointer flex items-center w-4"
+            @click="onClear"
+            v-if="props.modelValue"
           >
-            <button
-              class="font-semibold uppercase text-xs text-slate-800 dark:text-slate-100"
-              @click="openModal = true"
-            >
-              {{ buttonText }}
-            </button>
-          </div> -->
+            <x-mark-icon class="w-full text-slate-600 dark:text-slate-400" />
+          </span>
         </div>
       </div>
     </teleport>
-    <!-- <layout-modal-root v-if="openModal" @close="openModal = false">
-      <div>
-        <div class="px-4">
-          <ul class="flex flex-wrap items-center gap-10">
-            <li v-for="repo in props.repositories" :key="repo.id">
-              <span
-                class="flex items-center cursor-pointer"
-                @click="() => handleChecked(repo.id)"
-              >
-                <input
-                  class="mr-2"
-                  type="checkbox"
-                  :checked="checkeds.includes(repo.id)"
-                  :disabled="checkeds.includes(repo.id) && isLastItem"
-                />
-                <h3 class="text-sm uppercase font-bold">{{ repo.title }}</h3>
-              </span>
-              <span class="text-xs">
-                <p>{{ repo.description }}</p>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </layout-modal-root> -->
   </client-only>
 </template>
