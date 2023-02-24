@@ -11,11 +11,11 @@ interface Props {
   };
 }
 
-const props = defineProps<Props>();
-const emit = defineEmits(["click"]);
+const props = defineProps<Props>()
+const emit = defineEmits(['click'])
 
-function handleClick() {
-  emit("click");
+function handleClick () {
+  emit('click')
 }
 </script>
 
@@ -31,16 +31,20 @@ function handleClick() {
         class="w-12 h-12 mr-4 rounded-full"
         :src="props.data.avatarUrl"
         alt="Avatar"
-      />
+      >
       <div>
-        <p class="font-bold text-sm">{{ props.data.createdBy }}</p>
+        <p class="font-bold text-sm">
+          {{ props.data.createdBy }}
+        </p>
         <p class="font-light text-xs">
           {{ useLocaleTimeAgo(new Date(data.createdAt)) }}
         </p>
       </div>
     </div>
     <div class="my-4">
-      <h3 class="text-sm font-semibold">{{ props.data.title }}</h3>
+      <h3 class="text-sm font-semibold">
+        {{ props.data.title }}
+      </h3>
     </div>
     <div
       v-if="!!props.data.tags.length"

@@ -1,4 +1,4 @@
-import { en, pt_BR } from './locales'
+import { en, ptBR } from './locales'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -13,7 +13,7 @@ export default defineNuxtConfig({
       legacy: false,
       locale: 'pt_BR',
       fallbackLocale: 'pt_BR',
-      messages: { pt_BR, en }
+      messages: { ptBR, en }
     }
   },
   build: {

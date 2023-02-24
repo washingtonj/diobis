@@ -2,10 +2,10 @@
 import {
   MagnifyingGlassCircleIcon,
   SunIcon,
-  MoonIcon,
-} from "@heroicons/vue/24/solid";
+  MoonIcon
+} from '@heroicons/vue/24/solid'
 
-import { HEADER_GADGET_PORTAL } from "@/consts/globals";
+import { HEADER_GADGET_PORTAL } from '@/consts/globals'
 
 interface Props {
   isDarkMode: boolean;
@@ -13,9 +13,9 @@ interface Props {
   currentPage: string;
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
-const emits = defineEmits(["pageChange", "darkMode"]);
+const emits = defineEmits(['pageChange', 'darkMode'])
 </script>
 
 <template>

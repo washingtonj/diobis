@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import { LAYOUT_PORTAL } from "@/consts/globals";
+import { LAYOUT_PORTAL } from '@/consts/globals'
 
-const isDark = useDark();
+const isDark = useDark()
 
-const toggleDark = useToggle(isDark);
+const toggleDark = useToggle(isDark)
 
-const theme = computed(() => (isDark.value ? "#0f172a" : "#ffffff"));
+const theme = computed(() => (isDark.value ? '#0f172a' : '#ffffff'))
 
 useHead({
-  meta: [{ name: "theme-color", content: theme }],
+  meta: [{ name: 'theme-color', content: theme }],
   bodyAttrs: {
-    class: "absolute top-0 z-20 w-full bg-white dark:bg-slate-900 overflow-y-scroll",
-  },
-});
+    class: 'absolute top-0 z-20 w-full bg-white dark:bg-slate-900 overflow-y-scroll'
+  }
+})
 </script>
 
 <template>

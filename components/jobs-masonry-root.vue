@@ -1,42 +1,42 @@
 <script setup lang="ts">
-const containerRef = ref<HTMLUListElement>(null!);
+const containerRef = ref<HTMLUListElement>(null!)
 
-const isUltra = useMediaQuery("(min-width: 1536px)");
-const isWide = useMediaQuery("(min-width: 1024px)");
-const isTablet = useMediaQuery("(min-width: 768px)");
+const isUltra = useMediaQuery('(min-width: 1536px)')
+const isWide = useMediaQuery('(min-width: 1024px)')
+const isTablet = useMediaQuery('(min-width: 768px)')
 
 const columns = computed(() => {
-  if (isUltra.value) return 4;
-  if (isWide.value) return 3;
-  if (isTablet.value) return 2;
-  return 1;
-});
+  if (isUltra.value) { return 4 }
+  if (isWide.value) { return 3 }
+  if (isTablet.value) { return 2 }
+  return 1
+})
 
 const items = computed(() => {
-  const slots = useSlots().default!();
-  let cards = slots[0].children as any[];
-  const skeleton = slots[1].children as any[];
+  const slots = useSlots().default!()
+  let cards = slots[0].children as any[]
+  const skeleton = slots[1].children as any[]
 
-  if (typeof skeleton !== "string" && !cards.length) return skeleton;
+  if (typeof skeleton !== 'string' && !cards.length) { return skeleton }
 
   if (cards.length > 32 && cards.length % columns.value !== 0) {
-    cards = cards.slice(0, cards.length - (cards.length % columns.value));
+    cards = cards.slice(0, cards.length - (cards.length % columns.value))
   }
 
-  return order(cards, columns.value);
-});
+  return order(cards, columns.value)
+})
 
-function order(original: any[], columns: number) {
-  const ordered: any[] = [];
+function order (original: any[], columns: number) {
+  const ordered: any[] = []
 
   Array.from([...Array(columns).keys()]).forEach((_, col) => {
     for (let row = 0; row < original.length; row += columns) {
-      const item = original[row + col];
-      if (item) ordered.push(item);
+      const item = original[row + col]
+      if (item) { ordered.push(item) }
     }
-  });
+  })
 
-  return ordered;
+  return ordered
 }
 
 // TODO: Implement virtual list

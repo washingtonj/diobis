@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { XCircleIcon } from "@heroicons/vue/24/solid";
+import { XCircleIcon } from '@heroicons/vue/24/solid'
 import { LAYOUT_PORTAL } from '@/consts/globals'
 
-const emit = defineEmits(["close"]);
-const target = ref(null);
+const emit = defineEmits(['close'])
+const target = ref(null)
 
-onClickOutside(target, () => emit("close", true));
+onClickOutside(target, () => emit('close', true))
 </script>
 
 <template>
@@ -17,11 +17,13 @@ onClickOutside(target, () => emit("close", true));
       <div
         class="flex items-center justify-between p-4 border-b-slate-200 dark:border-b-slate-700 border-b-[1px]"
       >
-        <h2 class="font-bold text-xl">Fontes de dados</h2>
+        <h2 class="font-bold text-xl">
+          Fontes de dados
+        </h2>
         <XCircleIcon class="w-6 cursor-pointer" @click="$emit('close', true)" />
       </div>
       <div class="my-6">
-        <slot></slot>
+        <slot />
       </div>
     </div>
   </Teleport>

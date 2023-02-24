@@ -1,12 +1,12 @@
 import { JobEntity } from '@/domain/entities'
-import { GitHubRepo } from "@/domain/interfaces";
+import { GitHubRepo } from '@/domain/interfaces'
 import { Logger } from '@/utils'
 
 const GITHUB_BASE_URL = 'https://api.github.com/repos'
 const GITHUB_PARAMS = { per_page: 100 }
 
 const Transform = {
-  toJobEntity(data: any, group: string): JobEntity {
+  toJobEntity (data: any, group: string): JobEntity {
     return {
       id: data.node_id,
       number: data.number,
@@ -51,11 +51,11 @@ export const GitHubRepository: GitHubRepo = {
 
   getById: async (group, repo, id) => {
     const jobsFromGroup = await GitHubRepository.getAll(group, repo)
-    const job = jobsFromGroup.find((item) => item.id === id)
+    const job = jobsFromGroup.find(item => item.id === id)
 
-    if (job) return job
+    if (job) { return job }
 
     return $fetch<any>(`${GITHUB_BASE_URL}/${group}/${repo}/issues/${id}`)
-      .then((data) => Transform.toJobEntity(data, group))
-  },
+      .then(data => Transform.toJobEntity(data, group))
+  }
 }

@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-const { params, query } = useRoute();
+const { params, query } = useRoute()
 
 const { data } = await useFetch(`/api/jobs/${params.group}`, {
-  key: "jobs",
-  query: { id: query.id },
-});
+  key: 'jobs',
+  query: { id: query.id }
+})
 
 useHead({
   title: data?.value?.title,
   meta: [
     {
-      name: "description",
-      content: data?.value?.title,
-    },
-  ],
-});
+      name: 'description',
+      content: data?.value?.title
+    }
+  ]
+})
 </script>
 
 <template>

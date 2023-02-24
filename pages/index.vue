@@ -1,30 +1,30 @@
 <script setup lang="ts">
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
-const searchText = ref((route.query.search as string) || "");
+const searchText = ref((route.query.search as string) || '')
 
-const { data, pending } = useFetch("/api/jobs", { server: false });
+const { data, pending } = useFetch('/api/jobs', { server: false })
 
 const filteredData = computed(() => {
-  if (!searchText.value) return data.value;
+  if (!searchText.value) { return data.value }
 
   return data?.value?.filter(
-    (item) =>
+    item =>
       item.title.toLowerCase().includes(searchText.value.toLowerCase()) ||
       item.tags
-        .map((item) => item.toLocaleLowerCase())
+        .map(item => item.toLocaleLowerCase())
         .includes(searchText.value.toLowerCase())
-  );
-});
+  )
+})
 
-watch(searchText, async (search) => {
+watch(searchText, (search) => {
   if (search.length === 0) {
-    router.push({ query: {} });
-    return;
+    router.push({ query: {} })
+    return
   }
-  router.push({ query: { search } });
-});
+  router.push({ query: { search } })
+})
 </script>
 
 <template>
@@ -36,11 +36,8 @@ watch(searchText, async (search) => {
         :data="item"
         @click="$router.push(`/${item.group}?id=${item.number}`)"
       />
-      <template name="skeleton" v-if="pending">
+      <template v-if="pending">
         <jobs-card-skeleton v-for="item in [...Array(12).keys()]" :key="item" />
-      </template>
-      <template name="empty">
-        <jobs-card-skeleton />
       </template>
     </jobs-masonry-root>
   </client-only>
@@ -49,7 +46,9 @@ watch(searchText, async (search) => {
       <div class="text-2xl font-bold text-gray-500">
         No jobs found for "{{ searchText }}"
       </div>
-      <div class="text-gray-500">Try searching for something else</div>
+      <div class="text-gray-500">
+        Try searching for something else
+      </div>
     </div>
   </template>
 

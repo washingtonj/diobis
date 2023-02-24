@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { HEADER_GADGET_PORTAL } from "@/consts/globals";
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/vue/24/solid";
+import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/vue/24/solid'
+import { HEADER_GADGET_PORTAL } from '@/consts/globals'
 
 interface Props {
   modelValue: string;
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue'])
 
-function onModelValueChange(event: Event) {
-  emit("update:modelValue", (event.target as HTMLInputElement).value);
+function onModelValueChange (event: Event) {
+  emit('update:modelValue', (event.target as HTMLInputElement).value)
 }
 
-function onClear() {
-  emit("update:modelValue", "");
+function onClear () {
+  emit('update:modelValue', '')
 }
 </script>
 
@@ -40,12 +40,12 @@ function onClear() {
             placeholder="Pesquisar por palava-chave"
             :value="props.modelValue"
             @change="onModelValueChange"
-          />
+          >
           <span
+            v-if="props.modelValue"
             aria-label="clear"
             class="cursor-pointer flex items-center w-4"
             @click="onClear"
-            v-if="props.modelValue"
           >
             <x-mark-icon class="w-full text-slate-600 dark:text-slate-400" />
           </span>
