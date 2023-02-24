@@ -11,8 +11,8 @@ export default defineNuxtConfig({
   i18n: {
     vueI18n: {
       legacy: false,
-      locale: 'pt_BR',
-      fallbackLocale: 'pt_BR',
+      locale: 'ptBR',
+      fallbackLocale: 'ptBR',
       messages: { ptBR, en }
     }
   },

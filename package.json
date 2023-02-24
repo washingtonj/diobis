@@ -7,6 +7,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
+    "prepare": "husky install",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
@@ -20,9 +21,24 @@
     "vue-gtag-next": "^1.14.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@nuxt/eslint-config": "^0.1.1",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@types/marked": "^4.0.8",
     "@types/node": "^18.11.18",
-    "eslint": "^8.34.0"
+    "eslint": "^8.34.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.2"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": [
+      "npm run lint --fix"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }
