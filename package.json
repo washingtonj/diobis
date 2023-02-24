@@ -1,4 +1,5 @@
 {
+  "name": "diobis",
   "private": true,
   "scripts": {
     "build": "nuxt build",

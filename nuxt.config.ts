@@ -15,5 +15,8 @@ export default defineNuxtConfig({
       fallbackLocale: 'pt_BR',
       messages: { pt_BR, en }
     }
+  },
+  build: {
+    transpile: ['@heroicons/vue']
   }
 })
