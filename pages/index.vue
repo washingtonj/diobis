@@ -9,8 +9,12 @@ const { data, pending } = useFetch("/api/jobs", { server: false });
 const filteredData = computed(() => {
   if (!searchText.value) return data.value;
 
-  return data?.value?.filter((item) =>
-    item.title.toLowerCase().includes(searchText.value.toLowerCase())
+  return data?.value?.filter(
+    (item) =>
+      item.title.toLowerCase().includes(searchText.value.toLowerCase()) ||
+      item.tags
+        .map((item) => item.toLocaleLowerCase())
+        .includes(searchText.value.toLowerCase())
   );
 });
 
