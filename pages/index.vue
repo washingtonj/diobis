@@ -24,17 +24,22 @@ watch(searchText, async (search) => {
 </script>
 
 <template>
-  <jobs-masonry-root>
-    <jobs-card-root
-      v-for="item in filteredData"
-      :key="`${item.group}:${item.number}`"
-      :data="item"
-      @click="$router.push(`/${item.group}?id=${item.number}`)"
-    />
-    <template v-if="pending">
-      <jobs-card-skeleton v-for="item in [...Array(12).keys()]" :key="item" />
-    </template>
-  </jobs-masonry-root>
+  <client-only>
+    <jobs-masonry-root>
+      <jobs-card-root
+        v-for="item in filteredData"
+        :key="`${item.group}:${item.number}`"
+        :data="item"
+        @click="$router.push(`/${item.group}?id=${item.number}`)"
+      />
+      <template name="skeleton" v-if="pending">
+        <jobs-card-skeleton v-for="item in [...Array(12).keys()]" :key="item" />
+      </template>
+      <template name="empty">
+        <jobs-card-skeleton />
+      </template>
+    </jobs-masonry-root>
+  </client-only>
   <template v-if="!pending && !filteredData?.length">
     <div class="flex flex-col items-center justify-center h-full">
       <div class="text-2xl font-bold text-gray-500">
