@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import { FunctionalComponent } from 'vue'
-import { ChatBubbleBottomCenterIcon } from '@heroicons/vue/20/solid'
-
 interface Props {
   unselectable?: boolean;
   data: {
@@ -10,30 +7,12 @@ interface Props {
     createdBy: string;
     createdAt: string;
     avatarUrl: string;
-    interactions?: {
-      comments?: number;
-    }
-    reactions?: {
-      looking?: number;
-      rocket?: number;
-      heart?: number;
-    }
     tags: string[];
   };
 }
 
 const props = defineProps<Props>()
 const emit = defineEmits(['click'])
-
-const reactionsUnicode: Record<string, string> = {
-  looking: '👀',
-  rocket: '🚀',
-  heart: '❤️'
-}
-
-const interactionsIcons: Record<string, FunctionalComponent> = {
-  comments: ChatBubbleBottomCenterIcon
-}
 
 function handleClick () {
   emit('click')
@@ -71,21 +50,8 @@ function handleClick () {
       </div>
     </div>
     <div class="flex justify-between px-4 pb-3">
-      <div v-if="props.data.reactions" class="flex not-last:mr-2.5">
-        <template v-for="reaction in Object.keys(props.data.reactions)" :key="reaction">
-          <span v-if="!!(props.data.reactions as any)[reaction]" class="flex items-center text-[10px]">
-            {{ reactionsUnicode[reaction] }}
-            <p class="ml-1.5">{{ (props.data.reactions as Record<string, string>)[reaction] }}</p>
-          </span>
-        </template>
-      </div>
-      <div v-if="props.data.interactions" class="flex not-last:mr-2.5">
-        <span v-for="interaction in Object.keys(props.data.interactions)" :key="interaction" class="flex items-center ">
-          <component :is="interactionsIcons[interaction]" class="fill-slate-300 dark:fill-slate-600/90 w-4 mr-1.5" />
-          <p class="text-[10px] text-slate-400 dark:text-slate-400">{{ (props.data.interactions as Record<string, string>)[interaction] }}
-          </p>
-        </span>
-      </div>
+      <slot name="reactions" />
+      <slot name="interactions" />
     </div>
   </div>
 </template>

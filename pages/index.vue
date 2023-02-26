@@ -47,18 +47,28 @@ watch(searchText, (search) => {
           createdBy: item.createdBy,
           createdAt: item.createdAt,
           title: item.title,
-          tags: item.tags,
-          interactions: {
-            comments: item.interactions?.comments
-          },
-          reactions: {
-            looking: item.reactions?.eyes,
-            heart: item.reactions?.heart,
-            rocket: item.reactions?.rocket
-          }
+          tags: item.tags
         }"
         @click="$router.push(`/${item.group}?id=${item.number}`)"
-      />
+      >
+        <template #interactions>
+          <app-interactions
+            :interactions="{
+              comments: item.interactions?.comments,
+            }"
+          />
+        </template>
+        <template #reactions>
+          <app-reactions
+            :reactions="{
+              heart: item.reactions?.heart,
+              rocket: item.reactions?.rocket,
+              looking: item.reactions?.eyes
+            }"
+            readonly
+          />
+        </template>
+      </jobs-card-root>
       <template v-if="pending">
         <jobs-card-skeleton v-for="item in [...Array(12).keys()]" :key="item" />
       </template>
