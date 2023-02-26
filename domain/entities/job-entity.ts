@@ -7,5 +7,14 @@ export interface JobEntity {
   avatarUrl: string
   tags: string[]
   markdown: string
+  reactions?: {
+    confused?: number
+    heart?: number
+    rocket?: number
+    eyes?: number
+  },
+  interactions?: {
+    comments?: number
+  }
   group: string
 }

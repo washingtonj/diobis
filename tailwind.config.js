@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin')
+
 module.exports = {
   theme: {
     extend: {
@@ -7,5 +10,10 @@ module.exports = {
       }
     }
   },
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant('not-last', '& > :not(:last-child)')
+    })
+  ],
   darkMode: 'class'
 }

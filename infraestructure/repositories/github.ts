@@ -9,6 +9,7 @@ const GITHUB_PARAMS = { per_page: 100 }
 const Transform = {
   toJobEntity (data: any, group: string): JobEntity {
     return {
+      group,
       id: data.node_id,
       number: data.number,
       title: data.title,
@@ -17,7 +18,15 @@ const Transform = {
       createdAt: data.created_at,
       tags: data.labels.map((item: any) => item.name),
       markdown: data.body,
-      group
+      reactions: {
+        confused: data.reactions.confused,
+        eyes: data.reactions.eyes,
+        heart: data.reactions.heart,
+        rocket: data.reactions.rocket
+      },
+      interactions: {
+        comments: data.comments
+      }
     }
   }
 }

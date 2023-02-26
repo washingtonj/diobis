@@ -41,7 +41,22 @@ watch(searchText, (search) => {
       <jobs-card-root
         v-for="item in filteredData"
         :key="`${item.group}:${item.number}`"
-        :data="item"
+        :data="{
+          id: item.id,
+          avatarUrl: item.avatarUrl,
+          createdBy: item.createdBy,
+          createdAt: item.createdAt,
+          title: item.title,
+          tags: item.tags,
+          interactions: {
+            comments: item.interactions?.comments
+          },
+          reactions: {
+            looking: item.reactions?.eyes,
+            heart: item.reactions?.heart,
+            rocket: item.reactions?.rocket
+          }
+        }"
         @click="$router.push(`/${item.group}?id=${item.number}`)"
       />
       <template v-if="pending">
