@@ -1,5 +1,6 @@
 import { JobEntity } from '@/domain/entities'
 import { GitHubRepo } from '@/domain/interfaces'
+import { JobNotFoundError } from '@/domain/errors'
 import { Logger } from '@/utils'
 
 const GITHUB_BASE_URL = 'https://api.github.com/repos'
@@ -57,5 +58,6 @@ export const GitHubRepository: GitHubRepo = {
 
     return $fetch<any>(`${GITHUB_BASE_URL}/${group}/${repo}/issues/${id}`)
       .then(data => Transform.toJobEntity(data, group))
+      .catch(() => { throw new JobNotFoundError({ group, repo, id }) })
   }
 }

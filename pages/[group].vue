@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 const { params, query } = useRoute()
 
-const { data } = await useFetch(`/api/jobs/${params.group}`, {
+const { data, error } = await useFetch(`/api/jobs/${params.group}`, {
   key: 'jobs',
   query: { id: query.id }
 })
+
+useErrorHandling(error)
 
 useHead({
   title: data?.value?.title,
@@ -18,7 +20,7 @@ useHead({
 </script>
 
 <template>
-  <section class="flex flex-col">
+  <section v-if="data" class="flex flex-col">
     <div class="mb-4">
       <jobs-card-root class="w-full sticky top-12" unselectable :data="data!" />
     </div>

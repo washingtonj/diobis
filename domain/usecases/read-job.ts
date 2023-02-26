@@ -1,14 +1,14 @@
 import { GitHubRepo } from '@/domain/interfaces'
+import { JobEntity } from '@/domain/entities'
 
 export function ReadJob (GitHubRepo: GitHubRepo) {
-  return async function (group: string, repo: string, id: string) {
-    // VERIFY IF THE GROUP IS AN AUTHORIZED GROUP
-    // VERIFY IF THE REPO IS AN AUTHORIZED REPO
+  return function (group: string, repo: string, id: string) {
+    function onSuccess (JobEntity: JobEntity) {
+      return JobEntity
+    }
 
-    const data = await GitHubRepo.getById(group, repo, id)
-
-    if (!data) { throw new Error('Job not found') }
-
-    return data
+    return GitHubRepo
+      .getById(group, repo, id)
+      .then(onSuccess)
   }
 }

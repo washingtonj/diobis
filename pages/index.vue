@@ -4,7 +4,7 @@ const router = useRouter()
 
 const searchText = ref((route.query.search as string) || '')
 
-const { data, pending } = useFetch('/api/jobs', { server: false })
+const { data, pending, error } = useFetch('/api/jobs', { server: false })
 
 const filteredData = computed(() => {
   if (!searchText.value) { return data.value }
@@ -17,6 +17,14 @@ const filteredData = computed(() => {
         .includes(searchText.value.toLowerCase())
   )
 })
+
+onUpdated(() => {
+  if (error.value) {
+    showError(error.value.data)
+  }
+})
+
+useErrorHandling(error)
 
 watch(searchText, (search) => {
   if (search.length === 0) {
