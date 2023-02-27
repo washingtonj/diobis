@@ -36,8 +36,8 @@ useHead({
 </script>
 
 <template>
-  <main v-if="job.data.value" class="flex flex-col not-last:mb-4">
-    <section>
+  <main v-if="job.data.value">
+    <section class="card">
       <jobs-card-root
         class="w-full sticky top-12"
         unselectable
@@ -51,7 +51,7 @@ useHead({
         }"
       />
     </section>
-    <section class="flex justify-between px-4 py-3 bg-blue-50 dark:bg-slate-800 rounded-md">
+    <section class="reactions">
       <app-reactions
         :reactions="{
           heart: job.data.value.reactions?.heart,
@@ -65,10 +65,10 @@ useHead({
         }"
       />
     </section>
-    <section class="rounded-md p-6 bg-blue-50 dark:bg-slate-800 overflow-auto">
+    <section class="content">
       <app-markdown :content="job.data.value.markdown || ''" />
     </section>
-    <section v-if="comments.data.value?.length" class="p-4 bg-blue-50 dark:bg-slate-800 rounded-md">
+    <section v-if="comments.data.value?.length" class="comment">
       <div class="flex justify-between">
         <h2 class="text-sm font-bold dark:text-slate-600">
           Comentarios
@@ -81,3 +81,41 @@ useHead({
     </section>
   </main>
 </template>
+
+<style lang="postcss" scoped>
+main {
+  @apply flex flex-col gap-4;
+
+  .card {
+    @apply h-fit;
+    grid-area: card;
+  }
+
+  .content {
+    @apply h-fit rounded-md p-6 bg-blue-50 dark:bg-slate-800 overflow-auto  ;
+    grid-area: content;
+  }
+
+  .comment {
+    @apply h-fit px-5 py-4 bg-blue-50 dark:bg-slate-800 rounded-md;
+    grid-area: comment;
+  }
+
+  .reactions {
+    @apply h-fit flex justify-between px-4 py-3 bg-blue-50 dark:bg-slate-800 rounded-md;
+    grid-area: reactions;
+  }
+
+  @screen lg {
+    @apply grid;
+
+    grid-template-areas:
+      "card content"
+      "reactions content"
+      "comment content"
+    ;
+    grid-template-columns: 450px auto;
+    grid-template-rows: auto 40px max-content;
+  }
+}
+</style>
