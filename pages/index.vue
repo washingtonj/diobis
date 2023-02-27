@@ -40,16 +40,16 @@ watch(searchText, (search) => {
     <jobs-masonry-root>
       <jobs-card-root
         v-for="item in filteredData"
-        :key="`${item.group}:${item.number}`"
+        :key="`${item.repository.group}/${item.repository.repo}/${item.id}`"
         :data="{
           id: item.id,
-          avatarUrl: item.avatarUrl,
-          createdBy: item.createdBy,
-          createdAt: item.createdAt,
+          avatarUrl: item.user.avatar_url,
+          createdBy: item.user.login_id,
+          createdAt: item.created_at,
           title: item.title,
           tags: item.tags
         }"
-        @click="$router.push(`/${item.group}?id=${item.number}`)"
+        @click="$router.push(`/${item.repository.group}?repo=${item.repository.repo}&id=${item.id}`)"
       >
         <template #interactions>
           <app-interactions

@@ -1,16 +1,17 @@
 import { ReadJob } from '@/domain/usecases'
-import { GitHubRepository } from '@/infraestructure/repositories'
+import { InMemoryCache } from '@/infraestructure/services'
 
-interface Params {
+type Params = {
   group: string
 }
 
-interface Query {
-  id?: string
+type Query = {
+  id: string
+  repo: string
 }
 
 export default defineEventHandler(async (event) => {
-  const params = getRouterParams(event) as Params
+  const routeParams = getRouterParams(event) as Params
   const query = getQuery(event) as Query
-  return await ReadJob(GitHubRepository)(params.group, 'vagas', query.id!)
+  return await ReadJob(InMemoryCache)(routeParams.group, query.repo, query.id)
 })

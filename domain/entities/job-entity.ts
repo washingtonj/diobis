@@ -1,12 +1,12 @@
+import { UserEntity } from '@/domain/entities'
+
 export interface JobEntity {
   id: string
-  number: number
   title: string
-  createdBy: string
-  createdAt: string
-  avatarUrl: string
-  tags: string[]
+  created_at: string
   markdown: string
+  tags: string[]
+  user: UserEntity
   reactions?: {
     confused?: number
     heart?: number
@@ -16,5 +16,8 @@ export interface JobEntity {
   interactions?: {
     comments?: number
   }
-  group: string
+  repository: {
+    group: string
+    repo: string
+  }
 }

@@ -1,6 +1,7 @@
 import { ListJobs } from '@/domain/usecases'
-import { GitHubRepository } from '@/infraestructure/repositories'
+import { GitHubAPI } from '@/infraestructure/repositories'
+import { InMemoryCache } from '@/infraestructure/services'
 
 export default defineEventHandler(async () => {
-  return await ListJobs(GitHubRepository)()
+  return await ListJobs(GitHubAPI, InMemoryCache)()
 })

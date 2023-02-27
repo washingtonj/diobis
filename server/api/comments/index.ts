@@ -1,12 +1,14 @@
 import { ReadJobComments } from '@/domain/usecases'
-import { GitHubRepository } from '@/infraestructure/repositories'
+import { GitHubAPI } from '@/infraestructure/repositories'
+import { InMemoryCache } from '@/infraestructure/services'
 
 type Query = {
   id: string
   group: string
+  repo: string
 }
 
 export default defineEventHandler(async (event) => {
-  const params = getQuery(event) as Query
-  return await ReadJobComments(GitHubRepository)(params.group, params.id)
+  const query = getQuery(event) as Query
+  return await ReadJobComments(GitHubAPI, InMemoryCache)(query.group, query.repo, query.id)
 })
