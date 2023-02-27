@@ -1,4 +1,4 @@
-import { JobEntity } from '@/domain/entities'
+import { CommentEntity, JobEntity } from '@/domain/entities'
 import { GitHubRepo } from '@/domain/interfaces'
 import { JobNotFoundError } from '@/domain/errors'
 import { Logger } from '@/utils'
@@ -26,6 +26,17 @@ const Transform = {
       },
       interactions: {
         comments: data.comments
+      }
+    }
+  },
+  toCommentEntity (data: any): CommentEntity {
+    return {
+      id: data.node_id,
+      body: data.body,
+      created_at: data.created_at,
+      user: {
+        avatar_url: data.user.avatar_url,
+        login: data.user.login
       }
     }
   }
@@ -68,5 +79,21 @@ export const GitHubRepository: GitHubRepo = {
     return $fetch<any>(`${GITHUB_BASE_URL}/${group}/${repo}/issues/${id}`)
       .then(data => Transform.toJobEntity(data, group))
       .catch(() => { throw new JobNotFoundError({ group, repo, id }) })
+  },
+
+  getComments: async (group, repo, id) => {
+    const cachedComments = await useStorage().getItem<any[]>(`gh/${group}/${repo}/${id}/comments`)
+
+    if (cachedComments) {
+      Logger('GitHubRepository', `Using cache for gh/${group}/${repo}/${id}/comments`)
+      return cachedComments
+    }
+
+    const rawComments = await $fetch<any[]>(`${GITHUB_BASE_URL}/${group}/${repo}/issues/${id}/comments`)
+    const transformedComments = rawComments.map((item: any) => Transform.toCommentEntity(item))
+
+    await useStorage().setItem(`gh/${group}/${repo}/${id}/comments`, transformedComments)
+
+    return transformedComments
   }
 }
