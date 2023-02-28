@@ -1,83 +1,64 @@
 <script lang="ts" setup>
-import { ArrowDownIcon } from '@heroicons/vue/20/solid'
-import { CommentEntity } from '@/domain/entities'
-
 const { params, query } = useRoute()
 
-const job = await useFetch(`/api/jobs/${params.group}`, {
+const { data, error } = await useFetch(`/api/jobs/${params.group}`, {
   key: 'jobs',
   params: { repo: query.repo, id: query.id }
 })
 
-const comments = await useFetch('/api/comments', {
-  key: 'comments',
-  params: { id: query.id, group: params.group, repo: query.repo },
-  server: false,
-  transform: data => data?.map((comment: CommentEntity) => ({
-    isAuthor: job.data.value?.user.login_id === comment.user.login_id,
-    name: comment.user.login_id,
-    avatar: comment.user.avatar_url,
-    date: comment.created_at,
-    comment: comment.body
-  }))
-})
-
-useErrorHandling(job.error)
+useErrorHandling(error)
 
 useHead({
-  title: job.data.value?.title,
+  title: data.value?.title,
   meta: [
     {
       name: 'description',
-      content: job.data.value?.title
+      content: data.value?.title
     }
   ]
 })
 </script>
 
 <template>
-  <main v-if="job.data.value">
+  <main v-if="data">
     <section class="card">
       <jobs-card-root
         class="w-full sticky top-12"
         unselectable
         :data="{
-          id: job.data.value.id,
-          title: job.data.value.title,
-          avatarUrl: job.data.value.user.avatar_url,
-          createdBy: job.data.value.user.login_id,
-          createdAt: job.data.value.created_at,
-          tags: job.data.value.tags,
+          id: data.id,
+          title: data.title,
+          avatarUrl: data.user.avatar_url,
+          createdBy: data.user.login_id,
+          createdAt: data.created_at,
+          tags: data.tags,
         }"
       />
     </section>
     <section class="reactions">
       <app-reactions
         :reactions="{
-          heart: job.data.value.reactions?.heart,
-          rocket: job.data.value.reactions?.rocket,
-          looking: job.data.value.reactions?.eyes
+          heart: data.reactions?.heart,
+          rocket: data.reactions?.rocket,
+          looking: data.reactions?.eyes
         }"
       />
       <app-interactions
         :interactions="{
-          comments: job.data.value.interactions?.comments,
+          comments: data.interactions?.comments,
         }"
       />
     </section>
     <section class="content">
-      <app-markdown :content="job.data.value.markdown || ''" />
+      <app-markdown :content="data.markdown || ''" />
     </section>
-    <section v-if="comments.data.value?.length" class="comment">
-      <div class="flex justify-between">
-        <h2 class="text-sm font-bold dark:text-slate-600">
-          Comentarios
-        </h2>
-        <arrow-down-icon class="w-4" />
-      </div>
-      <div class="mt-4">
-        <app-comments :comments="comments.data.value" />
-      </div>
+    <section v-if="data.interactions?.comments" class="comment">
+      <job-comments
+        :id="data.id"
+        :author-id="data.user.login_id"
+        :group="data.repository.group"
+        :repo="data.repository.repo"
+      />
     </section>
   </main>
 </template>
