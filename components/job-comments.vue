@@ -13,7 +13,6 @@ const props = defineProps<Props>()
 const isLoading = ref(false)
 
 const { data, pending, execute } = await useFetch('/api/comments', {
-  key: `ui/job-comments/${props.group}:${props.repo}:${props.id}`,
   params: { id: props.id, group: props.group, repo: props.repo },
   server: false,
   immediate: false,

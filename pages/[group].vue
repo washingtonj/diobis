@@ -2,7 +2,6 @@
 const { params, query } = useRoute()
 
 const { data, error } = await useFetch(`/api/jobs/${params.group}`, {
-  key: 'jobs',
   params: { repo: query.repo, id: query.id }
 })
 
