@@ -24,7 +24,7 @@ const emits = defineEmits(['pageChange', 'darkMode'])
     class="sticky top-0 z-40 w-full backdrop-blur p-4 md:p-0 flex-none border-b border-inherit bg-inherit dark:bg-slate-900/75"
   >
     <div
-      class="container md:min-h-[3.5rem] mx-auto flex items-center flex-col md:flex-row"
+      class="container md:h-14 mx-auto flex items-center flex-col md:flex-row"
     >
       <div class="w-full grid grid-cols-6 gap-x-4 md:grid-cols-12">
         <nuxt-link

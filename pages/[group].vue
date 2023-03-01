@@ -1,9 +1,13 @@
 <script lang="ts" setup>
+import { useSettings } from '@/stores/settings'
+
 const { params, query } = useRoute()
 
 const { data, error } = await useFetch(`/api/jobs/${params.group}`, {
   params: { repo: query.repo, id: query.id }
 })
+
+const { state } = useSettings()
 
 useErrorHandling(error)
 
@@ -19,10 +23,13 @@ useHead({
 </script>
 
 <template>
-  <main v-if="data">
+  <main
+    v-if="data"
+    class="h-full flex flex-col gap-4 p-4 lg:p-0 lg:py-4"
+    :class="{ 'firefox': state.browser === 'firefox' }"
+  >
     <section class="card">
       <jobs-card-root
-        class="w-full sticky top-12"
         unselectable
         :data="{
           id: data.id,
@@ -34,7 +41,7 @@ useHead({
         }"
       />
     </section>
-    <section class="reactions">
+    <section class="reactions h-fit flex justify-between px-4 py-3 rounded-md bg-blue-50 dark:bg-slate-800">
       <app-reactions
         :reactions="{
           heart: data.reactions?.heart,
@@ -48,10 +55,10 @@ useHead({
         }"
       />
     </section>
-    <section class="content">
-      <app-markdown :content="data.markdown || ''" />
+    <section class="content sticky top-0 overflow-auto;">
+      <job-content :content="data.markdown" />
     </section>
-    <section v-if="data.interactions?.comments" class="comment">
+    <section v-if="data.interactions?.comments" class="comment sticky top-0 rounded-md overflow-auto">
       <job-comments
         :id="data.id"
         :author-id="data.user.login_id"
@@ -62,32 +69,21 @@ useHead({
   </main>
 </template>
 
-<style lang="postcss" scoped>
+<style lang="css" scoped>
 main {
-  @apply flex flex-col gap-4;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
-  .card {
-    @apply h-fit;
-    grid-area: card;
-  }
+main::-webkit-scrollbar {
+  display: none;
+}
 
-  .content {
-    @apply h-fit rounded-md p-6 bg-blue-50 dark:bg-slate-800 overflow-auto  ;
-    grid-area: content;
-  }
-
-  .comment {
-    @apply h-fit px-5 py-4 bg-blue-50 dark:bg-slate-800 rounded-md;
-    grid-area: comment;
-  }
-
-  .reactions {
-    @apply h-fit flex justify-between px-4 py-3 bg-blue-50 dark:bg-slate-800 rounded-md;
-    grid-area: reactions;
-  }
-
-  @screen lg {
-    @apply grid;
+@media screen and (min-width: theme('screens.lg')) {
+  main {
+    display: grid;
+    overflow: scroll;
+    height: calc(100vh - 3.5rem);
 
     grid-template-areas:
       "card content"
@@ -96,6 +92,29 @@ main {
     ;
     grid-template-columns: 450px auto;
     grid-template-rows: auto 40px max-content;
+  }
+
+  main.firefox .comment {
+    height: calc(100vh - 4.5rem);
+  }
+
+  .card {
+    height: fit-content;
+    grid-area: card;
+  }
+
+  .content {
+    height: calc(100vh - 5.5rem);
+    grid-area: content;
+  }
+
+  .comment {
+    height: calc(100vh - 5.5rem);
+    grid-area: comment;
+  }
+
+  .reactions {
+    grid-area: reactions;
   }
 }
 </style>

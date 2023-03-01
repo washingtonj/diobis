@@ -19,7 +19,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <div class="flex not-last:mr-2.5">
+  <div class="flex not-last:mr-4">
     <template v-for="reaction in Object.keys(props.reactions)" :key="reaction">
       <span v-if="!props.readonly || !!(props.reactions as any)[reaction]" class="flex items-center text-xs">
         {{ reactionsUnicode[reaction] }}

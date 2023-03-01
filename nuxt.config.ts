@@ -8,6 +8,11 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/i18n'
   ],
+  pinia: {
+    autoImports: [
+      'defineStore'
+    ]
+  },
   i18n: {
     vueI18n: {
       legacy: false,

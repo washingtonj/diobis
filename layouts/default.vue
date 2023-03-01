@@ -25,9 +25,30 @@ useHead({
       @dark-mode="toggleDark()"
     />
     <main class="overflow-hidden text-black dark:text-white">
-      <div :id="LAYOUT_PORTAL" class="overflow-y-auto container mx-auto p-4">
+      <div :id="LAYOUT_PORTAL" class="overflow-y-auto container mx-auto">
         <slot />
       </div>
     </main>
   </div>
 </template>
+
+<style lang="css">
+html.dark *::-webkit-scrollbar {
+    background-color: theme('colors.slate.800');
+    width: theme('height.[3.5]');
+}
+
+html.dark *::-webkit-scrollbar-track {
+    background-color: theme('colors.slate.800');
+}
+
+html.dark *::-webkit-scrollbar-thumb {
+    background-color: theme('colors.slate.700');
+    border-radius: 16px;
+    border: 4px solid theme('colors.slate.800');
+}
+
+html.dark *::-webkit-scrollbar-button {
+    display:none;
+}
+</style>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ArrowDownIcon } from '@heroicons/vue/20/solid'
+import { useSettings } from '@/stores/settings'
 
 type Props = {
   id: string
@@ -25,6 +26,10 @@ const { data, pending, execute } = await useFetch('/api/comments', {
   }))
 })
 
+const { state } = useSettings()
+
+const isFirefox = computed(() => state.browser === 'firefox')
+
 function handleGetComments () {
   if (!pending.value) { return }
 
@@ -41,18 +46,23 @@ watch(data, (oldValue, newValue) => {
 </script>
 
 <template>
-  <div class="flex items-center justify-between">
-    <h2 class="text-sm font-bold dark:text-slate-600">
-      Comentarios
-    </h2>
-    <span v-if="!isLoading && pending" class="cursor-pointer" @click="handleGetComments">
-      <arrow-down-icon class="w-4" />
-    </span>
-    <span v-else-if="isLoading">
-      <app-spinner size="sm" />
-    </span>
-  </div>
-  <div v-if="data" class="mt-4">
-    <app-comments :comments="data!" />
+  <div
+    class="bg-blue-50 dark:bg-slate-800 rounded-md overflow-hidden"
+    :class="{ 'lg:h-full': data && !isFirefox, 'lg:h-[98%]': data && isFirefox, 'h-fit': !data }"
+  >
+    <div class="flex items-center justify-between px-5 py-4 shadow-xl shadow-blue-100/40 dark:shadow-xl">
+      <h2 class="text-sm font-bold dark:text-slate-600">
+        Comentarios
+      </h2>
+      <span v-if="!isLoading && pending" class="cursor-pointer" @click="handleGetComments">
+        <arrow-down-icon class="w-4" />
+      </span>
+      <span v-else-if="isLoading">
+        <app-spinner size="sm" />
+      </span>
+    </div>
+    <div v-if="data" class="px-8 pt-5 pb-16 mb-4 h-full overflow-auto" :class="{ 'shadow-xl': data }">
+      <app-comments :comments="data!" />
+    </div>
   </div>
 </template>

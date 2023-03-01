@@ -36,54 +36,56 @@ watch(searchText, (search) => {
 </script>
 
 <template>
-  <client-only>
-    <jobs-masonry-root>
-      <jobs-card-root
-        v-for="item in filteredData"
-        :key="`${item.repository.group}/${item.repository.repo}/${item.id}`"
-        :data="{
-          id: item.id,
-          avatarUrl: item.user.avatar_url,
-          createdBy: item.user.login_id,
-          createdAt: item.created_at,
-          title: item.title,
-          tags: item.tags
-        }"
-        @click="$router.push(`/${item.repository.group}?repo=${item.repository.repo}&id=${item.id}`)"
-      >
-        <template #interactions>
-          <app-interactions
-            :interactions="{
-              comments: item.interactions?.comments,
-            }"
-          />
+  <main class="py-4 px-4 lg:px-0">
+    <client-only>
+      <jobs-masonry-root>
+        <jobs-card-root
+          v-for="item in filteredData"
+          :key="`${item.repository.group}/${item.repository.repo}/${item.id}`"
+          :data="{
+            id: item.id,
+            avatarUrl: item.user.avatar_url,
+            createdBy: item.user.login_id,
+            createdAt: item.created_at,
+            title: item.title,
+            tags: item.tags
+          }"
+          @click="$router.push(`/${item.repository.group}?repo=${item.repository.repo}&id=${item.id}`)"
+        >
+          <template #interactions>
+            <app-interactions
+              :interactions="{
+                comments: item.interactions?.comments,
+              }"
+            />
+          </template>
+          <template #reactions>
+            <app-reactions
+              :reactions="{
+                heart: item.reactions?.heart,
+                rocket: item.reactions?.rocket,
+                looking: item.reactions?.eyes
+              }"
+              readonly
+            />
+          </template>
+        </jobs-card-root>
+        <template v-if="pending">
+          <jobs-card-skeleton v-for="item in [...Array(12).keys()]" :key="item" />
         </template>
-        <template #reactions>
-          <app-reactions
-            :reactions="{
-              heart: item.reactions?.heart,
-              rocket: item.reactions?.rocket,
-              looking: item.reactions?.eyes
-            }"
-            readonly
-          />
-        </template>
-      </jobs-card-root>
-      <template v-if="pending">
-        <jobs-card-skeleton v-for="item in [...Array(12).keys()]" :key="item" />
-      </template>
-    </jobs-masonry-root>
-  </client-only>
-  <template v-if="!pending && !filteredData?.length">
-    <div class="flex flex-col items-center justify-center h-full">
-      <div class="text-2xl font-bold text-gray-500">
-        No jobs found for "{{ searchText }}"
+      </jobs-masonry-root>
+    </client-only>
+    <template v-if="!pending && !filteredData?.length">
+      <div class="flex flex-col items-center justify-center h-full">
+        <div class="text-2xl font-bold text-gray-500">
+          No jobs found for "{{ searchText }}"
+        </div>
+        <div class="text-gray-500">
+          Try searching for something else
+        </div>
       </div>
-      <div class="text-gray-500">
-        Try searching for something else
-      </div>
-    </div>
-  </template>
+    </template>
 
-  <gadget-search v-model="searchText" />
+    <gadget-search v-model="searchText" />
+  </main>
 </template>
