@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 useHead({
-  title: 'Diobis | As melhores vagas do GitHub.',
+  title: 'Diobis - A maneira mais eficiente de encontrar empregos no GitHub.',
   link: [
     {
       href: 'https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;600;700&family=Poppins:wght@200;400;500;700&display=swap',
@@ -25,15 +25,15 @@ useHead({
     {
       hid: 'description',
       name: 'description',
-      content: 'Sua plataforma de vagas direto do GitHub'
+      content: 'A maneira mais eficiente de encontrar empregos no GitHub.'
     },
     {
       name: 'og:description',
-      content: 'Sua plataforma de vagas direto do GitHub'
+      content: 'A maneira mais eficiente de encontrar empregos no GitHub.'
     },
     {
       name: 'twitter:title',
-      content: 'Diobis - Sua plataforma de vagas direto do GitHub'
+      content: 'Diobis - A maneira mais eficiente de encontrar empregos no GitHub.'
     },
     { name: 'twitter:site', content: '@diobis' },
     { name: 'twitter:creator', content: '@diobis' }
