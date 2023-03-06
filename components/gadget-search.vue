@@ -35,6 +35,7 @@ function onClear () {
             />
           </span>
           <input
+            id="search"
             class="w-full bg-transparent rouded-md text-sm outline-none dark:text-white dark:placeholder:text-slate-400 placeholder:text-slate-600"
             type="text"
             placeholder="Pesquisar por palava-chave"
