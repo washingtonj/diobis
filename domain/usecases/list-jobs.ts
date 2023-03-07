@@ -2,6 +2,8 @@ import { JobEntity } from '@/domain/entities'
 import { GitHubService, CacheService } from '@/domain/interfaces'
 import { JOB_META_KEY } from '@/domain/consts/metas'
 
+const REMOVED_JOBS = ['ATENÇÃO: Leia nossas regras', 'ATENÇÃO: Leia nossas regras.']
+
 export function ListJobs (GitHubService: GitHubService, CacheService: CacheService) {
   return async function () {
     const lastCacheSync = await CacheService.lastCacheSync(JOB_META_KEY)
@@ -11,7 +13,9 @@ export function ListJobs (GitHubService: GitHubService, CacheService: CacheServi
       ? await GitHubService.getAllJobs()
       : await CacheService.get<JobEntity[]>('jobs')
 
-    const filtered = raw.sort((a, b) => +new Date(b.created_at) - +new Date(a.created_at))
+    const filtered = raw
+      .sort((a, b) => +new Date(b.created_at) - +new Date(a.created_at))
+      .filter(job => !REMOVED_JOBS.includes(job.title))
 
     if (isInvalidCache) { await CacheService.set('jobs', raw) }
 
