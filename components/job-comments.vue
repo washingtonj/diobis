@@ -61,7 +61,7 @@ watch(data, (oldValue, newValue) => {
         <app-spinner size="sm" />
       </span>
     </div>
-    <div v-if="data" class="px-8 pt-5 pb-16 mb-4 h-full overflow-auto" :class="{ 'shadow-xl': data }">
+    <div v-if="data" class="px-8 pt-5 pb-4 lg:pb-10 mb-4 h-full overflow-auto" :class="{ 'shadow-xl': data }">
       <app-comments :comments="data!" />
     </div>
   </div>
