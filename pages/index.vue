@@ -50,7 +50,7 @@ watch(searchText, (search) => {
             title: item.title,
             tags: item.tags
           }"
-          @click="$router.push(`/${item.repository.group}?repo=${item.repository.repo}&id=${item.id}`)"
+          @click="$router.push(`/v/${item.repository.group}?repo=${item.repository.repo}&id=${item.id}`)"
         >
           <template #interactions>
             <app-interactions
