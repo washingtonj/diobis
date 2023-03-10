@@ -2,6 +2,10 @@ import { en, ptBR } from './locales'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  components: [
+    '~/components',
+    '~/containers'
+  ],
   modules: [
     '@nuxtjs/tailwindcss',
     '@vueuse/nuxt',

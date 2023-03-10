@@ -2,7 +2,7 @@ import { ReadJobComments } from '@/core/domain/usecases'
 import { GitHubAPI } from '@/core/infraestructure/repositories'
 import { InMemoryCache } from '@/core/infraestructure/services'
 
-type Query = {
+export type Query = {
   id: string
   group: string
   repo: string

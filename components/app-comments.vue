@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-type Props = {
+export type Props = {
   comments: Array<{
     isAuthor: boolean
     name: string
