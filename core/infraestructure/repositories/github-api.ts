@@ -1,6 +1,6 @@
-import { CommentEntity, JobEntity } from '@/domain/entities'
-import { GitHubService } from '@/domain/interfaces'
-import { JobNotFoundError } from '@/domain/errors'
+import { CommentEntity, JobEntity } from '@/core/domain/entities'
+import { GitHubService } from '@/core/domain/interfaces'
+import { JobNotFoundError } from '@/core/domain/errors'
 import { Logger } from '@/utils'
 
 const GITHUB_BASE_URL = 'https://api.github.com/repos'

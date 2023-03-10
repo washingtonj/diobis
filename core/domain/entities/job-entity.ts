@@ -1,4 +1,4 @@
-import { UserEntity } from '@/domain/entities'
+import { UserEntity } from '@/core/domain/entities'
 
 export interface JobEntity {
   id: string

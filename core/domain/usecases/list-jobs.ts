@@ -1,6 +1,6 @@
-import { JobEntity } from '@/domain/entities'
-import { GitHubService, CacheService } from '@/domain/interfaces'
-import { JOB_META_KEY } from '@/domain/consts/metas'
+import { JobEntity } from '@/core/domain/entities'
+import { GitHubService, CacheService } from '@/core/domain/interfaces'
+import { JOB_META_KEY } from '@/core/domain/consts/metas'
 
 const REMOVED_JOBS = ['ATENÇÃO: Leia nossas regras', 'ATENÇÃO: Leia nossas regras.']
 

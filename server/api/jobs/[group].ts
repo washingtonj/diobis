@@ -1,5 +1,5 @@
-import { ReadJob } from '@/domain/usecases'
-import { InMemoryCache } from '@/infraestructure/services'
+import { ReadJob } from '@/core/domain/usecases'
+import { InMemoryCache } from '@/core/infraestructure/services'
 
 type Params = {
   group: string

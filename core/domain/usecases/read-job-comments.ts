@@ -1,5 +1,5 @@
-import { GitHubService, CacheService } from '@/domain/interfaces'
-import { CommentEntity } from '@/domain/entities'
+import { GitHubService, CacheService } from '@/core/domain/interfaces'
+import { CommentEntity } from '@/core/domain/entities'
 
 export function ReadJobComments (GitHubService: GitHubService, CacheService: CacheService) {
   return async function (group: string, repo: string, id: string) {

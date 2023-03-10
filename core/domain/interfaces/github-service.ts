@@ -1,4 +1,4 @@
-import { JobEntity, CommentEntity } from '@/domain/entities'
+import { JobEntity, CommentEntity } from '@/core/domain/entities'
 
 export interface GitHubService {
   getAllJobs: () => Promise<JobEntity[]>

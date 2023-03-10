@@ -1,6 +1,6 @@
-import { ReadJobComments } from '@/domain/usecases'
-import { GitHubAPI } from '@/infraestructure/repositories'
-import { InMemoryCache } from '@/infraestructure/services'
+import { ReadJobComments } from '@/core/domain/usecases'
+import { GitHubAPI } from '@/core/infraestructure/repositories'
+import { InMemoryCache } from '@/core/infraestructure/services'
 
 type Query = {
   id: string

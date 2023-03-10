@@ -1,4 +1,4 @@
-import { CacheService } from '@/domain/interfaces'
+import { CacheService } from '@/core/domain/interfaces'
 import { Logger } from '@/utils'
 
 export const InMemoryCache: CacheService = {

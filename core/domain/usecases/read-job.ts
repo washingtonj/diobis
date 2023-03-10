@@ -1,7 +1,7 @@
-import { CacheService } from '@/domain/interfaces'
-import { JobEntity } from '@/domain/entities'
-import { JobNotCached } from '@/domain/errors'
-import { JOB_META_KEY } from '@/domain/consts/metas'
+import { CacheService } from '@/core/domain/interfaces'
+import { JobEntity } from '@/core/domain/entities'
+import { JobNotCached } from '@/core/domain/errors'
+import { JOB_META_KEY } from '@/core/domain/consts/metas'
 
 export function ReadJob (CacheService: CacheService) {
   return async function (group: string, repo: string, id: string) {
