@@ -3,6 +3,7 @@
 const plugin = require('tailwindcss/plugin')
 
 module.exports = {
+  content: ['./components/**/*.vue'],
   theme: {
     extend: {
       fontFamily: {

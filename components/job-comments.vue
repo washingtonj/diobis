@@ -16,7 +16,7 @@ defineEmits(['show'])
 <template>
   <div
     class="bg-blue-50 dark:bg-slate-800 rounded-md overflow-hidden"
-    :class="{ 'lg:h-full': data && !$props.isFirefox, 'lg:h-[98%]': data && $props.isFirefox, 'h-fit': !$props.data }"
+    :class="{ 'lg:h-full': $props.data.length && !$props.isFirefox, 'lg:h-[98%]': $props.data.length && $props.isFirefox, 'h-fit': !$props.data }"
   >
     <div class="flex items-center justify-between px-5 py-4 shadow-xl shadow-blue-100/40 dark:shadow-xl">
       <h2 class="text-sm font-bold dark:text-slate-600">
@@ -29,7 +29,7 @@ defineEmits(['show'])
         <app-spinner size="sm" />
       </span>
     </div>
-    <div v-if="data" class="px-8 pt-5 pb-4 lg:pb-10 mb-4 h-full overflow-auto" :class="{ 'shadow-xl': data }">
+    <div v-if="data.length" class="px-8 pt-5 pb-4 lg:pb-10 h-full overflow-auto" :class="{ 'shadow-xl': data }">
       <app-comments :comments="$props.data" />
     </div>
   </div>

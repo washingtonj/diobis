@@ -10,6 +10,7 @@ export type Props = {
 }
 
 const props = defineProps<Props>()
+
 </script>
 
 <!-- eslint-disable vue/no-v-html -->
