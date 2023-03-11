@@ -7,29 +7,24 @@ import {
 
 import { HEADER_GADGET_PORTAL } from '@/consts/globals'
 
-interface Props {
+type Props = {
   isDarkMode: boolean;
+  currentRoute: string;
+  navbar: Array<{
+    id: string;
+    title: string;
+    path: string;
+    matchPaths?: string[];
+  }>;
 }
 
-const { currentRoute } = useRouter()
+type Emits = {
+  (e: 'darkMode', isDarkMode: boolean): void;
+  (e: 'pageChange', to: string): void;
+}
 
-const navbar = [
-  {
-    id: 'home',
-    title: 'Vagas',
-    path: '/',
-    matchPaths: ['/v/:group']
-  },
-  {
-    id: 'about',
-    title: 'Sobre',
-    path: '/about'
-  }
-]
-
-const props = defineProps<Props>()
-
-const emits = defineEmits(['darkMode'])
+defineProps<Props>()
+defineEmits<Emits>()
 </script>
 
 <template>
@@ -45,31 +40,28 @@ const emits = defineEmits(['darkMode'])
         </nuxt-link>
         <nav class="hidden col-start-3 col-span-3 justify-start md:flex-1 md:flex mt-[0.5px]">
           <ul class="flex">
-            <nuxt-link
+            <li
               v-for="item in navbar"
               :key="item.id"
-              :to="item.path"
               class="flex items-center odd:mx-8 font-bold uppercase text-xs cursor-pointer transition-colors"
               :class="
-                currentRoute.path === item.path || item.matchPaths?.includes(currentRoute.matched[0].path)
+                $props.currentRoute === item.path || item.matchPaths?.includes($props.currentRoute)
                   ? 'text-blue-600'
                   : 'text-black dark:text-white'
               "
+              @click="() => $emit('pageChange', item.path)"
             >
               <p>{{ item.title }}</p>
-            </nuxt-link>
+            </li>
           </ul>
         </nav>
-        <div
-          :id="HEADER_GADGET_PORTAL"
-          class="gadget md:w-3/12 row-start-2 col-span-12"
-        />
+        <div :id="HEADER_GADGET_PORTAL" class="gadget md:w-3/12 row-start-2 col-span-12" />
         <div class="flex flex-row-reverse items-center justify-end col-start-12">
           <button id="toggleDarkMode">
             <Component
-              :is="props.isDarkMode ? SunIcon : MoonIcon"
+              :is="$props.isDarkMode ? SunIcon : MoonIcon"
               class="cursor-pointer w-5 h-5 text-slate-400 hover:text-slate-500 dark:fill-white"
-              @click="() => emits('darkMode', !props.isDarkMode)"
+              @click="() => $emit('darkMode', !$props.isDarkMode)"
             />
           </button>
         </div>

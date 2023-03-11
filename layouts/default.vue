@@ -2,9 +2,6 @@
 import { LAYOUT_PORTAL } from '@/consts/globals'
 
 const isDark = useDark()
-
-const toggleDark = useToggle(isDark)
-
 const theme = computed(() => (isDark.value ? '#0f172a' : '#ffffff'))
 
 useHead({
@@ -19,7 +16,7 @@ useHead({
   <div class="relative border-slate-900/10 dark:border-slate-700">
     <NuxtLoadingIndicator color="#2563eb" />
     <client-only>
-      <layout-header :is-dark-mode="isDark" @dark-mode="toggleDark()" />
+      <c-layout-header />
     </client-only>
     <main class="overflow-hidden text-black dark:text-white">
       <div :id="LAYOUT_PORTAL" class="overflow-y-auto container mx-auto">
