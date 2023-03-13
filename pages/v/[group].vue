@@ -57,12 +57,13 @@ useHead({
     <section class="content sticky top-0 overflow-auto;">
       <job-content :content="data.markdown" />
     </section>
-    <section v-if="data.interactions?.comments" class="comment sticky top-0 mt-2 rounded-md overflow-auto">
+    <section class="comment sticky top-0 rounded-md overflow-auto">
       <c-job-comments
         :id="data.id"
         :author-id="data.user.login_id"
         :group="data.repository.group"
         :repo="data.repository.repo"
+        :is-empty="data.interactions?.comments === 0"
       />
     </section>
   </main>

@@ -3,7 +3,13 @@ import { useSettings } from '@/stores/settings'
 import { type Query } from '@/server/api/comments'
 import { type Props as JobCommentsProps } from '@/components/job-comments.vue'
 
-type Props = { authorId: string, group: string, repo: string, id: string }
+type Props = {
+  authorId: string,
+  group: string,
+  repo: string,
+  id: string,
+  isEmpty: boolean
+}
 
 const props = defineProps<Props>()
 const store = useSettings()
@@ -39,6 +45,8 @@ watch(data, (prev, next) => {
 <template>
   <job-comments
     :data="data || []"
+    :is-authenticated="false"
+    :is-empty="props.isEmpty"
     :is-loading="isLoading"
     :is-firefox="isFirefox"
     @show="handleExecute"
