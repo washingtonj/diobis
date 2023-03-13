@@ -20,6 +20,10 @@ const emit = defineEmits<Emits>()
 
 const inputValue = ref('')
 
+const useFullHeight = computed(() => {
+  return props.data.length > 3
+})
+
 function submitComment () {
   emit('submit', inputValue.value)
   inputValue.value = ''
@@ -28,8 +32,8 @@ function submitComment () {
 
 <template>
   <div
-    class="bg-blue-50 dark:bg-slate-800 rounded-md overflow-hidden"
-    :class="{ 'lg:h-full': props.data.length && !props.isFirefox, 'lg:h-[98%]': props.data.length && props.isFirefox, 'h-fit': !props.data }"
+    class="overflow-hidden bg-blue-50 dark:bg-slate-800 rounded-md"
+    :class="{ 'lg:h-full lg:pb-14': useFullHeight && !props.isFirefox, 'lg:h-[98%] lg:pb-14': useFullHeight && props.isFirefox, 'h-fit': !props.data }"
   >
     <div class="flex items-center justify-between px-5 py-4 shadow-xl shadow-blue-100/40 dark:shadow-xl">
       <h2 class="text-sm font-bold dark:text-slate-500">
@@ -47,33 +51,34 @@ function submitComment () {
       </span>
     </div>
 
-    <div v-if="data.length" class="h-full overflow-auto">
-      <div class="p-5 lg:pb-10 ">
+    <div class="flex flex-col h-full w-full overflow-auto">
+      <div v-if="data.length" class="h-fit overflow-auto p-5">
         <app-comments :comments="props.data" />
       </div>
-    </div>
 
-    <div v-if="props.isEmpty" class="p-8 w-full flex justify-center items-center">
-      <p class="text-sm">
+      <p v-if="props.isEmpty" class="text-sm p-8 text-center">
         Esta vaga não contem comentários.
       </p>
-    </div>
 
-    <div v-if="props.isAuthenticated && (props.isEmpty || props.data.length)" class="px-4 py-4 border-t border-slate-900/10 dark:border-slate-700">
-      <div class="bg-blue-100 dark:bg-slate-700 rounded-lg">
-        <textarea
-          v-model="inputValue"
-          placeholder="Deixe seu comentário, dúvida ou sugestão."
-          class="w-full text-sm border-inherit p-4 bg-transparent outline-none resize-none dark:text-white text-black"
-        />
-        <div class="flex justify-end">
-          <button
-            :disabled="!inputValue"
-            class="-mt-1.5 py-2 px-4 text-xs font-bold rounded-br-lg rounded-tl-lg bg-blue-600 text-white disabled:bg-slate-400 transition-colors"
-            @click="submitComment"
-          >
-            Comentar
-          </button>
+      <div
+        v-if="props.isAuthenticated && (props.isEmpty || props.data.length)"
+        class="px-4 py-4 border-t border-slate-900/10 dark:border-slate-700"
+      >
+        <div class="bg-blue-100 dark:bg-slate-700 rounded-lg">
+          <textarea
+            v-model="inputValue"
+            placeholder="Deixe seu comentário, dúvida ou sugestão."
+            class="w-full text-sm border-inherit p-4 bg-transparent outline-none resize-none dark:text-white text-black"
+          />
+          <div class="flex justify-end">
+            <button
+              :disabled="!inputValue"
+              class="-mt-1.5 py-2 px-4 text-xs font-bold rounded-br-lg rounded-tl-lg bg-blue-600 text-white disabled:bg-slate-400 transition-colors"
+              @click="submitComment"
+            >
+              Comentar
+            </button>
+          </div>
         </div>
       </div>
     </div>
