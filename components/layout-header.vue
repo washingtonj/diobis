@@ -39,7 +39,7 @@ defineEmits<Emits>()
           <layout-logo class="fill-black dark:fill-white" />
         </nuxt-link>
         <nav class="hidden col-start-3 col-span-3 justify-start md:flex-1 md:flex mt-[0.5px]">
-          <ul class="flex">
+          <ul class="flex items-center">
             <li
               v-for="item in navbar"
               :key="item.id"
@@ -57,12 +57,12 @@ defineEmits<Emits>()
         </nav>
         <div :id="HEADER_GADGET_PORTAL" class="gadget md:w-3/12 row-start-2 col-span-12" />
         <div class="flex flex-row-reverse items-center justify-end col-start-12">
-          <button id="toggleDarkMode">
-            <Component
-              :is="$props.isDarkMode ? SunIcon : MoonIcon"
-              class="cursor-pointer w-5 h-5 text-slate-400 hover:text-slate-500 dark:fill-white"
-              @click="() => $emit('darkMode', !$props.isDarkMode)"
-            />
+          <button
+            id="toggleDarkMode"
+            class="rounded-full hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors delay-150 p-1.5"
+            @click="() => $emit('darkMode', !$props.isDarkMode)"
+          >
+            <Component :is="$props.isDarkMode ? SunIcon : MoonIcon" class="w-5 h-5 text-slate-400 dark:fill-white" />
           </button>
         </div>
       </div>

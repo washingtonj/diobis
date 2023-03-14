@@ -1,48 +1,24 @@
 <script lang="ts" setup>
 import { LAYOUT_PORTAL } from '@/consts/globals'
+import { useUser } from '@/stores/user'
 
-const isDark = useDark()
-const theme = computed(() => (isDark.value ? '#0f172a' : '#ffffff'))
+const User = useUser()
 
-useHead({
-  meta: [{ name: 'theme-color', content: theme }],
-  bodyAttrs: {
-    class: 'absolute top-0 z-20 w-full bg-white dark:bg-slate-900 overflow-y-scroll'
-  }
-})
 </script>
 
 <template>
-  <div class="relative border-slate-900/10 dark:border-slate-700">
+  <layout-theme>
     <NuxtLoadingIndicator color="#2563eb" />
     <client-only>
       <c-layout-header />
     </client-only>
-    <main class="overflow-hidden text-black dark:text-white">
+    <main class="overflow-hidden">
       <div :id="LAYOUT_PORTAL" class="overflow-y-auto container mx-auto">
         <slot />
       </div>
     </main>
-  </div>
+  </layout-theme>
+  <client-only>
+    <c-bt-sheet-authentication v-if="!User.getters.isLoggedIn" />
+  </client-only>
 </template>
-
-<style lang="css">
-html.dark *::-webkit-scrollbar {
-  background-color: theme('colors.slate.800');
-  width: theme('height.[3.5]');
-}
-
-html.dark *::-webkit-scrollbar-track {
-  background-color: theme('colors.slate.800');
-}
-
-html.dark *::-webkit-scrollbar-thumb {
-  background-color: theme('colors.slate.700');
-  border-radius: 16px;
-  border: 4px solid theme('colors.slate.800');
-}
-
-html.dark *::-webkit-scrollbar-button {
-  display: none;
-}
-</style>

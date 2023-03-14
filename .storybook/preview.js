@@ -7,6 +7,7 @@ import AppInteractions from '../components/app-interactions.vue'
 import AppMarkdown from '../components/app-markdown.vue'
 import AppReactions from '../components/app-reactions.vue'
 import AppSpinner from '../components/app-spinner.vue'
+import BottomSheet from '../components/app-bottom-sheet.vue'
 
 import en from '../locales/en.json'
 
@@ -24,6 +25,8 @@ app.component('app-interactions', AppInteractions)
 app.component('app-markdown', AppMarkdown)
 app.component('app-reactions', AppReactions)
 app.component('app-spinner', AppSpinner)
+app.component('app-bottom-sheet', BottomSheet)
+
 
 app.use(i18n)
 app.use(pinia)
