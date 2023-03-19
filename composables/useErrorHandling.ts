@@ -1,15 +1,11 @@
 export function useErrorHandling (error: any) {
-  function onServerSide () {
+  if (!error.value) { return }
+
+  if (process.server) {
     showError(error.value.data)
   }
 
-  function onClientSide () {
-    onUpdated(() => {
-      showError(error.value.data)
-    })
-  }
-
-  if (!error.value) { return }
-
-  process.client ? onClientSide() : onServerSide()
+  onUpdated(() => {
+    showError(error.value.data)
+  })
 }

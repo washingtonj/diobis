@@ -1,4 +1,4 @@
-import { browserDetect } from '@/utils/browser'
+import { defineBrowser } from '@/utils/browser'
 
 interface State {
   browser: 'firefox' | 'chrome' | 'safari' | 'edge' | 'ie' | 'opera' | 'unknown' | undefined
@@ -10,7 +10,7 @@ export const useSettings = defineStore('settings', () => {
   })
 
   onMounted(() => {
-    state.browser = browserDetect().defineBrowser()
+    state.browser = defineBrowser()
   })
 
   return {

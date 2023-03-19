@@ -6,7 +6,7 @@ export function ReadJobComments (GitHubService: GitHubService, CacheService: Cac
     const cacheKey = `comment/${group}/${repo}/${id}`
 
     const lastCacheSync = await CacheService.lastCacheSync(cacheKey)
-    const isInvalidCache = !lastCacheSync || new Date().getTime() - (lastCacheSync.getTime() || 0) > 3600000
+    const isInvalidCache = lastCacheSync === null || new Date(lastCacheSync).getTime() - (new Date().getTime()) > 3600000
 
     const raw = isInvalidCache
       ? await GitHubService.getJobComments(group, repo, id)

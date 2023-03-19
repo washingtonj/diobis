@@ -3,7 +3,7 @@ export function browserDetect () {
 
   const msie = ua.indexOf('MSIE ')
   const trident = ua.indexOf('Trident/')
-  const edge = ua.indexOf('Edge/')
+  const edge = ua.indexOf('Edg/')
   const chrome = ua.indexOf('Chrome/')
   const safari = ua.indexOf('Safari/')
   const firefox = ua.indexOf('Firefox/')
@@ -16,40 +16,23 @@ export function browserDetect () {
   const isFirefox = firefox > 0
   const isOpera = opera > 0
 
-  function defineBrowser () {
-    const browser = browserDetect()
-    if (browser.isFirefox) { return 'firefox' }
-    if (browser.isChrome) { return 'chrome' }
-    if (browser.isSafari) { return 'safari' }
-    if (browser.isEdge) { return 'edge' }
-    if (browser.isIE) { return 'ie' }
-    if (browser.isOpera) { return 'opera' }
-    return 'unknown'
-  }
-
   return {
     isIE,
     isEdge,
     isChrome,
     isSafari,
     isFirefox,
-    isOpera,
-    defineBrowser
+    isOpera
   }
 }
 
-export function osDetect () {
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream
-  const isAndroid = /Android/.test(navigator.userAgent) && !(window as any).MSStream
-  const isMac = /Mac/.test(navigator.userAgent)
-  const isWindows = /Windows/.test(navigator.userAgent)
-  const isLinux = /Linux/.test(navigator.userAgent)
-
-  return {
-    isIOS,
-    isAndroid,
-    isMac,
-    isWindows,
-    isLinux
-  }
+export function defineBrowser () {
+  const browser = browserDetect()
+  if (browser.isFirefox) { return 'firefox' }
+  if (browser.isChrome) { return 'chrome' }
+  if (browser.isSafari) { return 'safari' }
+  if (browser.isEdge) { return 'edge' }
+  if (browser.isIE) { return 'ie' }
+  if (browser.isOpera) { return 'opera' }
+  return 'unknown'
 }

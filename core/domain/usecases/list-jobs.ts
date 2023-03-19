@@ -7,7 +7,7 @@ const REMOVED_JOBS = ['ATENÇÃO: Leia nossas regras', 'ATENÇÃO: Leia nossas r
 export function ListJobs (GitHubService: GitHubService, CacheService: CacheService) {
   return async function () {
     const lastCacheSync = await CacheService.lastCacheSync(JOB_META_KEY)
-    const isInvalidCache = !lastCacheSync || new Date().getTime() - (lastCacheSync.getTime() || 0) > 3600000
+    const isInvalidCache = lastCacheSync === null || new Date(lastCacheSync).getTime() - (new Date().getTime()) > 3600000
 
     const raw = isInvalidCache
       ? await GitHubService.getAllJobs()
