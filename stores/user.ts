@@ -1,17 +1,19 @@
 type State = {
   username?: string
   token?: string
+  avatarUrl?: string
 }
 
 export const useUser = defineStore('user', () => {
-  const state = ref<State>({
-    username: undefined,
-    token: undefined
-  })
+  const state = ref<State>({})
 
   const actions = {
     setToken: (token: string) => {
       state.value.token = token
+    },
+
+    setAvatarUrl: (avatarUrl: string) => {
+      state.value.avatarUrl = avatarUrl
     }
   }
 
@@ -24,7 +26,7 @@ export const useUser = defineStore('user', () => {
   })
 
   watch(state, () => {
-    if (state.value.token) {
+    if (Object.keys(state.value).length > 0) {
       localStorage.setItem('userStore', JSON.stringify(state.value))
     }
   }, { deep: true })

@@ -1,8 +1,8 @@
 import { describe, vi, it, expect, beforeEach } from 'vitest'
 
 import { GitHubAPI } from '@/core/infraestructure/repositories/github-api/services'
-import { GitHubIssue, GitHubOAuth } from '@/core/infraestructure/repositories/github-api/models'
-import { JobEntity } from '@/core/domain/entities'
+import { GitHubIssue, GitHubOAuth, GitHubUser } from '@/core/infraestructure/repositories/github-api/models'
+import { JobEntity, UserEntity } from '@/core/domain/entities'
 
 const mockedFetch = vi.fn()
 
@@ -16,7 +16,7 @@ describe('GitHubAPI', () => {
     (global as any).$fetch = mockedFetch.mockResolvedValue([])
 
     // When
-    const repositories = await GitHubAPI.getAllJobs()
+    const repositories = await GitHubAPI().getAllJobs()
 
     // Then
     expect(repositories).toEqual([])
@@ -44,7 +44,7 @@ describe('GitHubAPI', () => {
     } as GitHubIssue)
 
     // When
-    const job = await GitHubAPI.getJobById('group', 'repo', 'id')
+    const job = await GitHubAPI().getJobById('group', 'repo', 'id')
 
     // Then
     expect(job).toEqual({
@@ -77,17 +77,17 @@ describe('GitHubAPI', () => {
     // When
     (global as any).$fetch = mockedFetch.mockResolvedValue([])
 
-    const comments = await GitHubAPI.getJobComments('group', 'repo', 'id')
+    const comments = await GitHubAPI().getJobComments('group', 'repo', 'id')
 
     // Then
     expect(comments).toEqual([])
   })
 
-  it('Shouldnt throw an error when job doesnt exist', async () => {
+  it('Should throw an error when job doesnt exist', async () => {
     // When
     (global as any).$fetch = mockedFetch.mockResolvedValue(undefined)
 
-    const job = GitHubAPI.getJobById('group', 'repo', 'id')
+    const job = GitHubAPI().getJobById('group', 'repo', 'id')
 
     // Then
     await expect(job).rejects.toThrow()
@@ -101,19 +101,53 @@ describe('GitHubAPI', () => {
       scope: 'repo'
     } as GitHubOAuth)
 
-    const token = await GitHubAPI.getAuthToken('code')
+    const token = await GitHubAPI().getAuthToken('code')
 
     // Then
-    expect(token).toEqual('Bearer token')
+    expect(token).toEqual({ token: 'token', type: 'Bearer' })
   })
 
   it('Should throw an erro when auth token is invalid', async () => {
     // When
     (global as any).$fetch = mockedFetch.mockResolvedValue({})
 
-    const token = GitHubAPI.getAuthToken('code')
+    const token = GitHubAPI().getAuthToken('code')
 
     // Then
     await expect(token).rejects.toThrow()
+  })
+
+  it('Should use the GH Authorization on requests', async () => {
+    // Given
+    (global as any).$fetch = mockedFetch.mockResolvedValue([])
+
+    // When
+    await GitHubAPI({ authorization: 'Bearer token' }).getAllJobs()
+
+    // Then
+    expect(mockedFetch.mock.calls[0][1].headers.Authorization).toBe('Bearer token')
+  })
+
+  it('Should get user information from service', async () => {
+    // Given
+    (global as any).$fetch = mockedFetch.mockResolvedValue({ avatar_url: 'some_avatar', login: 'some_login' } as GitHubUser)
+
+    // When
+    const user = await GitHubAPI().getUserByToken('TOKEN')
+
+    // Then
+    expect(mockedFetch.mock.calls[0][1].headers.Authorization).toBe('Bearer TOKEN')
+    expect(user).toEqual({ avatar_url: 'some_avatar', login_id: 'some_login' } as UserEntity)
+  })
+
+  it('Should throw an error when user token is invalid or expired', async () => {
+    // Given
+    (global as any).$fetch = mockedFetch.mockResolvedValue(undefined)
+
+    // When
+    const user = GitHubAPI().getUserByToken('TOKEN')
+
+    // Then
+    await expect(user).rejects.toThrow()
   })
 })

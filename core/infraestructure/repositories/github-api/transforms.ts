@@ -1,5 +1,5 @@
-import { GitHubComment, GitHubIssue } from './models'
-import { JobEntity, CommentEntity } from '@/core/domain/entities'
+import { GitHubComment, GitHubIssue, GitHubUser } from './models'
+import { JobEntity, CommentEntity, UserEntity } from '@/core/domain/entities'
 
 export const Transform = {
 
@@ -39,6 +39,13 @@ export const Transform = {
         avatar_url: data.user.avatar_url,
         login_id: data.user.login
       }
+    }
+  },
+
+  toUserEntity (data: GitHubUser): UserEntity {
+    return {
+      avatar_url: data.avatar_url,
+      login_id: data.login
     }
   }
 }

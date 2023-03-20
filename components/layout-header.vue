@@ -8,13 +8,16 @@ import {
 import { HEADER_GADGET_PORTAL } from '@/consts/globals'
 
 type Props = {
-  isDarkMode: boolean;
-  currentRoute: string;
+  isDarkMode: boolean
+  currentRoute: string
+  user?: {
+    avatar_url: string
+  }
   navbar: Array<{
-    id: string;
-    title: string;
-    path: string;
-    matchPaths?: string[];
+    id: string
+    title: string
+    path: string
+    matchPaths?: string[]
   }>;
 }
 
@@ -57,6 +60,14 @@ defineEmits<Emits>()
         </nav>
         <div :id="HEADER_GADGET_PORTAL" class="gadget md:w-3/12 row-start-2 col-span-12" />
         <div class="flex flex-row-reverse items-center justify-end col-start-12">
+          <button
+            v-if="$props.user"
+            id="userMenu"
+            class="rounded-full hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors delay-150 p-1.5 cursor-default ml-1"
+            @click="() => $emit('darkMode', !$props.isDarkMode)"
+          >
+            <img :src="$props.user.avatar_url" class="h-6 rounded-full">
+          </button>
           <button
             id="toggleDarkMode"
             class="rounded-full hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors delay-150 p-1.5"

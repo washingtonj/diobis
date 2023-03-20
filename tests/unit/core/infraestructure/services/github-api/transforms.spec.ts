@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
-import { GitHubComment, GitHubIssue } from '@/core/infraestructure/repositories/github-api/models'
+import { GitHubComment, GitHubIssue, GitHubUser } from '@/core/infraestructure/repositories/github-api/models'
 import { Transform } from '@/core/infraestructure/repositories/github-api/transforms'
-import { CommentEntity, JobEntity } from '@/core/domain/entities'
+import { CommentEntity, JobEntity, UserEntity } from '@/core/domain/entities'
 
 describe('Transform', () => {
   it('Should transform to JobEntity', () => {
@@ -90,6 +90,25 @@ describe('Transform', () => {
 
     // when
     const result = Transform.toCommentEntity(data)
+
+    // then
+    expect(result).toEqual(expected)
+  })
+
+  it('Should transform to UserEntity', () => {
+    // given
+    const data: GitHubUser = {
+      avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
+      login: 'user'
+    }
+
+    const expected: UserEntity = {
+      avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
+      login_id: 'user'
+    }
+
+    // when
+    const result = Transform.toUserEntity(data)
 
     // then
     expect(result).toEqual(expected)

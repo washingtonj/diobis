@@ -14,8 +14,8 @@ const Template: Story = args => ({
   template: '<LayoutHeader v-bind="args" />'
 })
 
-export const Header = Template.bind({})
-Header.args = {
+export const LoggedOut = Template.bind({})
+LoggedOut.args = {
   isDarkMode: true,
   currentRoute: '/about',
   navbar: [
@@ -35,4 +35,30 @@ Header.args = {
       path: '/contact'
     }
   ]
+}
+
+export const Logged = Template.bind({})
+Logged.args = {
+  isDarkMode: true,
+  currentRoute: '/about',
+  navbar: [
+    {
+      id: 'home',
+      title: 'Home',
+      path: '/'
+    },
+    {
+      id: 'about',
+      title: 'About',
+      path: '/about'
+    },
+    {
+      id: 'contact',
+      title: 'Contact',
+      path: '/contact'
+    }
+  ],
+  user: {
+    avatar_url: 'https://avatars.githubusercontent.com/u/55254037?s=60&v=4'
+  }
 }
