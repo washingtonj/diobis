@@ -1,6 +1,6 @@
 import { AuthenticateUser } from '@/core/domain/usecases'
 import { GitHubAPI } from '@/core/infraestructure/repositories'
-import { getContextHeader } from '~~/server/utils'
+import { getContextHeader } from '@/server/utils'
 
 export type Query = {
   authCode: string

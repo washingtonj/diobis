@@ -29,7 +29,7 @@ export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
       const jobs: JobEntity[] = []
 
       for await (const repo of GITHUB_REPOS) {
-        const issues = await $fetch<GitHubIssue[]>(`${GITHUB_BASE_URL}/${repo.group}/${repo.repo}/issues`, { headers, params: GITHUB_PARAMS })
+        const issues = await $fetch<GitHubIssue[]>(`${GITHUB_BASE_URL}/repos/${repo.group}/${repo.repo}/issues`, { headers, params: GITHUB_PARAMS })
 
         Logger('GitHubAPI', `Found ${issues.length} jobs in ${repo.group}/${repo.repo}`)
 
@@ -41,7 +41,7 @@ export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
     },
 
     getJobById: async (group, repo, id) => {
-      const raw = await $fetch<GitHubIssue>(`${GITHUB_BASE_URL}/${group}/${repo}/issues/${id}`, { headers, params: GITHUB_PARAMS })
+      const raw = await $fetch<GitHubIssue>(`${GITHUB_BASE_URL}/repos/${group}/${repo}/issues/${id}`, { headers, params: GITHUB_PARAMS })
 
       Logger('GitHubAPI', `Found job in ${group}/${repo}/${id}`)
 
@@ -51,7 +51,7 @@ export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
     },
 
     getJobComments: async (group, repo, id) => {
-      const raw = await $fetch<GitHubComment[]>(`${GITHUB_BASE_URL}/${group}/${repo}/issues/${id}/comments`, { headers, params: GITHUB_PARAMS })
+      const raw = await $fetch<GitHubComment[]>(`${GITHUB_BASE_URL}/repos/${group}/${repo}/issues/${id}/comments`, { headers, params: GITHUB_PARAMS })
 
       Logger('GitHubAPI', `Found ${raw.length} comments in ${group}/${repo}/${id}`)
 
@@ -69,11 +69,11 @@ export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
         }
       })
 
-      Logger('GitHubAPI', `Got auth token for ${authCode}`)
-
       if (!bearerToken.access_token) {
         throw new InvalidGitHubOAuthCodeError({ code: authCode, state: 'unknown' })
       }
+
+      Logger('GitHubAPI', `Got auth token for ${authCode}`)
 
       return Promise.resolve({
         token: bearerToken.access_token,
