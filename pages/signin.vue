@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { MagnifyingGlassCircleIcon } from '@heroicons/vue/20/solid'
 import { type Query } from '@/server/api/auth'
-import { useUser } from '@/stores/user'
+import { useUserStore } from '@/stores/user'
 
 const Route = useRoute()
 const Router = useRouter()
-const User = useUser()
+const User = useUserStore()
 const isLoading = ref(false)
 
 const SignInBenefits = [

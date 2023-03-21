@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { withSetup } from '@/utils/test-utils'
+import { withSetup } from '@/tests/utils/render'
 import { useErrorHandling } from '@/composables/useErrorHandling'
 
 const showErrorMock = vi.fn()

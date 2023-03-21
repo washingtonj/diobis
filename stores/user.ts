@@ -4,7 +4,7 @@ type State = {
   avatarUrl?: string
 }
 
-export const useUser = defineStore('user', () => {
+export const useUserStore = defineStore('user', () => {
   const state = ref<State>({})
 
   const actions = {

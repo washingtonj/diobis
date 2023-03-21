@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import { useUserStore } from '@/stores/user'
+
 const route = useRoute()
 const router = useRouter()
+const User = useUserStore()
 
 const searchText = ref((route.query.search as string) || '')
 
-const { data, pending, error } = useFetch('/api/jobs', { server: false })
+const { data, pending, error } = useFetch('/api/jobs', {
+  server: false,
+  headers: { 'x-github-token': User.state.token || '' }
+})
 
 const filteredData = computed(() => {
   if (!searchText.value) { return data.value }
@@ -16,12 +22,6 @@ const filteredData = computed(() => {
         .map(item => item.toLocaleLowerCase())
         .includes(searchText.value.toLowerCase())
   )
-})
-
-onUpdated(() => {
-  if (error.value) {
-    showError(error.value.data)
-  }
 })
 
 useErrorHandling(error)

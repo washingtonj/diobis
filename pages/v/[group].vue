@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 import { useSettings } from '@/stores/settings'
+import { useUserStore } from '@/stores/user'
 
 const { params, query } = useRoute()
+const User = useUserStore()
 
 const { data, error } = await useFetch(`/api/jobs/${params.group}`, {
+  headers: { 'x-github-token': User.state.token || '' },
   params: { repo: query.repo, id: query.id }
 })
 
