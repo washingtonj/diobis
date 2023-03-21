@@ -64,7 +64,6 @@ defineEmits<Emits>()
             v-if="$props.user"
             id="userMenu"
             class="rounded-full hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors delay-150 p-1.5 cursor-default ml-1"
-            @click="() => $emit('darkMode', !$props.isDarkMode)"
           >
             <img :src="$props.user.avatar_url" class="h-6 rounded-full">
           </button>
