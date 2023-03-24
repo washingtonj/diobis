@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import { useUserStore } from '@/stores/user'
-
 const route = useRoute()
 const router = useRouter()
-const User = useUserStore()
 
 const searchText = ref((route.query.search as string) || '')
 
 const { data, pending, error } = useFetch('/api/jobs', {
-  server: false,
-  headers: { 'x-github-token': User.state.token || '' }
+  server: false
 })
 
 const filteredData = computed(() => {

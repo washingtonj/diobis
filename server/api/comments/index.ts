@@ -10,10 +10,10 @@ export type Query = {
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event) as Query
-  const headers = getContextHeader(event)
+  const { Authorization } = getContextHeader(event)
 
   return await ReadJobComments(
-    GitHubAPI({ authorization: headers['x-github-token'] }),
+    GitHubAPI({ authorization: Authorization }),
     UnstorageRedis()
   )(query.group, query.repo, query.id)
 })

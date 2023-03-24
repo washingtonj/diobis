@@ -3,7 +3,7 @@ import { getUser } from '@/core/domain/usecases'
 import { GitHubAPI } from '@/core/infraestructure/services'
 
 export default defineEventHandler(async (event) => {
-  const headers = getContextHeader(event)
+  const { Authorization } = getContextHeader(event)
 
-  return await getUser(GitHubAPI())(headers['x-github-token']!)
+  return await getUser(GitHubAPI())(Authorization!)
 })

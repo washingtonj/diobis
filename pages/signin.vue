@@ -6,6 +6,7 @@ import { useUserStore } from '@/stores/user'
 const Route = useRoute()
 const Router = useRouter()
 const User = useUserStore()
+
 const isLoading = ref(false)
 
 const SignInBenefits = [
@@ -21,15 +22,20 @@ definePageMeta({
 })
 
 onMounted(() => {
+  if (Route.query.renew) {
+    requestOAuthAccessToken()
+    return
+  }
+
   if (!Route.query.code) { return }
 
   $fetch('/api/auth', {
     server: false,
     params: { authCode: Route.query.code } as Query
   })
-    .then(({ auth, user }) => {
-      User.actions.setToken(`${auth.type} ${auth.token}`)
+    .then(({ user }) => {
       User.actions.setAvatarUrl(user.avatar_url)
+      User.actions.setAuthentication()
       Router.push('/')
     })
     .finally(() => {
@@ -73,7 +79,7 @@ function requestOAuthAccessToken () {
         </ul>
       </span>
 
-      <span v-if="User.getters.isLoggedIn" class="w-full flex justify-center bg-green-500 p-2 mt-8 rounded-lg">
+      <span v-if="User.state.isAuthenticated" class="w-full flex justify-center bg-green-500 p-2 mt-8 rounded-lg">
         <p class="text-sm">Você está autenticado! 🥳</p>
       </span>
 

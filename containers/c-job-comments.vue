@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useUserStore } from '@/stores/user'
 import { useSettings } from '@/stores/settings'
 import { type Query } from '@/server/api/comments'
 import { type Props as JobCommentsProps } from '@/components/job-comments.vue'
@@ -8,14 +7,12 @@ type Props = { authorId: string, group: string, repo: string, id: string }
 
 const props = defineProps<Props>()
 const store = useSettings()
-const user = useUserStore()
 
 const isLoading = ref(false)
 const isFirefox = computed(() => store.state.browser === 'firefox')
 
 const { data, pending, execute } = await useFetch('/api/comments', {
   params: { id: props.id, group: props.group, repo: props.repo } as Query,
-  headers: { 'x-github-token': user.state.token || '' },
   server: false,
   immediate: false,
   transform: data => data?.map(comment => ({

@@ -53,6 +53,6 @@ const navbar = [
     </main>
   </layout-theme>
   <client-only>
-    <bt-sheet-authentication v-if="!User.getters.isLoggedIn" @login="$router.push('/signin')" />
+    <bt-sheet-authentication v-if="!User.state.isAuthenticated" @login="$router.push('/signin')" />
   </client-only>
 </template>

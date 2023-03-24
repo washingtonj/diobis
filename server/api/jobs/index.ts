@@ -3,9 +3,9 @@ import { UnstorageRedis, GitHubAPI } from '@/core/infraestructure/services'
 import { getContextHeader } from '@/server/utils'
 
 export default defineEventHandler(async (event) => {
-  const headers = getContextHeader(event)
+  const { Authorization } = getContextHeader(event)
 
   return await ListJobs(GitHubAPI({
-    authorization: headers['x-github-token']
+    authorization: Authorization
   }), UnstorageRedis())()
 })

@@ -1,24 +1,20 @@
 type State = {
   username?: string
-  token?: string
   avatarUrl?: string
+  isAuthenticated?: boolean
 }
 
 export const useUserStore = defineStore('user', () => {
   const state = ref<State>({})
 
   const actions = {
-    setToken: (token: string) => {
-      state.value.token = token
+    setAuthentication: () => {
+      state.value.isAuthenticated = true
     },
 
     setAvatarUrl: (avatarUrl: string) => {
       state.value.avatarUrl = avatarUrl
     }
-  }
-
-  const getters = {
-    isLoggedIn: computed(() => !!state.value.token)
   }
 
   onMounted(() => {
@@ -33,7 +29,6 @@ export const useUserStore = defineStore('user', () => {
 
   return {
     state,
-    actions,
-    getters
+    actions
   }
 })

@@ -1,9 +1,10 @@
 import { H3Event } from 'h3'
-
-type Header = {
-  'x-github-token'?: string
-}
+import { GITHUB_COOKIE_NAME } from '@/consts/globals'
 
 export function getContextHeader (event: H3Event) {
-  return getHeaders(event) as Header
+  const token = getCookie(event, GITHUB_COOKIE_NAME)
+
+  return {
+    Authorization: token
+  }
 }
