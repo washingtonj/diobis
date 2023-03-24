@@ -1,6 +1,5 @@
 import { ListJobs } from '@/core/domain/usecases'
-import { GitHubAPI } from '@/core/infraestructure/repositories'
-import { InMemoryCache } from '@/core/infraestructure/services'
+import { UnstorageRedis, GitHubAPI } from '@/core/infraestructure/services'
 import { getContextHeader } from '@/server/utils'
 
 export default defineEventHandler(async (event) => {
@@ -8,5 +7,5 @@ export default defineEventHandler(async (event) => {
 
   return await ListJobs(GitHubAPI({
     authorization: headers['x-github-token']
-  }), InMemoryCache)()
+  }), UnstorageRedis())()
 })

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { GitHubComment, GitHubIssue, GitHubUser } from '@/core/infraestructure/repositories/github-api/models'
-import { Transform } from '@/core/infraestructure/repositories/github-api/transforms'
+import { GitHubComment, GitHubIssue, GitHubUser } from '@/core/infraestructure/services/github-api/models'
+import { Transform } from '~~/core/infraestructure/services/github-api/transforms'
 import { CommentEntity, JobEntity, UserEntity } from '@/core/domain/entities'
 
 describe('Transform', () => {

@@ -1,5 +1,5 @@
 import { ReadJob } from '@/core/domain/usecases'
-import { InMemoryCache } from '@/core/infraestructure/services'
+import { UnstorageRedis } from '@/core/infraestructure/services'
 
 type Params = {
   group: string
@@ -13,5 +13,5 @@ type Query = {
 export default defineEventHandler(async (event) => {
   const routeParams = getRouterParams(event) as Params
   const query = getQuery(event) as Query
-  return await ReadJob(InMemoryCache)(routeParams.group, query.repo, query.id)
+  return await ReadJob(UnstorageRedis())(routeParams.group, query.repo, query.id)
 })

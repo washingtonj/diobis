@@ -4,9 +4,10 @@ import { CommentEntity } from '@/core/domain/entities'
 export function ReadJobComments (GitHubService: GitHubService, CacheService: CacheService) {
   return async function (group: string, repo: string, id: string) {
     const cacheKey = `comment/${group}/${repo}/${id}`
+    const oneHourInMilliseconds = 1000 * 60 * 60
 
     const lastCacheSync = await CacheService.lastCacheSync(cacheKey)
-    const isInvalidCache = lastCacheSync === null || new Date(lastCacheSync).getTime() - (new Date().getTime()) > 3600000
+    const isInvalidCache = lastCacheSync === null || +new Date() - +new Date(lastCacheSync) > oneHourInMilliseconds
 
     const raw = isInvalidCache
       ? await GitHubService.getJobComments(group, repo, id)

@@ -1,7 +1,7 @@
 import { describe, vi, it, expect, beforeEach } from 'vitest'
 
-import { GitHubAPI } from '@/core/infraestructure/repositories/github-api/services'
-import { GitHubIssue, GitHubOAuth, GitHubUser } from '@/core/infraestructure/repositories/github-api/models'
+import { GitHubAPI } from '~~/core/infraestructure/services/github-api/services'
+import { GitHubIssue, GitHubOAuth, GitHubUser } from '@/core/infraestructure/services/github-api/models'
 import { JobEntity, UserEntity } from '@/core/domain/entities'
 
 const mockedFetch = vi.fn()

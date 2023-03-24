@@ -24,6 +24,8 @@ export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
     Authorization: opts?.authorization || ''
   }
 
+  Logger('GitHubAPI', `[${opts?.authorization ? 'Authenticated' : 'Unauthenticated'}] GitHubAPI instance created!`)
+
   return {
     getAllJobs: async () => {
       const jobs: JobEntity[] = []
