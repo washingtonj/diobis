@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    command: redis-server --maxmemory 100mb --requirepass ${REDIS_PASSWORD} --maxmemory-policy allkeys-lru
