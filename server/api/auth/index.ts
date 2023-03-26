@@ -15,8 +15,8 @@ export default defineEventHandler(async (event) => {
   const { authCode } = getQuery(event) as Query
   const { Authorization } = getContextHeader(event)
 
-  const t24HoursInMilliseconds = 86400000
-  const expires = new Date(Date.now() + t24HoursInMilliseconds)
+  const fourHoursInMs = 1000 * 60 * 60 * 4
+  const expires = new Date(Date.now() + fourHoursInMs)
 
   const data = await AuthenticateUser(GitHubAPI({ authorization: Authorization }))(authCode)
   const capitalizedType = data.auth.type.charAt(0).toUpperCase() + data.auth.type.slice(1)
