@@ -27,5 +27,10 @@ export default defineNuxtConfig({
   },
   build: {
     transpile: ['@heroicons/vue']
+  },
+  runtimeConfig: {
+    public: {
+      GITHUB_OAUTH_CLIENT_ID: process.env.GITHUB_OAUTH_CLIENT_ID
+    }
   }
 })

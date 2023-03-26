@@ -1,3 +1,5 @@
+# Docker compose used to production environment
+
 version: "3"
 
 networks:
@@ -21,7 +23,6 @@ services:
       - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.le.acme.email=washingtonj@diobis.com"
       - "--certificatesresolvers.le.acme.storage=acme.json"
-
     ports:
       - "80:80"
       - "443:443"
@@ -41,14 +42,11 @@ services:
     #   - "traefik.http.middlewares.traefik-strip.stripprefix.prefixes=/traefik"
 
   redis:
-    image: redis:latest
-    container_name: redis
-    restart: always
-    command: redis-server --maxmemory 100mb --requirepass ${REDIS_PASSWORD} --maxmemory-policy allkeys-lru
+    extends:
+      file: ./redis/docker-compose.yml
+      service: redis
     networks:
       - external
-    env_file:
-      - .env
     ports:
       - "6379:6379"
     labels:
@@ -56,5 +54,8 @@ services:
       - "traefik.http.routers.redis.rule=Host(`redis.diobis.app`)"
       - "traefik.http.routers.redis.entrypoints=websecure"
       - "traefik.http.routers.redis.tls=true"
+      
       - "traefik.http.routers.redis.tls.certresolver=le"
       - "traefik.http.services.redis.loadbalancer.server.port=6379"
+
+

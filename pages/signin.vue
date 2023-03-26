@@ -44,7 +44,12 @@ onMounted(() => {
 })
 
 function requestOAuthAccessToken () {
-  window.open('https://github.com/login/oauth/authorize?client_id=cb7d3f1bf3aec5645334&scope=public_repo,repo_public&redirect_uri=https://diobis.app/signin', '_self')
+  const githubUrl = 'https://github.com/login/oauth/authorize'
+  const clientId = useRuntimeConfig().public.GITHUB_OAUTH_CLIENT_ID
+  const scopes = 'public_repo,repo_public'
+  const redirectUri = `${window.location.origin}/signin`
+
+  window.open(`${githubUrl}?client_id=${clientId}&scope=${scopes}&redirect_uri=${redirectUri}`, '_self')
 }
 
 </script>
