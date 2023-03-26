@@ -1,0 +1,11 @@
+# Docker compose used to production environment
+
+version: "3"
+
+services:
+  redis:
+    extends:
+      file: redis/docker-compose.yml
+      service: redis
+    ports:
+      - "6379:6379"

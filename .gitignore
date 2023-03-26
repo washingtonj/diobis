@@ -9,3 +9,5 @@ dist
 .vercel
 coverage
 .DS_Store
+.env.*
+!.env.example

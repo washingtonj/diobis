@@ -21,9 +21,11 @@ export default defineEventHandler(async (event) => {
   const data = await AuthenticateUser(GitHubAPI({ authorization: Authorization }))(authCode)
   const capitalizedType = data.auth.type.charAt(0).toUpperCase() + data.auth.type.slice(1)
 
+  const isProductionEnvironment = process.env.NODE_ENV === 'production'
+
   setCookie(event, GITHUB_COOKIE_NAME, `${capitalizedType} ${data.auth.token}`, {
-    httpOnly: true,
-    secure: true,
+    httpOnly: isProductionEnvironment,
+    secure: isProductionEnvironment,
     expires
   })
 
