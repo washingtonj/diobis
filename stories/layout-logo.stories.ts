@@ -1,13 +1,13 @@
 import { Story } from '@storybook/vue3'
-import AppLayoutLogo from '@/components/layout-logo.vue'
+import AppLogo from '@/components/app-logo.vue'
 
 export default {
-  title: 'Layout/Logo',
-  component: AppLayoutLogo
+  title: 'App/Logo',
+  component: AppLogo
 }
 
 const Template: Story = args => ({
-  components: { AppLayoutLogo },
+  components: { AppLogo },
   setup () {
     return { args }
   },

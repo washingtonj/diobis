@@ -1,8 +1,42 @@
 <script lang="ts" setup>
+import { BriefcaseIcon, InformationCircleIcon } from '@heroicons/vue/24/solid'
 import { LAYOUT_PORTAL } from '@/consts/globals'
 import { useUserStore } from '@/stores/user'
 
 const User = useUserStore()
+const Router = useRouter()
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
+
+const showSidebar = ref(false)
+
+const navbar = [
+  {
+    id: 'home',
+    title: 'Vagas',
+    path: '/',
+    icon: BriefcaseIcon,
+    matchedPaths: ['/v/:group']
+  },
+  {
+    id: 'about',
+    title: 'Sobre',
+    path: '/about',
+    icon: InformationCircleIcon
+  }
+]
+
+const selectedPage = computed(() => {
+  const currentPath = Router.currentRoute.value.path
+  const matchedPaths = Router.currentRoute.value.matched.map(m => m.path)
+
+  const route = navbar.find((nav) => {
+    return nav.matchedPaths?.some(path => matchedPaths.includes(path)) || nav.path === currentPath
+  })
+
+  return route?.id
+})
 
 const userData = computed(() => {
   if (User.state.avatarUrl) {
@@ -13,23 +47,6 @@ const userData = computed(() => {
 
   return undefined
 })
-
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
-
-const navbar = [
-  {
-    id: 'home',
-    title: 'Vagas',
-    path: '/',
-    matchPaths: ['/v/:group']
-  },
-  {
-    id: 'about',
-    title: 'Sobre',
-    path: '/about'
-  }
-]
 
 </script>
 
@@ -44,15 +61,31 @@ const navbar = [
         :user="userData"
         @dark-mode="toggleDark"
         @page-change="$router.push"
+        @go-home="$router.push('/')"
+        @toggle-sidebar="showSidebar = true"
       />
     </client-only>
+
     <main class="overflow-hidden">
-      <div :id="LAYOUT_PORTAL" class="overflow-y-auto container mx-auto">
+      <client-only>
+        <layout-sidebar
+          v-model:hidden="showSidebar"
+          :navbar="navbar"
+          :selected-page-id="selectedPage"
+          @page-change="$router.push"
+        />
+      </client-only>
+
+      <div
+        :id="LAYOUT_PORTAL"
+        class="overflow-y-auto w-screen md:w-full md:pl-4 md:pr-20 md:ml-16 2xl:container 2xl:mx-auto 2xl:p-0"
+      >
         <slot />
       </div>
     </main>
+
+    <client-only>
+      <bt-sheet-authentication v-if="!User.state.isAuthenticated" @login="$router.push('/signin')" />
+    </client-only>
   </layout-theme>
-  <client-only>
-    <bt-sheet-authentication v-if="!User.state.isAuthenticated" @login="$router.push('/signin')" />
-  </client-only>
 </template>

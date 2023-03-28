@@ -2,28 +2,23 @@
 import {
   MagnifyingGlassCircleIcon,
   SunIcon,
-  MoonIcon
+  MoonIcon,
+  Bars3Icon
 } from '@heroicons/vue/24/solid'
 
 import { HEADER_GADGET_PORTAL } from '@/consts/globals'
 
 type Props = {
   isDarkMode: boolean
-  currentRoute: string
   user?: {
     avatar_url: string
   }
-  navbar: Array<{
-    id: string
-    title: string
-    path: string
-    matchPaths?: string[]
-  }>;
 }
 
 type Emits = {
-  (e: 'darkMode', isDarkMode: boolean): void;
-  (e: 'pageChange', to: string): void;
+  (e: 'darkMode', isDarkMode: boolean): void
+  (e: 'goHome'): void
+  (e: 'toggleSidebar'): void
 }
 
 defineProps<Props>()
@@ -33,39 +28,31 @@ defineEmits<Emits>()
 <template>
   <header
     data-testid="LayoutTopbarRoot"
-    class="sticky top-0 z-40 w-full backdrop-blur p-4 md:p-0 flex-none border-b border-inherit bg-inherit dark:bg-slate-900/75"
+    class="sticky top-0 z-10 w-full backdrop-blur md:p-0 flex-none border-b border-inherit bg-inherit dark:bg-slate-900/75"
   >
-    <div class="container md:h-14 mx-auto flex items-center flex-col md:flex-row">
-      <div class="w-full grid grid-cols-6 gap-x-4 md:flex">
-        <nuxt-link class="flex col-span-2 col-start-1 items-center cursor-pointer" to="/">
+    <div class="md:h-14 p-4 flex items-center flex-col md:flex-row">
+      <div class="grid grid-cols-6 gap-x-4 w-full items-center justify-center md:flex">
+        <button
+          id="toggleSidebar"
+          class="flex w-8 h-8 justify-center col-start-1 md:hidden rounded-full hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors delay-150 p-1.5"
+          @click="$emit('toggleSidebar')"
+        >
+          <bars-3-icon class="w-5 h-5 text-slate-400 dark:fill-white" />
+        </button>
+        <a id="logo" class="flex items-center  w-full col-start-2 col-span-4 cursor-pointer" @click="$emit('goHome')">
           <MagnifyingGlassCircleIcon class="w-5 h-5 mr-2 fill-blue-600 text-white" />
-          <layout-logo class="fill-black dark:fill-white" />
-        </nuxt-link>
-        <nav class="hidden col-start-3 col-span-3 justify-start md:flex-1 md:flex mt-[0.5px]">
-          <ul class="flex items-center">
-            <li
-              v-for="item in navbar"
-              :key="item.id"
-              class="flex items-center odd:mx-8 font-bold uppercase text-xs cursor-pointer transition-colors"
-              :class="
-                $props.currentRoute === item.path || item.matchPaths?.includes($props.currentRoute)
-                  ? 'text-blue-600'
-                  : 'text-black dark:text-white'
-              "
-              @click="() => $emit('pageChange', item.path)"
-            >
-              <p>{{ item.title }}</p>
-            </li>
-          </ul>
-        </nav>
-        <div :id="HEADER_GADGET_PORTAL" class="gadget md:w-3/12 row-start-2 col-span-12" />
-        <div class="flex flex-row-reverse items-center justify-end col-start-12">
+          <app-logo class="fill-black dark:fill-white" />
+        </a>
+
+        <div :id="HEADER_GADGET_PORTAL" class="gadget md:w-4/12 row-start-2 col-span-12" />
+
+        <div class="flex flex-row-reverse items-center justify-end col-start-12 md:col-start-10">
           <button
             v-if="$props.user"
             id="userMenu"
-            class="rounded-full hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors delay-150 p-1.5 cursor-default ml-1"
+            class="rounded-full hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors delay-150 w-8 p-1 cursor-default ml-1"
           >
-            <img :src="$props.user.avatar_url" class="h-6 rounded-full">
+            <img :src="$props.user.avatar_url" class="rounded-full">
           </button>
           <button
             id="toggleDarkMode"

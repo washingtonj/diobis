@@ -15,7 +15,7 @@ const repos = [
 </script>
 
 <template>
-  <main class="py-8 px-8">
+  <main class="py-8 px-4">
     <h1 class="font-bold text-2xl">
       O que é o Diobis?
     </h1>

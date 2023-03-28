@@ -9,6 +9,7 @@ import AppMarkdown from './components/app-markdown.vue'
 import AppReactions from './components/app-reactions.vue'
 import AppSpinner from './components/app-spinner.vue'
 import BottomSheet from './components/app-bottom-sheet.vue'
+import AppLogo from './components/app-logo.vue'
 
 export const components = {
   'app-comments': AppComments,
@@ -16,7 +17,8 @@ export const components = {
   'app-markdown': AppMarkdown,
   'app-reactions': AppReactions,
   'app-spinner': AppSpinner,
-  'app-bottom-sheet': BottomSheet
+  'app-bottom-sheet': BottomSheet,
+  'app-logo': AppLogo
 }
 
 export const plugins = {

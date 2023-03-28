@@ -32,8 +32,8 @@ watch(searchText, (search) => {
 </script>
 
 <template>
-  <main class="py-4 px-4 lg:px-0">
-    <client-only>
+  <client-only>
+    <main class="py-4 px-4 lg:px-0">
       <jobs-masonry-root>
         <jobs-card-root
           v-for="item in filteredData"
@@ -70,18 +70,18 @@ watch(searchText, (search) => {
           <jobs-card-skeleton v-for="item in [...Array(12).keys()]" :key="item" />
         </template>
       </jobs-masonry-root>
-    </client-only>
-    <template v-if="!pending && !filteredData?.length">
-      <div class="flex flex-col items-center justify-center h-full">
-        <div class="text-2xl font-bold text-gray-500">
-          No jobs found for "{{ searchText }}"
+      <template v-if="!pending && !filteredData?.length">
+        <div class="flex flex-col items-center justify-center h-full">
+          <div class="text-2xl font-bold text-gray-500">
+            No jobs found for "{{ searchText }}"
+          </div>
+          <div class="text-gray-500">
+            Try searching for something else
+          </div>
         </div>
-        <div class="text-gray-500">
-          Try searching for something else
-        </div>
-      </div>
-    </template>
+      </template>
 
-    <gadget-search v-model="searchText" />
-  </main>
+      <gadget-search v-model="searchText" />
+    </main>
+  </client-only>
 </template>
