@@ -17,7 +17,7 @@ const randomId = 'tooltip-' + Math.random().toString(36).substring(2, 9)
 </script>
 
 <template>
-  <component :is="$slots.default!()[0]" :data-tooltip-target="randomId" :data-tooltip-placement="$props.placement" />
+  <component :is="$slots.default!()[0]" :data-tooltip-target="randomId" :data-tooltip-placement="$props.placement" data-tooltip-trigger="hover" />
 
   <div
     :id="randomId"
