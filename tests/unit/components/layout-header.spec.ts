@@ -39,8 +39,7 @@ describe('LayoutHeader', () => {
         user: {
           avatar_url: 'some_avatar_url'
         }
-      },
-      shallow: true
+      }
     })
 
     // When

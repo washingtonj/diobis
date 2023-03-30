@@ -47,20 +47,24 @@ defineEmits<Emits>()
         <div :id="HEADER_GADGET_PORTAL" class="gadget md:w-4/12 row-start-2 col-span-12" />
 
         <div class="flex flex-row-reverse items-center justify-end col-start-12 md:col-start-10">
-          <button
-            v-if="$props.user"
-            id="userMenu"
-            class="rounded-full hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors delay-150 w-8 p-1 cursor-default ml-1"
-          >
-            <img :src="$props.user.avatar_url" class="rounded-full">
-          </button>
-          <button
-            id="toggleDarkMode"
-            class="rounded-full hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors delay-150 p-1.5"
-            @click="() => $emit('darkMode', !$props.isDarkMode)"
-          >
-            <Component :is="$props.isDarkMode ? SunIcon : MoonIcon" class="w-5 h-5 text-slate-400 dark:fill-white" />
-          </button>
+          <app-tooltip label="Você está logado 🥳">
+            <button
+              v-if="$props.user"
+              id="userMenu"
+              class="rounded-full hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors delay-150 w-8 p-1 cursor-default ml-1"
+            >
+              <img :src="$props.user.avatar_url" class="rounded-full">
+            </button>
+          </app-tooltip>
+          <app-tooltip label="Modo Escuro">
+            <button
+              id="toggleDarkMode"
+              class="rounded-full hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors delay-150 p-1.5"
+              @click="() => $emit('darkMode', !$props.isDarkMode)"
+            >
+              <Component :is="$props.isDarkMode ? SunIcon : MoonIcon" class="w-5 h-5 text-slate-400 dark:fill-white" />
+            </button>
+          </app-tooltip>
         </div>
       </div>
     </div>

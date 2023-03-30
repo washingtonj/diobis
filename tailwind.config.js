@@ -3,7 +3,14 @@
 const plugin = require('tailwindcss/plugin')
 
 module.exports = {
-  content: ['./components/**/*.vue'],
+  content: [
+    './components/**/*.{js,vue,ts}',
+    './layouts/**/*.vue',
+    './pages/**/*.vue',
+    './plugins/**/*.{js,ts}',
+    './nuxt.config.{js,ts}',
+    './node_modules/flowbite.{js,ts}'
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -12,6 +19,7 @@ module.exports = {
     }
   },
   plugins: [
+    require('flowbite'),
     plugin(function ({ addVariant }) {
       addVariant('not-last', '& > :not(:last-child)')
     })

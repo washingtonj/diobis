@@ -10,6 +10,7 @@ import AppReactions from './components/app-reactions.vue'
 import AppSpinner from './components/app-spinner.vue'
 import BottomSheet from './components/app-bottom-sheet.vue'
 import AppLogo from './components/app-logo.vue'
+import AppTooltip from './components/app-tooltip.vue'
 
 export const components = {
   'app-comments': AppComments,
@@ -18,7 +19,8 @@ export const components = {
   'app-reactions': AppReactions,
   'app-spinner': AppSpinner,
   'app-bottom-sheet': BottomSheet,
-  'app-logo': AppLogo
+  'app-logo': AppLogo,
+  'app-tooltip': AppTooltip
 }
 
 export const plugins = {

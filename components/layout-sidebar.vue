@@ -38,21 +38,26 @@ onClickOutside(sidebar, () => emits('update:hidden', false))
     :class="{ 'hidden': !$props.hidden }"
   >
     <ul class="py-4 px-3 not-last:mb-2">
-      <li
+      <app-tooltip
         v-for="nav in $props.navbar"
         :key="nav.id"
-        class="flex items-center justify-center rounded-lg text-slate-400 dark:text-white hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors py-2"
-        :class="{
-          'bg-blue-600/5 dark:bg-slate-200/5 text-blue-600 dark:text-blue-600': $props.selectedPageId === nav.id
-        }"
+        :label="nav.title"
+        placement="right"
       >
-        <a :id="nav.id" class="flex items-center text-sm px-2 cursor-pointer" @click="handleChangePage(nav.path)">
-          <component :is="nav.icon" class="text w-4 h-4" />
-          <p class="hidden ml-4">
-            {{ nav.title }}
-          </p>
-        </a>
-      </li>
+        <li
+          class="flex items-center justify-center rounded-lg text-slate-400 dark:text-white hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors py-2"
+          :class="{
+            'bg-blue-600/5 dark:bg-slate-200/5 text-blue-600 dark:text-blue-600': $props.selectedPageId === nav.id
+          }"
+        >
+          <a :id="nav.id" class="flex items-center text-sm px-2 cursor-pointer" @click="handleChangePage(nav.path)">
+            <component :is="nav.icon" class="text w-4 h-4" />
+            <p class="hidden ml-4">
+              {{ nav.title }}
+            </p>
+          </a>
+        </li>
+      </app-tooltip>
     </ul>
   </aside>
 </template>
