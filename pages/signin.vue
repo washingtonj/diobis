@@ -29,6 +29,8 @@ onMounted(() => {
 
   if (!Route.query.code) { return }
 
+  isLoading.value = true
+
   $fetch('/api/auth', {
     server: false,
     params: { authCode: Route.query.code } as Query
@@ -55,11 +57,13 @@ function requestOAuthAccessToken () {
 </script>
 
 <template>
-  <div class="container mx-auto max-w-screen-sm p-8">
-    <div class="flex flex-col items-start mt-[5vh] bg-blue-50 shadow-lg dark:bg-black/20 rounded-xl px-8 pt-4 pb-10">
+  <div class="container mx-auto max-w-screen-sm px-4 py-8">
+    <div
+      class="flex flex-col items-start mt-[5vh] bg-blue-50 shadow-lg bg-transparent dark:bg-black/20 rounded-xl px-6 md:px-8 pt-4 pb-10"
+    >
       <div class="w-full flex items-center mb-10 border-b-2" to="/">
         <MagnifyingGlassCircleIcon class="w-8 h-8 mr-2 fill-blue-600 text-white" />
-        <layout-logo class="w-20 h-20 fill-black dark:fill-white" />
+        <app-logo class="w-20 h-20 fill-black dark:fill-white" />
       </div>
 
       <span>

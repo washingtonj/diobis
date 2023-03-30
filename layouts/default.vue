@@ -78,7 +78,7 @@ const userData = computed(() => {
 
       <div
         :id="LAYOUT_PORTAL"
-        class="overflow-y-auto w-screen md:w-full md:pl-4 md:pr-20 md:ml-16 2xl:container 2xl:mx-auto 2xl:p-0"
+        class="md:px-4 md:ml-16 2xl:container 2xl:mx-auto 2xl:p-0"
       >
         <slot />
       </div>

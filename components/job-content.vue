@@ -13,7 +13,7 @@ const props = defineProps<Props>()
         Descrição
       </h2>
     </div>
-    <div class="h-full px-8 pt-5 pb-8 lg:pb-24 mb-4 overflow-auto">
+    <div class="h-full px-6 md:px-8 pt-5 pb-8 lg:pb-24 mb-4 overflow-auto">
       <app-markdown :content="props.content || ''" />
     </div>
   </div>

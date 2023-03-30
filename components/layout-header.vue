@@ -56,7 +56,7 @@ defineEmits<Emits>()
               <img :src="$props.user.avatar_url" class="rounded-full">
             </button>
           </app-tooltip>
-          <app-tooltip label="Modo Escuro">
+          <app-tooltip :label="isDarkMode ? ' Modo Claro' : 'Modo Escuro'">
             <button
               id="toggleDarkMode"
               class="rounded-full hover:bg-blue-600/5 hover:dark:bg-slate-200/5 transition-colors delay-150 p-1.5"

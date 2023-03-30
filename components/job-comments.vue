@@ -29,7 +29,7 @@ defineEmits(['show'])
         <app-spinner size="sm" />
       </span>
     </div>
-    <div v-if="data.length" class="px-8 pt-5 pb-4 lg:pb-10 h-full overflow-auto" :class="{ 'shadow-xl': data }">
+    <div v-if="data.length" class="px-4 md:px-8 pt-5 pb-4 lg:pb-10 h-full overflow-auto" :class="{ 'shadow-xl': data }">
       <app-comments :comments="$props.data" />
     </div>
   </div>
