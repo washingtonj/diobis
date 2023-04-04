@@ -27,7 +27,7 @@ const props = defineProps<Props>()
               </p>
               <p
                 v-if="comment.isAuthor"
-                class=" border-black   dark:border-white border rounded-lg px-1.5 text-[10px] ml-2"
+                class=" border-black dark:border-white border rounded-lg px-1.5 text-[10px] ml-2"
               >
                 Autor
               </p>

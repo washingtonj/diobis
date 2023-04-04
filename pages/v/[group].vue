@@ -40,7 +40,7 @@ useHead({
         }"
       />
     </section>
-    <section class="reactions h-fit flex justify-between px-4 py-3 rounded-md bg-blue-50 dark:bg-slate-800">
+    <section class="reactions h-fit flex justify-between px-4 py-4 rounded-md bg-blue-50 dark:bg-slate-800">
       <app-reactions
         :reactions="{
           heart: data.reactions?.heart,
@@ -57,7 +57,7 @@ useHead({
     <section class="content sticky top-0 overflow-auto;">
       <job-content :content="data.markdown" />
     </section>
-    <section v-if="data.interactions?.comments" class="comment sticky top-0 rounded-md overflow-auto">
+    <section v-if="data.interactions?.comments" class="comment sticky top-0 mt-2 rounded-md overflow-auto">
       <c-job-comments
         :id="data.id"
         :author-id="data.user.login_id"
