@@ -95,6 +95,7 @@ function requestOAuthAccessToken () {
       <template v-else>
         <button
           v-if="!isLoading"
+          id="btn-gh-authentication"
           class="flex w-full justify-center self-start items-center text-white bg-black py-2.5  rounded-md mt-12"
           @click="requestOAuthAccessToken"
         >
