@@ -14,7 +14,6 @@
     "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
-    "@headlessui/vue": "^1.7.12",
     "@heroicons/vue": "^2.0.13",
     "@nuxtjs/i18n": "^8.0.0-beta.8",
     "@nuxtjs/tailwindcss": "^6.2.0",

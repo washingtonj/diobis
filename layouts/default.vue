@@ -10,6 +10,7 @@ const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
 const showSidebar = ref(false)
+const showAuthNotification = ref(true)
 
 const navbar = [
   {
@@ -48,11 +49,16 @@ const userData = computed(() => {
   return undefined
 })
 
+function handleAuthNotification () {
+  showAuthNotification.value = false
+}
+
 </script>
 
 <template>
+  <NuxtLoadingIndicator color="#2563eb" />
+
   <layout-theme>
-    <NuxtLoadingIndicator color="#2563eb" />
     <client-only>
       <layout-header
         :is-dark-mode="isDark"
@@ -66,7 +72,7 @@ const userData = computed(() => {
       />
     </client-only>
 
-    <main class="overflow-hidden">
+    <main :id="LAYOUT_PORTAL" class="overflow-hidden">
       <client-only>
         <layout-sidebar
           v-model:hidden="showSidebar"
@@ -76,16 +82,23 @@ const userData = computed(() => {
         />
       </client-only>
 
-      <div
-        :id="LAYOUT_PORTAL"
-        class="md:px-4 md:ml-16 2xl:container 2xl:mx-auto 2xl:p-0"
-      >
+      <div class="md:px-4 md:ml-16 2xl:container 2xl:mx-auto 2xl:p-0">
         <slot />
       </div>
     </main>
 
     <client-only>
-      <bt-sheet-authentication v-if="!User.state.isAuthenticated" @login="$router.push('/signin')" />
+      <Transition
+        appear
+        enter-to-class="animate__animated animate__slideInUp"
+        leave-active-class="animate__animated animate__slideOutDown"
+      >
+        <bt-sheet-authentication
+          v-if="!User.state.isAuthenticated && showAuthNotification"
+          @login="$router.push('/signin')"
+          @close="handleAuthNotification"
+        />
+      </Transition>
     </client-only>
   </layout-theme>
 </template>

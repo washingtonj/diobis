@@ -5,7 +5,7 @@ const theme = computed(() => (isDark.value ? '#0f172a' : '#ffffff'))
 useHead({
   meta: [{ name: 'theme-color', content: theme }],
   bodyAttrs: {
-    class: 'absolute top-0 z-20 w-full bg-white dark:bg-slate-900 overflow-y-scroll'
+    class: 'absolute top-0 z-20 w-full bg-white dark:bg-slate-900 overflow-y-scroll overflow-x-hidden'
   }
 })
 </script>
