@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 import { initTooltips } from 'flowbite'
+import { useSettings } from '@/stores/settings'
+
+const User = useSettings()
 
 type Props = {
   label: string
@@ -9,7 +12,9 @@ type Props = {
 defineProps<Props>()
 
 onMounted(() => {
-  initTooltips()
+  if (!User.getters.isMobile) {
+    initTooltips()
+  }
 })
 
 const randomId = 'tooltip-' + Math.random().toString(36).substring(2, 9)
