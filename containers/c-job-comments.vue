@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useSettings } from '@/stores/settings'
 import { useUserStore } from '@/stores/user'
-import { type Query } from '~~/server/api/comments/index.get'
+import { type Query } from '@/server/api/comments/index.get'
 import { type Props as JobCommentsProps } from '@/components/job-comments.vue'
 
 type Props = {
@@ -17,6 +17,7 @@ const store = useSettings()
 const user = useUserStore()
 
 const isLoading = ref(false)
+const submitting = ref(false)
 const isFirefox = computed(() => store.state.browser === 'firefox')
 
 const { data, pending, execute } = await useFetch('/api/comments', {
@@ -38,7 +39,26 @@ function loadComments () {
 }
 
 function submitComment (comment: string) {
-  console.log('Comment submited', comment)
+  submitting.value = true
+
+  $fetch('/api/comments', {
+    method: 'POST',
+    body: JSON.stringify({
+      id: props.id,
+      group: props.group,
+      repo: props.repo,
+      body: comment
+    })
+  })
+    .then(() => {
+      loadComments()
+    })
+    .finally(() => {
+      submitting.value = false
+    })
+    .catch((error) => {
+      window.alert(`Error: ${error}`)
+    })
 }
 
 watch(data, (prev, next) => {
@@ -55,6 +75,7 @@ watch(data, (prev, next) => {
     :is-empty="props.isEmpty"
     :is-loading="isLoading"
     :is-firefox="isFirefox"
+    :is-submitting="submitting"
     @show="loadComments"
     @submit="submitComment"
   />

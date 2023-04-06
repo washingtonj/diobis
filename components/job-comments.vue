@@ -8,6 +8,7 @@ export type Props = {
   isEmpty: boolean
   isFirefox: boolean
   isAuthenticated: boolean
+  isSubmitting: boolean
 }
 
 export type Emits = {
@@ -72,7 +73,7 @@ function submitComment () {
           />
           <div class="flex justify-end">
             <button
-              :disabled="!inputValue"
+              :disabled="!inputValue || props.isSubmitting"
               class="-mt-1.5 py-2 px-4 text-xs font-bold rounded-br-lg rounded-tl-lg bg-blue-600 text-white disabled:bg-slate-400 transition-colors"
               @click="submitComment"
             >
