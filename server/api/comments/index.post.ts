@@ -1,5 +1,5 @@
 import { commentJob } from '@/core/domain/usecases'
-import { GitHubAPI } from '@/core/infraestructure/services'
+import { GitHubAPIFactory, UnstorageRedis } from '@/core/infraestructure/services'
 
 type Body = {
   group: string
@@ -12,5 +12,7 @@ export default defineEventHandler(async (event) => {
   const { group, repo, comment, id } = await readBody<Body>(event)
   const { Authorization } = getContextHeader(event)
 
-  return await commentJob(GitHubAPI({ authorization: Authorization }))(group, repo, id, comment)
+  return await commentJob(
+    GitHubAPIFactory({ authorization: Authorization }),
+    UnstorageRedis())(group, repo, id, comment)
 })

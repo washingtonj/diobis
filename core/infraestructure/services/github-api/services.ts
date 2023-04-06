@@ -16,6 +16,7 @@ import { Logger } from '@/utils'
 
 type GitHubAPIOpts = {
   authorization?: string
+  repositories?: typeof GITHUB_REPOS
 }
 
 export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
@@ -24,13 +25,15 @@ export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
     Authorization: opts?.authorization || ''
   }
 
+  const repositories = opts?.repositories || GITHUB_REPOS
+
   Logger('GitHubAPI', `[${opts?.authorization ? 'Authenticated' : 'Unauthenticated'}] GitHubAPI instance created!`)
 
   return {
     getAllJobs: async () => {
       const jobs: JobEntity[] = []
 
-      for await (const repo of GITHUB_REPOS) {
+      for await (const repo of repositories) {
         const issues = await $fetch<GitHubIssue[]>(`${GITHUB_BASE_URL}/repos/${repo.group}/${repo.repo}/issues`, { headers, params: GITHUB_PARAMS })
 
         Logger('GitHubAPI', `Found ${issues.length} jobs in ${repo.group}/${repo.repo}`)
