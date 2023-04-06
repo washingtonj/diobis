@@ -97,6 +97,20 @@ export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
       Logger('GitHubAPI', `Got user ${user.login} for token ${token}`)
 
       return Transform.toUserEntity(user)
+    },
+
+    async createComment (group, repo, id, comment) {
+      const data = await $fetch<GitHubComment>(`${GITHUB_BASE_URL}/repos/${group}/${repo}/issues/${id}/comments`, {
+        method: 'POST',
+        headers,
+        body: {
+          body: comment
+        }
+      })
+
+      Logger('GitHubAPI', `Created comment ${comment} in ${group}/${repo}/${id}`)
+
+      return Transform.toCommentEntity(data)
     }
   }
 }
