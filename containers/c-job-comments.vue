@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useSettings } from '@/stores/settings'
-import { useUserStore } from '@/stores/user'
 import { type Query } from '@/server/api/comments/index.get'
 import { type Props as JobCommentsProps } from '@/components/job-comments.vue'
 
@@ -14,7 +13,6 @@ type Props = {
 
 const props = defineProps<Props>()
 const store = useSettings()
-const user = useUserStore()
 
 const isLoading = ref(false)
 const submitting = ref(false)
@@ -71,7 +69,7 @@ watch(data, (prev, next) => {
 <template>
   <job-comments
     :data="data || []"
-    :is-authenticated="user.state.isAuthenticated || false"
+    :is-authenticated="false"
     :is-empty="props.isEmpty"
     :is-loading="isLoading"
     :is-firefox="isFirefox"
