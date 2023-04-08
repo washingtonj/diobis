@@ -40,31 +40,36 @@ useHead({
         }"
       />
     </section>
-    <section class="reactions h-fit flex justify-between px-4 py-4 rounded-md bg-blue-50 dark:bg-slate-800">
-      <app-reactions
-        :reactions="{
-          heart: data.reactions?.heart,
-          rocket: data.reactions?.rocket,
-          looking: data.reactions?.eyes
-        }"
-      />
-      <app-interactions
-        :interactions="{
-          comments: data.interactions?.comments,
-        }"
-      />
-    </section>
+    <client-only>
+      <section class="reactions h-fit flex justify-between px-4 py-4 rounded-md bg-blue-50 dark:bg-slate-800">
+        <app-reactions
+          :reactions="{
+            heart: data.reactions?.heart,
+            rocket: data.reactions?.rocket,
+            looking: data.reactions?.eyes
+          }"
+        />
+        <app-interactions
+          :interactions="{
+            comments: data.interactions?.comments,
+          }"
+        />
+      </section>
+    </client-only>
     <section class="content sticky top-0 overflow-auto;">
       <job-content :content="data.markdown" />
     </section>
-    <section v-if="data.interactions?.comments" class="comment sticky top-0 mt-2 rounded-md overflow-auto">
-      <c-job-comments
-        :id="data.id"
-        :author-id="data.user.login_id"
-        :group="data.repository.group"
-        :repo="data.repository.repo"
-      />
-    </section>
+    <client-only>
+      <section class="comment sticky top-0 rounded-md mt-2 overflow-auto">
+        <c-job-comments
+          :id="data.id"
+          :author-id="data.user.login_id"
+          :group="data.repository.group"
+          :repo="data.repository.repo"
+          :is-empty="data.interactions?.comments === 0"
+        />
+      </section>
+    </client-only>
   </main>
 </template>
 

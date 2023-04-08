@@ -1,8 +1,8 @@
 import { describe, vi, it, expect, beforeEach } from 'vitest'
 
-import { GitHubAPI } from '~~/core/infraestructure/services/github-api/services'
-import { GitHubIssue, GitHubOAuth, GitHubUser } from '@/core/infraestructure/services/github-api/models'
-import { JobEntity, UserEntity } from '@/core/domain/entities'
+import { GitHubAPI } from '@/core/infraestructure/services/github-api/services'
+import { GitHubComment, GitHubIssue, GitHubOAuth, GitHubUser } from '@/core/infraestructure/services/github-api/models'
+import { CommentEntity, JobEntity, UserEntity } from '@/core/domain/entities'
 
 const mockedFetch = vi.fn()
 
@@ -149,5 +149,32 @@ describe('GitHubAPI', () => {
 
     // Then
     await expect(user).rejects.toThrow()
+  })
+
+  it('Should comment an issue and return the comment entity', async () => {
+    // Given
+    (global as any).$fetch = mockedFetch.mockResolvedValue({
+      body: 'comment',
+      created_at: '2021-01-01T00:00:00Z',
+      number: 1,
+      user: {
+        avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
+        login: 'login_id'
+      }
+    } as GitHubComment)
+
+    // When
+    const comment = await GitHubAPI().createComment('group', 'repo', 'id', 'comment')
+
+    // Then
+    expect(comment).toEqual({
+      body: 'comment',
+      created_at: '2021-01-01T00:00:00Z',
+      id: '1',
+      user: {
+        avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
+        login_id: 'login_id'
+      }
+    } as CommentEntity)
   })
 })
