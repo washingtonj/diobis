@@ -1,4 +1,4 @@
-export * from './list-jobs'
+export * from './get-jobs'
 export * from './read-job'
 export * from './read-job-comments'
 export * from './authenticate-user'
