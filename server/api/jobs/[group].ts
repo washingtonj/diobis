@@ -1,5 +1,5 @@
-import { ReadJob } from '@/core/domain/usecases'
-import { UnstorageRedis } from '@/core/infraestructure/services'
+import { ReadJob } from '@/server/usecases'
+import { UnstorageRedis } from '~~/server/infrastructure/services'
 
 type Params = {
   group: string

@@ -1,5 +1,5 @@
-import { AuthenticateUser } from '@/core/domain/usecases'
-import { GitHubAPIFactory } from '@/core/infraestructure/services'
+import { AuthenticateUser } from '@/server/usecases'
+import { GitHubAPIFactory } from '~~/server/infrastructure/services'
 import { getContextHeader } from '@/server/utils'
 import {
   GITHUB_COOKIE_NAME,

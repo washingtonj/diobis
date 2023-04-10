@@ -1,5 +1,5 @@
-import { commentJob } from '@/core/domain/usecases'
-import { GitHubAPIFactory, UnstorageRedis } from '@/core/infraestructure/services'
+import { commentJob } from '@/server/usecases'
+import { GitHubAPIFactory, UnstorageRedis } from '~~/server/infrastructure/services'
 
 type Body = {
   group: string

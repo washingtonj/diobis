@@ -1,6 +1,6 @@
 import { getContextHeader } from '@/server/utils'
-import { getUser } from '@/core/domain/usecases'
-import { GitHubAPI } from '@/core/infraestructure/services'
+import { getUser } from '@/server/usecases'
+import { GitHubAPI } from '~~/server/infrastructure/services'
 
 export default defineEventHandler(async (event) => {
   const { Authorization } = getContextHeader(event)

@@ -1,5 +1,5 @@
-import { ReadJobComments } from '@/core/domain/usecases'
-import { UnstorageRedis, GitHubAPIFactory } from '@/core/infraestructure/services'
+import { ReadJobComments } from '@/server/usecases'
+import { UnstorageRedis, GitHubAPIFactory } from '~~/server/infrastructure/services'
 import { getContextHeader } from '@/server/utils'
 
 export type Query = {
