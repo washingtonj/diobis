@@ -1,9 +1,9 @@
 import { describe, it, expect, vitest } from 'vitest'
-import { ReadJob } from '@/server/usecases'
-import { CacheService } from '@/server/domain/interfaces'
+import { GetJob } from '@/server/usecases'
+import { JobRepository } from '@/server/domain/interfaces'
 import { JobEntity } from '@/server/domain/entities'
 
-describe('ReadJob', () => {
+describe('GetJob', () => {
   it('Should read a job from Cache Service', async () => {
     // given
     const expectedJob: JobEntity = {
@@ -11,10 +11,6 @@ describe('ReadJob', () => {
       id: 'id',
       title: 'Job Title',
       markdown: 'Job Description',
-      repository: {
-        group: 'group',
-        repo: 'repo'
-      },
       tags: ['tag1', 'tag2'],
       user: {
         avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
@@ -31,20 +27,13 @@ describe('ReadJob', () => {
       }
     }
 
-    const mockCacheService: CacheService = {
-      get: vitest.fn().mockResolvedValue([expectedJob]),
-      set: vitest.fn(),
-      getMeta: vitest.fn(),
-      setMeta: vitest.fn(),
-      lastCacheSync: vitest.fn()
+    const mockJobRepository: JobRepository = {
+      ...{} as JobRepository,
+      getUnique: vitest.fn().mockResolvedValue(expectedJob)
     }
 
     // when
-    const job = await ReadJob(mockCacheService)(
-      expectedJob.repository.group,
-      expectedJob.repository.repo,
-      expectedJob.id
-    )
+    const job = await GetJob(mockJobRepository)(expectedJob.id)
 
     // then
     expect(job).toEqual(expectedJob)
@@ -57,10 +46,6 @@ describe('ReadJob', () => {
       id: 'id',
       title: 'Job Title',
       markdown: 'Job Description',
-      repository: {
-        group: 'group',
-        repo: 'repo'
-      },
       tags: ['tag1', 'tag2'],
       user: {
         avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
@@ -77,20 +62,13 @@ describe('ReadJob', () => {
       }
     }
 
-    const mockCacheService: CacheService = {
-      get: vitest.fn().mockResolvedValue([]),
-      set: vitest.fn(),
-      getMeta: vitest.fn(),
-      setMeta: vitest.fn(),
-      lastCacheSync: vitest.fn()
+    const mockJobRepository: JobRepository = {
+      ...{} as JobRepository,
+      getUnique: vitest.fn().mockRejectedValue(expectedJob)
     }
 
     // when
-    const job = ReadJob(mockCacheService)(
-      expectedJob.repository.group,
-      expectedJob.repository.repo,
-      expectedJob.id
-    )
+    const job = GetJob(mockJobRepository)(expectedJob.id)
 
     // then
     await expect(job).rejects.toThrow()

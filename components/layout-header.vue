@@ -39,9 +39,9 @@ defineEmits<Emits>()
         >
           <bars-3-icon class="w-5 h-5 text-slate-400 dark:fill-white" />
         </button>
-        <a id="logo" class="flex items-center w-full col-start-2 col-span-4">
+        <a class="flex items-center w-full col-start-2 col-span-4">
           <MagnifyingGlassCircleIcon class="w-5 h-5 mr-2 fill-blue-600 text-white" />
-          <app-logo class="cursor-pointer fill-black dark:fill-white" @click="$emit('goHome')" />
+          <app-logo id="logo" class="cursor-pointer fill-black dark:fill-white" @click="$emit('goHome')" />
         </a>
 
         <div :id="HEADER_GADGET_PORTAL" class="gadget md:w-4/12 row-start-2 col-span-12" />

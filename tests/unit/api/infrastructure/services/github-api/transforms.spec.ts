@@ -35,16 +35,12 @@ describe('Transform', () => {
     }
 
     const expected: JobEntity = {
-      id: '1',
+      id: 'Z3JvdXAvcmVwby8x',
       title: 'Job title',
       created_at: '2021-01-01',
       user: {
         avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
         login_id: 'user'
-      },
-      repository: {
-        group: 'group',
-        repo: 'repo'
       },
       tags: ['label'],
       markdown: 'Job description',

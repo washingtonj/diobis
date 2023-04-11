@@ -1,12 +1,10 @@
 <script lang="ts" setup>
 import { useSettings } from '@/stores/settings'
 
-const { params, query } = useRoute()
+const { params } = useRoute()
 const { state } = useSettings()
 
-const { data, error } = await useFetch(`/api/jobs/${params.group}`, {
-  params: { repo: query.repo, id: query.id }
-})
+const { data, error } = await useFetch(`/api/jobs/${params.id}`)
 
 useErrorHandling(error)
 

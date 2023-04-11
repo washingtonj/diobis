@@ -11,10 +11,10 @@ const JOB_META_KEY = 'jobs'
 export function JobRepository (DI: JobRepositoryDI): JobRepository {
   return {
     async getAll () {
-      const oneHourInMilliseconds = 1000 * 60 * 60
+      const ThirtyMinutesInMilliseconds = 30 * 60 * 1000
 
       const lastCacheSync = await DI.CacheService.lastCacheSync(JOB_META_KEY)
-      const isInvalidCache = lastCacheSync === null || +new Date() - +new Date(lastCacheSync) > oneHourInMilliseconds
+      const isInvalidCache = lastCacheSync === null || +new Date() - +new Date(lastCacheSync) > ThirtyMinutesInMilliseconds
 
       const raw = isInvalidCache
         ? await DI.GitHubService.getAllJobs()
@@ -25,6 +25,18 @@ export function JobRepository (DI: JobRepositoryDI): JobRepository {
       }
 
       return raw
+    },
+
+    async getUnique (id) {
+      const jobs = await this.getAll()
+      const jobsExistOnList = jobs?.find(job => job.id === id)
+
+      if (jobsExistOnList) { return jobsExistOnList }
+
+      // {group}/{repo}/{id}
+      const [group, repo, jobId] = atob(id).split('/')
+
+      return DI.GitHubService.getJobById(group, repo, jobId)
     }
   }
 }

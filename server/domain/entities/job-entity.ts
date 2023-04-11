@@ -16,8 +16,4 @@ export interface JobEntity {
   interactions?: {
     comments?: number
   }
-  repository: {
-    group: string
-    repo: string
-  }
 }

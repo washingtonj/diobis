@@ -5,16 +5,12 @@ export const Transform = {
 
   toJobEntity (data: GitHubIssue, repo: { group: string, repo: string }): JobEntity {
     return {
-      id: String(data.number),
+      id: btoa(`${repo.group}/${repo.repo}/${String(data.number)}`),
       title: data.title,
       created_at: data.created_at,
       user: {
         avatar_url: data.user.avatar_url,
         login_id: data.user.login
-      },
-      repository: {
-        group: repo.group,
-        repo: repo.repo
       },
       tags: data.labels.map((item: any) => item.name),
       markdown: data.body,

@@ -48,14 +48,10 @@ describe('GitHubAPI', () => {
 
     // Then
     expect(job).toEqual({
-      id: '1',
+      id: 'Z3JvdXAvcmVwby8x',
       created_at: '2021-01-01T00:00:00Z',
       title: 'Job Title',
       markdown: 'Job Description',
-      repository: {
-        group: 'group',
-        repo: 'repo'
-      },
       tags: ['label1', 'label2'],
       user: {
         avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',

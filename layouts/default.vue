@@ -18,7 +18,7 @@ const navbar = [
     title: 'Vagas',
     path: '/',
     icon: BriefcaseIcon,
-    matchedPaths: ['/v/:group']
+    matchedPaths: ['/v/:id']
   },
   {
     id: 'about',
