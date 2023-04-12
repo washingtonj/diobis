@@ -16,10 +16,8 @@ describe('AuthenticateUser', () => {
     }
 
     const mockGitHubService: GitHubService = {
-      getAllJobs: vitest.fn(),
+      ...{} as GitHubService,
       getAuthToken: vitest.fn().mockResolvedValue(expectedToken),
-      getJobById: vitest.fn(),
-      getJobComments: vitest.fn(),
       getUserByToken: vitest.fn().mockResolvedValue(expectedUser)
     }
 

@@ -17,3 +17,10 @@ export interface JobEntity {
     comments?: number
   }
 }
+
+export interface JobCommentEntity {
+  id: string
+  body: string
+  created_at: string
+  user: UserEntity
+}

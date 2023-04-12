@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { GitHubComment, GitHubIssue, GitHubUser } from '~~/server/infrastructure/services/github-api/models'
 import { Transform } from '~~/server/infrastructure/services/github-api/transforms'
-import { CommentEntity, JobEntity, UserEntity } from '@/server/domain/entities'
+import { JobCommentEntity, JobEntity, UserEntity } from '@/server/domain/entities'
 
 describe('Transform', () => {
   it('Should transform to JobEntity', () => {
@@ -62,10 +62,10 @@ describe('Transform', () => {
     expect(result).toEqual(expected)
   })
 
-  it('Should transform to CommentEntity', () => {
+  it('Should transform to JobCommentEntity', () => {
     // given
     const data: GitHubComment = {
-      number: 1,
+      id: 1,
       body: 'Comment body',
       created_at: '2021-01-01',
       user: {
@@ -74,7 +74,7 @@ describe('Transform', () => {
       }
     }
 
-    const expected: CommentEntity = {
+    const expected: JobCommentEntity = {
       id: '1',
       body: 'Comment body',
       created_at: '2021-01-01',
@@ -85,7 +85,7 @@ describe('Transform', () => {
     }
 
     // when
-    const result = Transform.toCommentEntity(data)
+    const result = Transform.toJobCommentEntity(data)
 
     // then
     expect(result).toEqual(expected)

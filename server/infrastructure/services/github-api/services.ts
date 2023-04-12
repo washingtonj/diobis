@@ -60,7 +60,7 @@ export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
 
       Logger('GitHubAPI', `Found ${raw.length} comments in ${group}/${repo}/${id}`)
 
-      return raw.map((item: any) => Transform.toCommentEntity(item))
+      return raw.map((item: any) => Transform.toJobCommentEntity(item))
     },
 
     getAuthToken: async (authCode) => {
@@ -113,7 +113,7 @@ export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
 
       Logger('GitHubAPI', `Created comment ${comment} in ${group}/${repo}/${id}`)
 
-      return Transform.toCommentEntity(data)
+      return Transform.toJobCommentEntity(data)
     }
   }
 }

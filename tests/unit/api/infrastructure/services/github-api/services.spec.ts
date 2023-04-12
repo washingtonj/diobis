@@ -2,7 +2,7 @@ import { describe, vi, it, expect, beforeEach } from 'vitest'
 
 import { GitHubAPI } from '~~/server/infrastructure/services/github-api/services'
 import { GitHubComment, GitHubIssue, GitHubOAuth, GitHubUser } from '~~/server/infrastructure/services/github-api/models'
-import { CommentEntity, JobEntity, UserEntity } from '@/server/domain/entities'
+import { JobCommentEntity, JobEntity, UserEntity } from '@/server/domain/entities'
 
 const mockedFetch = vi.fn()
 
@@ -150,6 +150,7 @@ describe('GitHubAPI', () => {
   it('Should comment an issue and return the comment entity', async () => {
     // Given
     (global as any).$fetch = mockedFetch.mockResolvedValue({
+      id: 1,
       body: 'comment',
       created_at: '2021-01-01T00:00:00Z',
       number: 1,
@@ -171,6 +172,6 @@ describe('GitHubAPI', () => {
         avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
         login_id: 'login_id'
       }
-    } as CommentEntity)
+    } as JobCommentEntity)
   })
 })

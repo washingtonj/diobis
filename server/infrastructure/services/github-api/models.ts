@@ -28,7 +28,7 @@ export interface GitHubIssue {
 }
 
 export interface GitHubComment {
-  number: number
+  id: number
   body: string
   created_at: string
   user: GitHubUser

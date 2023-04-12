@@ -62,8 +62,6 @@ useHead({
         <c-job-comments
           :id="data.id"
           :author-id="data.user.login_id"
-          :group="data.repository.group"
-          :repo="data.repository.repo"
           :is-empty="data.interactions?.comments === 0"
         />
       </section>

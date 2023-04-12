@@ -37,7 +37,7 @@ watch(searchText, (search) => {
       <jobs-masonry-root>
         <jobs-card-root
           v-for="item in filteredData"
-          :key="`${item.repository.group}/${item.repository.repo}/${item.id}`"
+          :key="item.id"
           :data="{
             id: item.id,
             avatarUrl: item.user.avatar_url,

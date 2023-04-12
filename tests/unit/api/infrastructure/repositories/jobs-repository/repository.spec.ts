@@ -205,4 +205,81 @@ describe('JobRepository', () => {
     // then
     expect(job).toEqual(expectedJob)
   })
+
+  it('Should get the job comments from GitHub Service', async () => {
+    // given
+    const expectedComment = {
+      id: 'id',
+      markdown: 'Job Description',
+      user: {
+        avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
+        login_id: 'login_id'
+      },
+      reactions: {
+        confused: 1,
+        eyes: 1,
+        heart: 1,
+        rocket: 1
+      }
+    }
+
+    const mockGitHubService: GitHubService = {
+      ...{} as GitHubService,
+      getJobComments: vitest.fn().mockResolvedValue(expectedComment)
+    }
+
+    const mockCacheService: CacheService = {
+      ...{} as CacheService,
+      set: vitest.fn(),
+      lastCacheSync: vitest.fn().mockResolvedValue(null)
+    }
+
+    // when
+    const comment = await JobRepositoryImpl({
+      CacheService: mockCacheService,
+      GitHubService: mockGitHubService
+    }).getComments('id')
+
+    // then
+    expect(comment).toEqual(expectedComment)
+  })
+
+  it('Should get the job comments from Cache Service', async () => {
+    // given
+    const expectedComment = {
+      id: 'id',
+      markdown: 'Job Description',
+      user: {
+        avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
+        login_id: 'login_id'
+      },
+      reactions: {
+        confused: 1,
+        eyes: 1,
+        heart: 1,
+        rocket: 1
+      }
+    }
+
+    const mockGitHubService: GitHubService = {
+      ...{} as GitHubService,
+      getJobComments: vitest.fn().mockResolvedValue(expectedComment)
+    }
+
+    const mockCacheService = {
+      ...{} as CacheService,
+      set: vitest.fn(),
+      lastCacheSync: vitest.fn().mockResolvedValue(new Date()),
+      get: vitest.fn().mockResolvedValue(expectedComment)
+    }
+
+    // when
+    const comment = await JobRepositoryImpl({
+      CacheService: mockCacheService,
+      GitHubService: mockGitHubService
+    }).getComments('id')
+
+    // then
+    expect(comment).toEqual(expectedComment)
+  })
 })

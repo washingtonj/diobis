@@ -1,12 +1,9 @@
 <script lang="ts" setup>
 import { useSettings } from '@/stores/settings'
-import { type Query } from '@/server/api/comments/index.get'
 import { type Props as JobCommentsProps } from '@/components/job-comments.vue'
 
 type Props = {
   authorId: string,
-  group: string,
-  repo: string,
   id: string,
   isEmpty: boolean
 }
@@ -18,8 +15,7 @@ const isLoading = ref(false)
 const submitting = ref(false)
 const isFirefox = computed(() => store.state.browser === 'firefox')
 
-const { data, pending, execute } = await useFetch('/api/comments', {
-  params: { id: props.id, group: props.group, repo: props.repo } as Query,
+const { data, pending, execute } = await useFetch(`/api/jobs/${props.id}/comments`, {
   server: false,
   immediate: false,
   transform: data => data?.map(comment => ({

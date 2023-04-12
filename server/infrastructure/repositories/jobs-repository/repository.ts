@@ -1,5 +1,5 @@
 import { JobRepository, GitHubService, CacheService } from '@/server/domain/interfaces'
-import { JobEntity } from '@/server/domain/entities'
+import { JobCommentEntity, JobEntity } from '@/server/domain/entities'
 
 type JobRepositoryDI = {
   GitHubService: GitHubService,
@@ -37,6 +37,24 @@ export function JobRepository (DI: JobRepositoryDI): JobRepository {
       const [group, repo, jobId] = atob(id).split('/')
 
       return DI.GitHubService.getJobById(group, repo, jobId)
+    },
+
+    async getComments (id) {
+      const [group, repo, jobId] = atob(id).split('/')
+
+      const ThirtyMinutesInMilliseconds = 30 * 60 * 1000
+      const cacheKey = `${id}/comments`
+
+      const lastCacheSync = await DI.CacheService.lastCacheSync(cacheKey)
+      const isInvalidCache = lastCacheSync === null || +new Date() - +new Date(lastCacheSync) > ThirtyMinutesInMilliseconds
+
+      const raw = isInvalidCache
+        ? await DI.GitHubService.getJobComments(group, repo, jobId)
+        : await DI.CacheService.get<JobCommentEntity[]>(cacheKey)
+
+      if (isInvalidCache) { await DI.CacheService.set(cacheKey, raw) }
+
+      return raw
     }
   }
 }

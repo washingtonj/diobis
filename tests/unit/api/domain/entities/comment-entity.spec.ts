@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { CommentEntity } from '@/server/domain/entities'
+import { JobCommentEntity } from '@/server/domain/entities'
 
-describe('CommentEntity', () => {
+describe('JobCommentEntity', () => {
   it('Should have the correct data types', () => {
-    const comment: CommentEntity = {
+    const comment: JobCommentEntity = {
       id: 'id',
       body: 'Comment Body',
       user: {

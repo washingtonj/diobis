@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { commentJob } from '@/server/usecases'
 import { CacheService, GitHubService } from '@/server/domain/interfaces'
-import { CommentEntity } from '@/server/domain/entities'
+import { JobCommentEntity } from '@/server/domain/entities'
 
 describe('CommentJob - UseCase', () => {
   it('Should create a comment without cached comments', async () => {
@@ -21,7 +21,7 @@ describe('CommentJob - UseCase', () => {
         avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
         login_id: 'login_id'
       }
-    } as CommentEntity
+    } as JobCommentEntity
 
     const GitHubServiceMock: GitHubService = {
       ...{} as GitHubService,
@@ -59,7 +59,7 @@ describe('CommentJob - UseCase', () => {
         avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
         login_id: 'login_id'
       }
-    } as CommentEntity
+    } as JobCommentEntity
 
     const GitHubServiceMock: GitHubService = {
       ...{} as GitHubService,
