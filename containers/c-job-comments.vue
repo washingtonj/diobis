@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { useSettings } from '@/stores/settings'
 import { type Props as JobCommentsProps } from '@/components/job-comments.vue'
+import { useSettings } from '@/stores/settings'
+import { useUserStore } from '@/stores/user'
 
 type Props = {
   authorId: string,
@@ -10,6 +11,7 @@ type Props = {
 
 const props = defineProps<Props>()
 const store = useSettings()
+const user = useUserStore()
 
 const isLoading = ref(false)
 const submitting = ref(false)
@@ -35,12 +37,9 @@ function loadComments () {
 function submitComment (comment: string) {
   submitting.value = true
 
-  $fetch('/api/comments', {
+  $fetch(`/api/jobs/${props.id}/comments`, {
     method: 'POST',
     body: JSON.stringify({
-      id: props.id,
-      group: props.group,
-      repo: props.repo,
       body: comment
     })
   })
@@ -65,7 +64,7 @@ watch(data, (prev, next) => {
 <template>
   <job-comments
     :data="data || []"
-    :is-authenticated="false"
+    :is-authenticated="user.state.isAuthenticated || false"
     :is-empty="props.isEmpty"
     :is-loading="isLoading"
     :is-firefox="isFirefox"

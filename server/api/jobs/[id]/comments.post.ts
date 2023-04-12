@@ -1,18 +1,35 @@
 import { commentJob } from '@/server/usecases'
-import { GitHubAPIFactory, UnstorageRedis } from '~~/server/infrastructure/services'
+import { JobRepository } from '@/server/infrastructure/repositories'
+import { GitHubAPIFactory, UnstorageRedis } from '@/server/infrastructure/services'
+
+type Params = {
+  id: string
+}
 
 type Body = {
-  group: string
-  repo: string
-  id: string
   comment: string
 }
 
 export default defineEventHandler(async (event) => {
-  const { group, repo, comment, id } = await readBody<Body>(event)
-  const { Authorization } = getContextHeader(event)
+  const { comment } = await readBody<Body>(event)
+  const { id } = getRouterParams(event) as Params
+  const { Authorization: authorization } = getContextHeader(event)
 
-  return await commentJob(
-    GitHubAPIFactory({ authorization: Authorization }),
-    UnstorageRedis())(group, repo, id, comment)
+  if (!authorization) {
+    sendError(event, {
+      fatal: false,
+      name: 'Unauthorized',
+      message: 'Please provide a valid GitHub token.',
+      statusCode: 401
+
+    })
+    return
+  }
+
+  const Repository = JobRepository({
+    CacheService: UnstorageRedis(),
+    GitHubService: GitHubAPIFactory({ authorization })
+  })
+
+  return await commentJob(Repository)(id, comment)
 })

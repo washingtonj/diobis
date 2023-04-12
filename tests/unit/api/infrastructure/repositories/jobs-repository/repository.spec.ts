@@ -1,6 +1,7 @@
 import { describe, it, expect, vitest } from 'vitest'
 import { CacheService, GitHubService } from '@/server/domain/interfaces'
 import { JobRepository as JobRepositoryImpl } from '@/server/infrastructure/repositories'
+import { JobCommentEntity } from '~~/server/domain/entities'
 
 describe('JobRepository', () => {
   it('Should list all jobs from GitHub Service', async () => {
@@ -281,5 +282,39 @@ describe('JobRepository', () => {
 
     // then
     expect(comment).toEqual(expectedComment)
+  })
+
+  it('Should put a job comment', async () => {
+    // given
+    const comment: JobCommentEntity = {
+      body: 'comment',
+      created_at: '2021-01-01T00:00:00Z',
+      id: 'id',
+      user: {
+        avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
+        login_id: 'login_id'
+      }
+    }
+
+    const mockGitHubService: GitHubService = {
+      ...{} as GitHubService,
+      getJobComments: vitest.fn().mockResolvedValue([]),
+      createComment: vitest.fn().mockResolvedValue(comment)
+    }
+
+    const mockCacheService: CacheService = {
+      ...{} as CacheService,
+      set: vitest.fn(),
+      lastCacheSync: vitest.fn().mockResolvedValue(null)
+    }
+
+    // when
+    const result = await JobRepositoryImpl({
+      CacheService: mockCacheService,
+      GitHubService: mockGitHubService
+    }).putComment('id', 'comment')
+
+    // then
+    expect(result).toEqual(comment)
   })
 })

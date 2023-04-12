@@ -55,6 +55,16 @@ export function JobRepository (DI: JobRepositoryDI): JobRepository {
       if (isInvalidCache) { await DI.CacheService.set(cacheKey, raw) }
 
       return raw
+    },
+
+    async putComment (id, comment) {
+      const [group, repo, jobId] = atob(id).split('/')
+
+      const raw = await DI.GitHubService.createComment(group, repo, jobId, comment)
+
+      await DI.CacheService.set(`${id}/comments`, [...await this.getComments(id), raw])
+
+      return raw
     }
   }
 }

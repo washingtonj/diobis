@@ -27,7 +27,9 @@ onMounted(() => {
     return
   }
 
-  if (!Route.query.code) { return }
+  if (!Route.query.code) {
+    return
+  }
 
   isLoading.value = true
 
