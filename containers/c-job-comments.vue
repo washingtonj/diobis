@@ -1,25 +1,23 @@
 <script lang="ts" setup>
-import { useSettings } from '@/stores/settings'
-import { type Query } from '@/server/api/comments/index.get'
 import { type Props as JobCommentsProps } from '@/components/job-comments.vue'
+import { useSettings } from '@/stores/settings'
+import { useUserStore } from '@/stores/user'
 
 type Props = {
   authorId: string,
-  group: string,
-  repo: string,
   id: string,
   isEmpty: boolean
 }
 
 const props = defineProps<Props>()
 const store = useSettings()
+const user = useUserStore()
 
 const isLoading = ref(false)
 const submitting = ref(false)
 const isFirefox = computed(() => store.state.browser === 'firefox')
 
-const { data, pending, execute } = await useFetch('/api/comments', {
-  params: { id: props.id, group: props.group, repo: props.repo } as Query,
+const { data, pending, execute } = await useFetch(`/api/jobs/${props.id}/comments`, {
   server: false,
   immediate: false,
   transform: data => data?.map(comment => ({
@@ -39,12 +37,9 @@ function loadComments () {
 function submitComment (comment: string) {
   submitting.value = true
 
-  $fetch('/api/comments', {
+  $fetch(`/api/jobs/${props.id}/comments`, {
     method: 'POST',
     body: JSON.stringify({
-      id: props.id,
-      group: props.group,
-      repo: props.repo,
       body: comment
     })
   })
@@ -69,7 +64,7 @@ watch(data, (prev, next) => {
 <template>
   <job-comments
     :data="data || []"
-    :is-authenticated="false"
+    :is-authenticated="user.state.isAuthenticated || false"
     :is-empty="props.isEmpty"
     :is-loading="isLoading"
     :is-firefox="isFirefox"

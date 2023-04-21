@@ -1,5 +1,5 @@
-import { AuthenticateUser } from '@/core/domain/usecases'
-import { GitHubAPIFactory } from '@/core/infraestructure/services'
+import { AuthenticateUser } from '@/server/usecases'
+import { GitHubAuth, GitHubAPIFactory } from '@/server/infrastructure/adapters'
 import { getContextHeader } from '@/server/utils'
 import {
   GITHUB_COOKIE_NAME,
@@ -13,12 +13,14 @@ export type Query = {
 
 export default defineEventHandler(async (event) => {
   const { authCode } = getQuery(event) as Query
-  const { Authorization } = getContextHeader(event)
+  const { Authorization: authorization } = getContextHeader(event)
 
   const fourHoursInMs = 1000 * 60 * 60 * 4
   const expires = new Date(Date.now() + fourHoursInMs)
 
-  const data = await AuthenticateUser(GitHubAPIFactory({ authorization: Authorization }))(authCode)
+  const GitHubService = GitHubAPIFactory({ authorization })
+
+  const data = await AuthenticateUser(GitHubAuth({ GitHubService }))(authCode)
   const capitalizedType = data.auth.type.charAt(0).toUpperCase() + data.auth.type.slice(1)
 
   const isProductionEnvironment = process.env.NODE_ENV === 'production'

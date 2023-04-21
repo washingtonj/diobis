@@ -1,4 +1,4 @@
-import { type JobEntity } from '@/core/domain/entities'
+import { type JobEntity } from '@/server/domain/entities'
 
 describe('Home', () => {
   before(() => {

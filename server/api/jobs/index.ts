@@ -1,11 +1,14 @@
-import { ListJobs } from '@/core/domain/usecases'
-import { UnstorageRedis, GitHubAPIFactory } from '@/core/infraestructure/services'
+import { GetJobs } from '@/server/usecases'
+import { JobRepository, UnstorageRedis, GitHubAPIFactory } from '@/server/infrastructure/adapters'
 import { getContextHeader } from '@/server/utils'
 
 export default defineEventHandler(async (event) => {
   const { Authorization } = getContextHeader(event)
 
-  return await ListJobs(GitHubAPIFactory({
-    authorization: Authorization
-  }), UnstorageRedis())()
+  const Repository = JobRepository({
+    GitHubService: GitHubAPIFactory({ authorization: Authorization }),
+    CacheService: UnstorageRedis()
+  })
+
+  return await GetJobs(Repository)()
 })
