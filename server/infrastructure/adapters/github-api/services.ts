@@ -30,6 +30,8 @@ export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
   Logger('GitHubAPI', `[${opts?.authorization ? 'Authenticated' : 'Unauthenticated'}] GitHubAPI instance created!`)
 
   return {
+    authenticated: !!opts?.authorization,
+
     getAllJobs: async () => {
       const jobs: JobEntity[] = []
 

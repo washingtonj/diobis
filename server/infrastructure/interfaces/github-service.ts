@@ -1,6 +1,7 @@
 import { JobEntity, JobCommentEntity, UserEntity } from '@/server/domain/entities'
 
 export interface GitHubService {
+  authenticated: boolean
   getAllJobs: () => Promise<JobEntity[]>
   getJobById: (jobId: string) => Promise<JobEntity>
   getJobComments: (jobId: string) => Promise<JobCommentEntity[]>

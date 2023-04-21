@@ -11,6 +11,10 @@ export function JobRepository (DI: JobRepositoryDI): JobRepository {
   const JOB_META_KEY = 'jobs'
 
   async function validateCache (cacheKey: string) {
+    const isUnecessaryCache = DI.GitHubService.authenticated
+
+    if (isUnecessaryCache) { return true }
+
     const ThirtyMinutesInMilliseconds = 30 * 60 * 1000
     const lastCacheSync = await DI.CacheService.lastCacheSync(cacheKey)
 
