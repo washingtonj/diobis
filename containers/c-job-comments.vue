@@ -40,7 +40,7 @@ function submitComment (comment: string) {
   $fetch(`/api/jobs/${props.id}/comments`, {
     method: 'POST',
     body: JSON.stringify({
-      body: comment
+      comment
     })
   })
     .then(() => {

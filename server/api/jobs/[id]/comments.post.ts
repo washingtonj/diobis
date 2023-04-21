@@ -1,4 +1,4 @@
-import { commentJob } from '@/server/usecases'
+import { CommentJob } from '@/server/usecases'
 import { JobRepository, GitHubAPIFactory, UnstorageRedis } from '@/server/infrastructure/adapters'
 
 type Params = {
@@ -30,5 +30,5 @@ export default defineEventHandler(async (event) => {
     GitHubService: GitHubAPIFactory({ authorization })
   })
 
-  return await commentJob(Repository)(id, comment)
+  return await CommentJob(Repository)(id, comment)
 })

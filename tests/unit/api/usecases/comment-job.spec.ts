@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { commentJob } from '@/server/usecases'
+import { CommentJob } from '@/server/usecases'
 import { JobRepository } from '@/server/domain/interfaces'
 import { JobCommentEntity } from '@/server/domain/entities'
 
@@ -22,7 +22,7 @@ describe('CommentJob - UseCase', () => {
     }
 
     // When
-    const result = await commentJob(Repository)('some_id', 'comment')
+    const result = await CommentJob(Repository)('some_id', 'comment')
 
     // Then
     expect(result).toEqual(data)
