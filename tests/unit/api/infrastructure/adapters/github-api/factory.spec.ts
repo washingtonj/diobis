@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { GitHubAPIFactory } from '@/server/infrastructure/services/github-api/factory'
+import { GitHubAPIFactory } from '@/server/infrastructure/adapters/github-api/factory'
 
 describe('GitHubAPI - Factory', () => {
   it('Should return a GitHub instance if is dev', () => {

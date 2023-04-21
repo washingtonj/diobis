@@ -1,6 +1,5 @@
 import { GetJob } from '@/server/usecases'
-import { GitHubAPIFactory, UnstorageRedis } from '@/server/infrastructure/services'
-import { JobRepository } from '@/server/infrastructure/repositories'
+import { JobRepository, GitHubAPIFactory, UnstorageRedis } from '@/server/infrastructure/adapters'
 
 type Params = {
   id: string

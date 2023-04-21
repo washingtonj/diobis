@@ -1,9 +1,11 @@
 import { getContextHeader } from '@/server/utils'
 import { getUser } from '@/server/usecases'
-import { GitHubAPI } from '~~/server/infrastructure/services'
+import { GitHubAPI, GitHubAuth } from '@/server/infrastructure/adapters'
 
 export default defineEventHandler(async (event) => {
-  const { Authorization } = getContextHeader(event)
+  const { Authorization: authorization } = getContextHeader(event)
 
-  return await getUser(GitHubAPI())(Authorization!)
+  const GitHubService = GitHubAPI()
+
+  return await getUser(GitHubAuth({ GitHubService }))(authorization!)
 })

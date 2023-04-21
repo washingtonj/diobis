@@ -1,6 +1,6 @@
 import { createStorage, Storage } from 'unstorage'
 import redisDriver from 'unstorage/drivers/redis'
-import { CacheService } from '@/server/domain/interfaces'
+import { CacheService } from '@/server/infrastructure/interfaces'
 import { Logger } from '@/utils'
 
 export function UnstorageRedis (storageInstance?: Storage): CacheService {

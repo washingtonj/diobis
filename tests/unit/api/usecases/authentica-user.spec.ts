@@ -1,6 +1,6 @@
 import { describe, it, expect, vitest } from 'vitest'
 import { AuthenticateUser } from '@/server/usecases'
-import { GitHubService } from '@/server/domain/interfaces'
+import { AuthService } from '@/server/domain/interfaces'
 
 describe('AuthenticateUser', () => {
   it('Should authenticate user', async () => {
@@ -15,9 +15,9 @@ describe('AuthenticateUser', () => {
       login_id: 'login_id'
     }
 
-    const mockGitHubService: GitHubService = {
-      ...{} as GitHubService,
-      getAuthToken: vitest.fn().mockResolvedValue(expectedToken),
+    const mockGitHubService: AuthService = {
+      ...{} as AuthService,
+      oAuthAuthentication: vitest.fn().mockResolvedValue(expectedToken),
       getUserByToken: vitest.fn().mockResolvedValue(expectedUser)
     }
 

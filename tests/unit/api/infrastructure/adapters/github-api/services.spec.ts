@@ -1,7 +1,7 @@
 import { describe, vi, it, expect, beforeEach } from 'vitest'
 
-import { GitHubAPI } from '~~/server/infrastructure/services/github-api/services'
-import { GitHubComment, GitHubIssue, GitHubOAuth, GitHubUser } from '~~/server/infrastructure/services/github-api/models'
+import { GitHubAPI } from '@/server/infrastructure/adapters/github-api/services'
+import { GitHubComment, GitHubIssue, GitHubOAuth, GitHubUser } from '@/server/infrastructure/adapters/github-api/models'
 import { JobCommentEntity, JobEntity, UserEntity } from '@/server/domain/entities'
 
 const mockedFetch = vi.fn()
@@ -44,11 +44,11 @@ describe('GitHubAPI', () => {
     } as GitHubIssue)
 
     // When
-    const job = await GitHubAPI().getJobById('group', 'repo', 'id')
+    const job = await GitHubAPI().getJobById('group/repo/id')
 
     // Then
     expect(job).toEqual({
-      id: 'Z3JvdXAvcmVwby8x',
+      id: '2f756e646566696e65642f31',
       created_at: '2021-01-01T00:00:00Z',
       title: 'Job Title',
       markdown: 'Job Description',

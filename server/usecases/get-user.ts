@@ -1,7 +1,7 @@
-import { GitHubService } from '@/server/domain/interfaces'
+import { AuthService } from '@/server/domain/interfaces'
 
-export function getUser (GitHubService: GitHubService) {
+export function getUser (AuthService: AuthService) {
   return async function (token: string) {
-    return await GitHubService.getUserByToken(token)
+    return await AuthService.getUserByToken(token)
   }
 }

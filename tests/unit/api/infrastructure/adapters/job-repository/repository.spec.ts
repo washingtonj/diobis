@@ -1,7 +1,7 @@
 import { describe, it, expect, vitest } from 'vitest'
-import { CacheService, GitHubService } from '@/server/domain/interfaces'
-import { JobRepository as JobRepositoryImpl } from '@/server/infrastructure/repositories'
-import { JobCommentEntity } from '~~/server/domain/entities'
+import { CacheService, GitHubService } from '@/server/infrastructure/interfaces'
+import { JobRepository as JobRepositoryImpl } from '@/server/infrastructure/adapters'
+import { JobCommentEntity } from '@/server/domain/entities'
 
 describe('JobRepository', () => {
   it('Should list all jobs from GitHub Service', async () => {

@@ -1,7 +1,7 @@
 
 import { vi, describe, it, expect } from 'vitest'
 import { Storage } from 'unstorage'
-import { UnstorageRedis } from '~~/server/infrastructure/services'
+import { UnstorageRedis } from '@/server/infrastructure/adapters'
 
 describe('UnstorageRedis', () => {
   it('Should create a self storage instance if not injected', () => {

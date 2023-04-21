@@ -10,7 +10,7 @@ import { GitHubComment, GitHubIssue, GitHubOAuth, GitHubUser } from './models'
 import { Transform } from './transforms'
 
 import { JobEntity } from '@/server/domain/entities'
-import { GitHubService } from '@/server/domain/interfaces'
+import { GitHubService } from '@/server/infrastructure/interfaces'
 import { JobNotFoundError, InvalidGitHubOAuthCodeError, InvalidGitHubToken } from '@/server/domain/errors'
 import { Logger } from '@/utils'
 
@@ -45,7 +45,9 @@ export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
       return jobs
     },
 
-    getJobById: async (group, repo, id) => {
+    getJobById: async (jobId) => {
+      const { group, id, repo } = Transform.fromCriptedId(jobId)
+
       const raw = await $fetch<GitHubIssue>(`${GITHUB_BASE_URL}/repos/${group}/${repo}/issues/${id}`, { headers, params: GITHUB_PARAMS })
 
       Logger('GitHubAPI', `Found job in ${group}/${repo}/${id}`)
@@ -55,7 +57,9 @@ export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
       return Transform.toJobEntity(raw, { group, repo })
     },
 
-    getJobComments: async (group, repo, id) => {
+    getJobComments: async (jobId) => {
+      const { group, id, repo } = Transform.fromCriptedId(jobId)
+
       const raw = await $fetch<GitHubComment[]>(`${GITHUB_BASE_URL}/repos/${group}/${repo}/issues/${id}/comments`, { headers, params: GITHUB_PARAMS })
 
       Logger('GitHubAPI', `Found ${raw.length} comments in ${group}/${repo}/${id}`)
@@ -102,7 +106,9 @@ export const GitHubAPI = (opts?: GitHubAPIOpts): GitHubService => {
       return Transform.toUserEntity(user)
     },
 
-    async createComment (group, repo, id, comment) {
+    async createComment (jobId, comment) {
+      const { group, id, repo } = Transform.fromCriptedId(jobId)
+
       const data = await $fetch<GitHubComment>(`${GITHUB_BASE_URL}/repos/${group}/${repo}/issues/${id}/comments`, {
         method: 'POST',
         headers,

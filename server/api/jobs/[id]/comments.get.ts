@@ -1,7 +1,6 @@
 import { GetJobComments } from '@/server/usecases'
-import { UnstorageRedis, GitHubAPIFactory } from '@/server/infrastructure/services'
 import { getContextHeader } from '@/server/utils'
-import { JobRepository } from '@/server/infrastructure/repositories'
+import { JobRepository, UnstorageRedis, GitHubAPIFactory } from '@/server/infrastructure/adapters'
 
 export type Params = { id: string }
 

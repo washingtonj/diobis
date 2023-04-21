@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { getUser } from '@/server/usecases/get-user'
 import { UserEntity } from '@/server/domain/entities'
-import { GitHubService } from '@/server/domain/interfaces'
+import { AuthService } from '~~/server/domain/interfaces'
 
 describe('getUser', () => {
   it('Should return the user informations', async () => {
@@ -11,13 +11,13 @@ describe('getUser', () => {
       login_id: 'login_id'
     }
 
-    const mockGitHubService = {
-      ...{} as GitHubService,
+    const AuthService: AuthService = {
+      ...{} as AuthService,
       getUserByToken: vi.fn().mockResolvedValue(expectedUser)
     }
 
     // when
-    const user = await getUser(mockGitHubService)('login_id')
+    const user = await getUser(AuthService)('login_id')
 
     // then
     expect(user).toEqual(expectedUser)

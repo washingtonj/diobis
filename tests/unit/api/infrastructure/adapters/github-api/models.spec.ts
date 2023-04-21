@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { GitHubComment, GitHubIssue, GitHubOAuth, GitHubUser } from '~~/server/infrastructure/services/github-api/models'
+import { GitHubComment, GitHubIssue, GitHubOAuth, GitHubUser } from '@/server/infrastructure/adapters/github-api/models'
 
 describe('models', () => {
   it('Should have the correct data type (GitHubComment)', () => {

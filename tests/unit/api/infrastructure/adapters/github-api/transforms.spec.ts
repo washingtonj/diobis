@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { GitHubComment, GitHubIssue, GitHubUser } from '~~/server/infrastructure/services/github-api/models'
-import { Transform } from '~~/server/infrastructure/services/github-api/transforms'
+import { GitHubComment, GitHubIssue, GitHubUser } from '@/server/infrastructure/adapters/github-api/models'
+import { Transform } from '@/server/infrastructure/adapters/github-api/transforms'
 import { JobCommentEntity, JobEntity, UserEntity } from '@/server/domain/entities'
 
 describe('Transform', () => {
@@ -35,7 +35,7 @@ describe('Transform', () => {
     }
 
     const expected: JobEntity = {
-      id: 'Z3JvdXAvcmVwby8x',
+      id: '67726f75702f7265706f2f31',
       title: 'Job title',
       created_at: '2021-01-01',
       user: {
@@ -108,5 +108,27 @@ describe('Transform', () => {
 
     // then
     expect(result).toEqual(expected)
+  })
+
+  it('Should transform id to Hex using toCriptedId', () => {
+    // given
+    const id = '1'
+
+    // when
+    const result = Transform.toCriptedId({ group: 'group', repo: 'repo', id })
+
+    // then
+    expect(result).toEqual('67726f75702f7265706f2f31')
+  })
+
+  it('Should transform hex to Id using fromCriptedId', () => {
+    // given
+    const id = '67726f75702f7265706f2f31'
+
+    // when
+    const result = Transform.fromCriptedId(id)
+
+    // then
+    expect(result).toEqual({ group: 'group', repo: 'repo', id: '1' })
   })
 })

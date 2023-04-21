@@ -1,6 +1,5 @@
 import { commentJob } from '@/server/usecases'
-import { JobRepository } from '@/server/infrastructure/repositories'
-import { GitHubAPIFactory, UnstorageRedis } from '@/server/infrastructure/services'
+import { JobRepository, GitHubAPIFactory, UnstorageRedis } from '@/server/infrastructure/adapters'
 
 type Params = {
   id: string

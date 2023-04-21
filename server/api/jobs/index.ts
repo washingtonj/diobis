@@ -1,6 +1,5 @@
 import { GetJobs } from '@/server/usecases'
-import { UnstorageRedis, GitHubAPIFactory } from '~~/server/infrastructure/services'
-import { JobRepository } from '~~/server/infrastructure/repositories'
+import { JobRepository, UnstorageRedis, GitHubAPIFactory } from '@/server/infrastructure/adapters'
 import { getContextHeader } from '@/server/utils'
 
 export default defineEventHandler(async (event) => {

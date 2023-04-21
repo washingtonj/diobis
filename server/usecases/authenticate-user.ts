@@ -1,9 +1,9 @@
-import { GitHubService } from '@/server/domain/interfaces'
+import { AuthService } from '@/server/domain/interfaces'
 
-export function AuthenticateUser (GitHubService: GitHubService) {
+export function AuthenticateUser (AuthService: AuthService) {
   return async function (authCode: string) {
-    const oAuth = await GitHubService.getAuthToken(authCode)
-    const user = await GitHubService.getUserByToken(oAuth.token)
+    const oAuth = await AuthService.oAuthAuthentication(authCode)
+    const user = await AuthService.getUserByToken(oAuth.token)
 
     return { user, auth: oAuth }
   }
