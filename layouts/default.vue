@@ -2,16 +2,22 @@
 import { BriefcaseIcon, InformationCircleIcon } from '@heroicons/vue/24/solid'
 import { LAYOUT_PORTAL } from '@/consts/globals'
 import { useUserStore } from '@/stores/user'
+import { useLayoutStore } from '@/stores/layout'
 
 const User = useUserStore()
 const Router = useRouter()
-
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+const Layout = useLayoutStore()
 
 const showSidebar = ref(false)
 const showAuthNotification = ref(true)
-const headerHeight = ref(0)
+const headerEl = ref<HTMLHeadingElement>()
+
+const headerMeasurements = useElementSize(headerEl)
+const windowMeasurements = useWindowSize()
+
+const sidebarHeight = computed(() => {
+  return windowMeasurements.height.value - headerMeasurements.height.value
+})
 
 const navbar = [
   {
@@ -59,18 +65,18 @@ function handleAuthNotification () {
 <template>
   <NuxtLoadingIndicator color="#2563eb" />
 
-  <layout-theme>
+  <layout-theme :color="Layout.bgColor">
     <client-only>
       <layout-header
-        :is-dark-mode="isDark"
+        ref="headerEl"
+        :is-dark-mode="Layout.isDark"
         :current-route="$router.currentRoute.value.path"
         :navbar="navbar"
         :user="userData"
-        @dark-mode="toggleDark"
+        @dark-mode="Layout.toggleTheme"
         @page-change="$router.push"
         @go-home="$router.push('/')"
         @toggle-sidebar="showSidebar = true"
-        @height-change="headerHeight = $event"
       />
     </client-only>
 
@@ -80,7 +86,7 @@ function handleAuthNotification () {
           v-model:hidden="showSidebar"
           :navbar="navbar"
           :selected-page-id="selectedPage"
-          :height="headerHeight"
+          :height="sidebarHeight"
           @page-change="$router.push"
         />
       </client-only>

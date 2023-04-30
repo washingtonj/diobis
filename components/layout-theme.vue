@@ -1,9 +1,15 @@
 <script lang="ts" setup>
-const isDark = useDark()
-const theme = computed(() => (isDark.value ? '#0f172a' : '#ffffff'))
+
+const props = defineProps({
+  color: {
+    type: String,
+    default: 'white',
+    required: false
+  }
+})
 
 useHead({
-  meta: [{ name: 'theme-color', content: theme }],
+  meta: [{ name: 'theme-color', content: props.color }],
   bodyAttrs: {
     class: 'absolute top-0 z-20 w-full bg-white dark:bg-slate-900 overflow-y-scroll overflow-x-hidden'
   }

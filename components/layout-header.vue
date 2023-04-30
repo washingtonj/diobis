@@ -19,22 +19,13 @@ type Emits = {
   (e: 'darkMode', isDarkMode: boolean): void
   (e: 'goHome'): void
   (e: 'toggleSidebar'): void
-  (e: 'heightChange', height: number): void
 }
 
-defineProps<Props>()
-const emit = defineEmits<Emits>()
-
 const rootEl = ref<HTMLHeadingElement>()
-const isMobile = useMediaQuery('(max-width: 768px)')
 
-watch(isMobile, () => {
-  emit('heightChange', rootEl.value?.offsetHeight || 0)
-})
-
-onMounted(() => {
-  emit('heightChange', rootEl.value?.offsetHeight || 0)
-})
+defineProps<Props>()
+defineEmits<Emits>()
+defineExpose({ rootEl })
 
 </script>
 

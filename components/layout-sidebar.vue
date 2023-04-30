@@ -36,7 +36,7 @@ onClickOutside(sidebar, () => emits('update:hidden', false))
   <aside
     ref="sidebar"
     class="group fixed flex flex-col z-10 w-52 backdrop-blur border-inherit border-r-[1px] md:flex md:w-16 md:hover:w-52 transition-all delay-150 bg-white dark:border-slate-700 dark:bg-slate-900/75"
-    :style="{ height: `calc(100vh - ${$props.height || 0}px)` }"
+    :style="{ height: `${$props.height}px` || '100%' }"
     :class="[{ 'hidden': !$props.hidden }]"
   >
     <ul class="flex-1 py-4 px-3 not-last:mb-2">

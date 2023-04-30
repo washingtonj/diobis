@@ -9,6 +9,8 @@ describe('LayoutSidebar', () => {
     // Given
     const component = render(LayoutSidebar, {
       props: {
+        hidden: true,
+        height: 100,
         navbar: [{
           id: 'Home',
           title: 'Home',
