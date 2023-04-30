@@ -11,7 +11,7 @@ useHead({
 </script>
 
 <template>
-  <div class="relative text-black dark:text-white border-slate-900/10 dark:border-slate-700">
+  <div class="relative h-full text-black dark:text-white border-slate-900/10 dark:border-slate-700">
     <slot />
   </div>
 </template>

@@ -11,6 +11,7 @@ const toggleDark = useToggle(isDark)
 
 const showSidebar = ref(false)
 const showAuthNotification = ref(true)
+const headerHeight = ref(0)
 
 const navbar = [
   {
@@ -69,6 +70,7 @@ function handleAuthNotification () {
         @page-change="$router.push"
         @go-home="$router.push('/')"
         @toggle-sidebar="showSidebar = true"
+        @height-change="headerHeight = $event"
       />
     </client-only>
 
@@ -78,6 +80,7 @@ function handleAuthNotification () {
           v-model:hidden="showSidebar"
           :navbar="navbar"
           :selected-page-id="selectedPage"
+          :height="headerHeight"
           @page-change="$router.push"
         />
       </client-only>

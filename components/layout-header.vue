@@ -19,16 +19,30 @@ type Emits = {
   (e: 'darkMode', isDarkMode: boolean): void
   (e: 'goHome'): void
   (e: 'toggleSidebar'): void
+  (e: 'heightChange', height: number): void
 }
 
 defineProps<Props>()
-defineEmits<Emits>()
+const emit = defineEmits<Emits>()
+
+const rootEl = ref<HTMLHeadingElement>()
+const isMobile = useMediaQuery('(max-width: 768px)')
+
+watch(isMobile, () => {
+  emit('heightChange', rootEl.value?.offsetHeight || 0)
+})
+
+onMounted(() => {
+  emit('heightChange', rootEl.value?.offsetHeight || 0)
+})
+
 </script>
 
 <template>
   <header
+    ref="rootEl"
     data-testid="LayoutTopbarRoot"
-    class="sticky top-0 z-10 w-full backdrop-blur md:p-0 flex-none border-b border-inherit bg-inherit dark:bg-slate-900/75"
+    class="sticky top-0 z-20 w-full md:p-0 flex-none border-b border-inherit bg-white dark:backdrop-blur dark:bg-slate-900/75"
   >
     <div class="md:h-14 p-4 flex items-center flex-col md:flex-row">
       <div class="grid grid-cols-6 gap-x-4 w-full items-center justify-center md:flex">

@@ -17,7 +17,7 @@ defineEmits<Emits>()
 <template>
   <div
     :id="$props.id"
-    class="fixed z-50 w-full rounded-t-xl bottom-0 left-0 px-5 md:px-8 py-5 backdrop-blur bg-blue-50/75 border-t-2 border-blue-600 dark:bg-slate-900/75 dark:text-white text-black"
+    class="fixed z-50 w-full rounded-t-xl bottom-0 left-0 px-5 md:px-8 py-5 backdrop-blur bg-white border-t-2 border-blue-600 dark:bg-slate-900/75 dark:text-white text-black"
   >
     <span class="flex items-center justify-between border-b-[1px] pb-2 mb-2">
       <h2 class="text-lg font-bold">
