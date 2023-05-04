@@ -1,8 +1,12 @@
 <script lang="ts" setup>
+import { TrashIcon } from '@heroicons/vue/24/solid'
+
 export type Props = {
   comments: Array<{
     isAuthor: boolean
+    rules: ['delete']
     name: string
+    userId: string
     avatar: string
     date: string
     comment: string
@@ -39,6 +43,18 @@ const props = defineProps<Props>()
         </div>
         <div class="py-1 mt-2 px-2.5 text-sm">
           <app-markdown :content="comment.comment" />
+        </div>
+        <div v-if="comment.rules.includes('delete')" class="flex justify-between">
+          <div />
+          <div class="mt-2.5 not-last:mr-1">
+            <button
+              class="group rounded-lg p-2 bg-blue-500/5 hover:bg-red-100 dark:bg-white/5 hover:dark:bg-red-800/20 transition-colors delay-150"
+            >
+              <TrashIcon
+                class="w-2.5 h-2.5 text-slate-500 dark:text-slate-400 group-hover:text-red-600 group-hover:dark:text-red-600 transition-colors delay-150"
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>

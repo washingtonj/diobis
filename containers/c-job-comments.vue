@@ -4,8 +4,8 @@ import { useSettings } from '@/stores/settings'
 import { useUserStore } from '@/stores/user'
 
 type Props = {
-  authorId: string,
   id: string,
+  authorId: string,
   isEmpty: boolean
 }
 
@@ -24,6 +24,7 @@ const { data, pending, execute } = await useAsyncData(() => comments().getCommen
   transform: data => data?.map(comment => ({
     isAuthor: props.authorId === comment.user.login_id,
     name: comment.user.login_id,
+    userId: comment.user.login_id,
     avatar: comment.user.avatar_url,
     date: comment.created_at,
     comment: comment.body
