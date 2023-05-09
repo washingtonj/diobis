@@ -18,7 +18,21 @@ export function CommentsServices (props: ServicesProps) {
     return issueComments.map(toCommentModel)
   }
 
+  async function postComment (jobId: string, comment: string) {
+    const { id, owner, repo } = fromBufferedJobId(jobId)
+    const path = `${baseUrl}/repos/${owner}/${repo}/issues/${id}/comments`
+    const body = { body: comment }
+    const issueComment = await $fetch<GitHubCommentDTO>(path, {
+      method: 'POST',
+      headers,
+      body
+    })
+
+    return toCommentModel(issueComment)
+  }
+
   return {
-    getComments
+    getComments,
+    postComment
   }
 }

@@ -38,12 +38,8 @@ function loadComments () {
 function submitComment (comment: string) {
   submitting.value = true
 
-  $fetch(`/api/jobs/${props.id}/comments`, {
-    method: 'POST',
-    body: JSON.stringify({
-      comment
-    })
-  })
+  comments()
+    .postComment(props.id, comment)
     .then(() => {
       loadComments()
     })

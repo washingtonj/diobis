@@ -6,8 +6,10 @@ export type ServicesProps = {
 
 export const DEFAULT_CONFIG: ServicesProps = {
   baseUrl: 'https://api.github.com',
-  repositories: [
-    { owner: 'frontendbr', repo: 'vagas' },
-    { owner: 'backend-br', repo: 'vagas' }
-  ]
+  repositories: process.env.NODE_ENV === 'production'
+    ? [
+        { owner: 'frontendbr', repo: 'vagas' },
+        { owner: 'backend-br', repo: 'vagas' }
+      ]
+    : [{ owner: 'washingtonj', repo: 'diobis-dev' }]
 }
