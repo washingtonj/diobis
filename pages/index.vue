@@ -1,12 +1,13 @@
 <script setup lang="ts">
 const route = useRoute()
 const router = useRouter()
+const services = useServices()
 
-const searchText = ref((route.query.search as string) || '')
-
-const { data, pending, error } = useFetch('/api/jobs', {
+const { data, pending } = useAsyncData(() => services.jobs().getAllJobs(), {
   server: false
 })
+
+const searchText = ref((route.query.search as string) || '')
 
 const filteredData = computed(() => {
   if (!searchText.value) { return data.value }
@@ -19,8 +20,6 @@ const filteredData = computed(() => {
         .includes(searchText.value.toLowerCase())
   )
 })
-
-useErrorHandling(error)
 
 watch(searchText, (search) => {
   if (search.length === 0) {

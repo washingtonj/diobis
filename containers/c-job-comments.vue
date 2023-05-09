@@ -12,12 +12,13 @@ type Props = {
 const props = defineProps<Props>()
 const store = useSettings()
 const user = useUserStore()
+const { comments } = useServices()
 
 const isLoading = ref(false)
 const submitting = ref(false)
 const isFirefox = computed(() => store.state.browser === 'firefox')
 
-const { data, pending, execute } = await useFetch(`/api/jobs/${props.id}/comments`, {
+const { data, pending, execute } = await useAsyncData(() => comments().getComments(props.id), {
   server: false,
   immediate: false,
   transform: data => data?.map(comment => ({

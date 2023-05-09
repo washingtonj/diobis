@@ -3,10 +3,9 @@ import { useSettings } from '@/stores/settings'
 
 const { params } = useRoute()
 const { state } = useSettings()
+const { jobs } = useServices()
 
-const { data, error } = await useFetch(`/api/jobs/${params.id}`)
-
-useErrorHandling(error)
+const { data } = await useAsyncData(() => jobs().getById(params.id as string))
 
 useHead({
   title: data.value?.title,
