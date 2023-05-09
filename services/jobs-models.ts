@@ -1,4 +1,4 @@
-import { UserModel } from '@/services/shared-models'
+import { UserModel } from '@/services/user-models'
 
 interface ReactionsModel {
   confused?: number

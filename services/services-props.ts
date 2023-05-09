@@ -1,5 +1,6 @@
 export type ServicesProps = {
   baseUrl: string
+  authorization?: string
   repositories: Array<{ owner: string, repo: string }>
 }
 

@@ -1,4 +1,4 @@
-import { GitHubUserDTO } from '@/services/shared-dtos'
+import { GitHubUserDTO } from '@/services/user-dtos'
 
 export interface GitHubCommentDTO {
   id: number

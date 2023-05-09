@@ -37,8 +37,8 @@ onMounted(() => {
     server: false,
     params: { authCode: Route.query.code } as Query
   })
-    .then(({ user }) => {
-      User.actions.setAvatarUrl(user.avatar_url)
+    .then((response) => {
+      User.actions.setAvatarUrl(response.avatar_url)
       User.actions.setAuthentication()
       Router.push('/')
     })
