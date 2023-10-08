@@ -17,17 +17,20 @@
     html.setAttribute('data-theme', themes[currentThemeIndex + 1] || themes[0]);
   }
 
-  const fontSizes = ['sm', 'md', 'lg']
+  const fontSizes = ['sm', 'md', 'lg'];
 
   function changeFontSize() {
     const html = document.querySelector('html');
-    const currentFontSize = html.classList.contains('text-sm') ? 'sm' : html.classList.contains('text-lg') ? 'lg' : 'md';
+    const currentFontSize = html.classList.contains('text-sm')
+      ? 'sm'
+      : html.classList.contains('text-lg')
+      ? 'lg'
+      : 'md';
     const currentFontSizeIndex = fontSizes.indexOf(currentFontSize);
 
     html.classList.remove(`text-${currentFontSize}`);
     html.classList.add(`text-${fontSizes[currentFontSizeIndex + 1] || fontSizes[0]}`);
   }
-
 </script>
 
 <header class="h-full min-h-12 py-4 flex flex-col border-b border-neutral">
@@ -52,13 +55,13 @@
         </g>
         <path
           d="M6.96419 9.0625C6.96419 8.77523 7.0202 8.49078 7.12904 8.22538C7.23788 7.95998 7.3974 7.71883 7.5985 7.5157C7.7996 7.31258 8.03835 7.15145 8.3011 7.04151C8.56385 6.93158 8.84547 6.875 9.12987 6.875C9.41427 6.875 9.69589 6.93158 9.95864 7.04151C10.2214 7.15145 10.4601 7.31258 10.6612 7.5157C10.8623 7.71883 11.0219 7.95998 11.1307 8.22538C11.2395 8.49078 11.2956 8.77523 11.2956 9.0625C11.2956 9.64266 11.0674 10.1991 10.6612 10.6093C10.2551 11.0195 9.70425 11.25 9.12987 11.25C8.5555 11.25 8.00465 11.0195 7.5985 10.6093C7.19236 10.1991 6.96419 9.64266 6.96419 9.0625Z"
-          fill="#3662E3"
+          class="fill-accent"
         />
         <path
           fill-rule="evenodd"
           clip-rule="evenodd"
           d="M10.058 1.875C5.61528 1.875 2.01405 5.5125 2.01405 10C2.01405 14.4875 5.61528 18.125 10.058 18.125C14.5008 18.125 18.102 14.4875 18.102 10C18.102 5.5125 14.5008 1.875 10.058 1.875ZM9.12987 5.625C8.59657 5.62511 8.07076 5.75181 7.59484 5.99489C7.11892 6.23796 6.70622 6.59061 6.39003 7.0244C6.07383 7.45818 5.86299 7.96094 5.7745 8.49215C5.68602 9.02336 5.72237 9.56814 5.88062 10.0826C6.03887 10.597 6.3146 11.0666 6.68556 11.4536C7.05653 11.8406 7.51234 12.1341 8.01625 12.3105C8.52015 12.4869 9.05804 12.5412 9.58654 12.469C10.115 12.3968 10.6193 12.2002 11.0588 11.895L12.7146 13.5667C12.7712 13.6281 12.8396 13.6773 12.9155 13.7115C12.9914 13.7456 13.0733 13.764 13.1564 13.7655C13.2395 13.767 13.322 13.7515 13.399 13.7201C13.4761 13.6887 13.5461 13.6419 13.6048 13.5825C13.6636 13.5232 13.7099 13.4525 13.741 13.3747C13.7721 13.2968 13.7874 13.2135 13.786 13.1296C13.7845 13.0456 13.7663 12.9629 13.7325 12.8862C13.6987 12.8096 13.6499 12.7406 13.5891 12.6833L11.9341 11.0108C12.2857 10.4947 12.4909 9.89133 12.5276 9.26594C12.5643 8.64056 12.4311 8.01693 12.1424 7.46245C11.8537 6.90797 11.4205 6.44372 10.8895 6.11988C10.3586 5.79604 9.75011 5.62491 9.12987 5.625Z"
-          fill="#3662E3"
+          class="fill-accent"
         />
         <defs>
           <clipPath id="clip0_1_25">
@@ -67,15 +70,15 @@
         </defs>
       </svg>
 
-      <nav class="flex items-center gap-4 ml-4">
-        <a class="text-sm hover:text-base-content transition-colors" href="#">Jobs</a>
-        <a class="text-sm text-white hover:text-base-content transition-colors" href="#"
+      <nav class="lg:flex items-center gap-4 ml-4 hidden">
+        <a class="text-sm hover:text-base-content transition-colors" href="/">Jobs</a>
+        <a class="text-sm text-white hover:text-base-content transition-colors" href="/"
           >Candidates</a
         >
-        <a class="text-sm text-white hover:text-base-content transition-colors" href="#"
+        <a class="text-sm text-white hover:text-base-content transition-colors" href="/"
           >Recruiters</a
         >
-        <a class="text-sm text-white hover:text-base-content transition-colors" href="#">About</a>
+        <a class="text-sm text-white hover:text-base-content transition-colors" href="/">About</a>
       </nav>
     </div>
 

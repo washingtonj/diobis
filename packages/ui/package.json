@@ -12,6 +12,9 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
+  "dependencies": {
+    "flowbite-svelte-icons": "^0.4.4"
+  },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.4.6",
     "@storybook/addon-interactions": "^7.4.6",
@@ -25,7 +28,6 @@
     "daisyui": "^3.9.2",
     "eslint-config-custom": "*",
     "eslint-plugin-storybook": "^0.6.14",
-    "flowbite-svelte-icons": "^0.4.4",
     "postcss": "^8.4.31",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
