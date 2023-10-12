@@ -14,7 +14,7 @@
 
 {#await data.payload()}
   <div class="flex items-center justify-center">
-    <span class="loading loading-spinner text-accent" />
+    <span class="loading loading-spinner text-primary" />
   </div>
 {:then response}
   <Masonry>

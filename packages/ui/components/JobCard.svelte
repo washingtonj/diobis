@@ -16,7 +16,7 @@
         class="w-6 h-6 rounded-full"
       />
       <h3 class="text-xs uppercase">
-        GH<b class="text-accent px-1">/</b>FrontEndBR<b class="text-accent px-1">/</b>washingtonj
+        GH<b class="text-primary px-1">/</b>FrontEndBR<b class="text-primary px-1">/</b>washingtonj
       </h3>
     </div>
 
