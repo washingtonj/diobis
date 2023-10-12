@@ -1,4 +1,4 @@
-import Header from './Header.svelte'
+import Header from '../components/Header.svelte'
 
 export default {
   title: 'Base/Header',

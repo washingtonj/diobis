@@ -36,7 +36,7 @@
 <header class="h-full min-h-12 py-4 flex flex-col border-b border-neutral">
   <div class="m-auto w-full m-w-xl flex items-center justify-between px-4">
     <div class="flex items-center gap-2">
-      <button class="btn btn-sm btn-ghost hover:bg-neutral">
+      <button class="btn btn-sm btn-ghost hover:bg-neutral md:hidden">
         <BarsSolid class="w-3 h-3 text-white" />
       </button>
 
@@ -71,7 +71,7 @@
       </svg>
 
       <nav class="lg:flex items-center gap-4 ml-4 hidden">
-        <a class="text-sm hover:text-base-content transition-colors" href="/">Jobs</a>
+        <a class="text-sm transition-colors text-accent font-bold" href="/">Jobs</a>
         <a class="text-sm text-white hover:text-base-content transition-colors" href="/"
           >Candidates</a
         >
