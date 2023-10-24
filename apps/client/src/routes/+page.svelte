@@ -5,7 +5,8 @@
 
   export let data: PageData;
 
-  const columnsByScreenType = {
+  $: columnsByScreenType = {
+    ultra: 4,
     desktop: 3,
     tablet: 2,
     mobile: 1
@@ -13,7 +14,7 @@
 </script>
 
 {#await data.payload()}
-  <div class="flex items-center justify-center">
+  <div class="mt-32 flex items-center justify-center">
     <span class="loading loading-spinner text-primary" />
   </div>
 {:then response}

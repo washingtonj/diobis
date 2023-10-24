@@ -4,7 +4,6 @@
     TextSizeOutline,
     BarsSolid,
     UserSolid,
-    SearchOutline
   } from 'flowbite-svelte-icons';
 
   const themes = ['dracula', 'night', 'black', 'dark'];
@@ -33,7 +32,7 @@
   }
 </script>
 
-<header class="h-full min-h-12 py-4 flex flex-col border-b border-neutral">
+<header class="sticky shadow-xl top-0 w-full backdrop-blur bg-neutral/80 min-h-12 py-4 flex flex-col border-b border-neutral">
   <div class="m-auto w-full m-w-xl flex items-center justify-between px-4">
     <div class="flex items-center gap-2">
       <button class="btn btn-sm btn-ghost hover:bg-neutral md:hidden">

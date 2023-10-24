@@ -26,7 +26,7 @@
 </script>
 
 <div class="flex items-center px-4 mt-4">
-  <div class="flex items-center w-full bg-neutral px-4 py-3.5 rounded-md">
+  <div class="flex items-center shadow-lg w-full bg-neutral px-4 py-3.5 rounded-md">
     <SearchOutline class=" w-3.5 h-3.5" />
 
     <span class="mx-3 bg-base-content w-[1px] h-5" />

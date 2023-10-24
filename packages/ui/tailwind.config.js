@@ -6,7 +6,7 @@ export default {
     './node_modules/flowbite-svelte-icons/**/*.{html,js,svelte,ts}'
   ],
   darkMode: ['class', '[data-theme="light"]'],
-  plugins: [require('daisyui')],
+  plugins: [require('@tailwindcss/typography'), require('daisyui')],
   daisyui: {
     themes: ['dark', 'dracula', 'black', 'night']
   },

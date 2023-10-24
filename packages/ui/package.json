@@ -13,7 +13,9 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "flowbite-svelte-icons": "^0.4.4"
+    "@tailwindcss/typography": "^0.5.10",
+    "flowbite-svelte-icons": "^0.4.4",
+    "marked": "^9.1.1"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.4.6",
