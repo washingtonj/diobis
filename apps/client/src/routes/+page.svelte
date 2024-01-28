@@ -6,9 +6,11 @@
 
   export let data: PageData;
 
+  console.log(data);
+
   $: columnsByScreenType = {
-    ultrawide: 4,
-    wide: 3,
+    ultrawide: 5,
+    wide: 4,
     mid: 2,
     small: 1
   }[$screenSize];
@@ -25,11 +27,14 @@
         {#each column as job}
           <JobCard
             title={job.title}
-            shortDescription={job.description}
+            shortDescription={''}
             tags={job.tags}
-            postedAt={'1h ago'}
+            postedAt={job.createdAt}
             comments={job.quantityOfComments}
             likes={job.quantityOfComments}
+            source={job.source}
+            avatar={job.userAvatar}
+            sourceUrl={job.sourceUrl}
           />
         {/each}
       </MasonryColumn>

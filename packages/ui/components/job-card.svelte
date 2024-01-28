@@ -5,18 +5,17 @@
   export let postedAt: string;
   export let comments: number;
   export let likes: number;
+  export let source: string;
+  export let avatar: string;
+  export let sourceUrl: string;
 </script>
 
-<div class="flex items-center h-max gap-6 p-6 rounded-md bg-neutral">
+<a href={sourceUrl} class="cursor-pointer flex items-center h-max gap-6 p-6 rounded-md bg-neutral">
   <div class="flex flex-col text-white">
     <div class="flex items-center gap-4 mb-4">
-      <img
-        src="https://avatars.githubusercontent.com/u/1140151?v=4"
-        alt="Washington Junior"
-        class="w-6 h-6 rounded-full"
-      />
+      <img src={avatar} alt="User Avatar" class="w-6 h-6 rounded-full" />
       <h3 class="text-xs uppercase">
-        GH<b class="text-primary px-1">/</b>FrontEndBR<b class="text-primary px-1">/</b>washingtonj
+        {source}
       </h3>
     </div>
 
@@ -48,4 +47,4 @@
       </span>
     </div>
   </div>
-</div>
+</a>
