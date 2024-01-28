@@ -1,25 +1,60 @@
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
 
-export type ScreenType = 'mobile' | 'tablet' | 'desktop' | 'ultra';
+type ScreenSize = (typeof screenSizes)[number];
+type FontSize = (typeof fontSizes)[number];
 
-export const screenType = writable<ScreenType>('desktop');
+const screenSizes = ['small', 'mid', 'wide', 'ultrawide'] as const;
+const fontSizes = ['small', 'mid', 'large'] as const;
 
-function onMediaQueryChange() {
+export const screenSize = writable<ScreenSize>('wide');
+export const fontSize = writable<FontSize>('mid');
+
+function _onMediaQueryChange() {
   const isMobile = window.matchMedia('(max-width: 767px)').matches;
   const isTablet = window.matchMedia('(min-width: 768px) and (max-width: 1023px)').matches;
   const isUltra = window.matchMedia('(min-width: 2048px)').matches;
 
   if (isMobile) {
-    screenType.set('mobile');
+    screenSize.set('small');
   } else if (isTablet) {
-    screenType.set('tablet');
+    screenSize.set('mid');
   } else if (isUltra) {
-    screenType.set('ultra');
+    screenSize.set('ultrawide');
   } else {
-    screenType.set('desktop');
+    screenSize.set('wide');
   }
 }
 
-window.addEventListener('resize', onMediaQueryChange);
+function _changeFontSizeOnDOM(newFontSize: FontSize) {
+  const html = document.querySelector('html');
 
-onMediaQueryChange();
+  let currentFontSize: FontSize = 'mid';
+
+  if (html?.classList.contains('text-sm')) {
+    currentFontSize = 'small';
+  } else if (html?.classList.contains('text-lg')) {
+    currentFontSize = 'large';
+  }
+
+  const propertyBySize: Record<FontSize, string> = {
+    small: 'text-sm',
+    mid: 'text-md',
+    large: 'text-lg'
+  };
+
+  html?.classList.remove(propertyBySize[currentFontSize]);
+  html?.classList.add(propertyBySize[newFontSize]);
+}
+
+export function nextFontSize() {
+  const currentFontName = get(fontSize);
+  const currentFontSize = fontSizes.indexOf(currentFontName);
+  const nextFontSizeName = fontSizes[currentFontSize + 1] || fontSizes[0];
+
+  fontSize.set(nextFontSizeName);
+}
+
+_onMediaQueryChange();
+
+window.addEventListener('resize', _onMediaQueryChange);
+fontSize.subscribe(_changeFontSizeOnDOM);

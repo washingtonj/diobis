@@ -1,2 +1,2 @@
-import { default as tailwind } from 'ui/tailwind.config.js'
-export default tailwind
+import { default as tailwind } from 'ui/tailwind.config.js';
+export default tailwind;

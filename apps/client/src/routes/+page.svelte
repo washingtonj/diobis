@@ -1,16 +1,17 @@
 <script lang="ts">
-  import { JobCard, Masonry, MasonryColumn, createMasonry } from 'ui/components';
-  import { screenType } from 'ui/stores';
+  import { JobCard, MasonryContainer, MasonryColumn } from 'ui/components';
+  import { createMasonry } from 'ui/functions';
+  import { screenSize } from 'ui/stores';
   import type { PageData } from './$types';
 
   export let data: PageData;
 
   $: columnsByScreenType = {
-    ultra: 4,
-    desktop: 3,
-    tablet: 2,
-    mobile: 1
-  }[$screenType];
+    ultrawide: 4,
+    wide: 3,
+    mid: 2,
+    small: 1
+  }[$screenSize];
 </script>
 
 {#await data.payload()}
@@ -18,7 +19,7 @@
     <span class="loading loading-spinner text-primary" />
   </div>
 {:then response}
-  <Masonry>
+  <MasonryContainer>
     {#each createMasonry(response, columnsByScreenType).chuck() as column}
       <MasonryColumn>
         {#each column as job}
@@ -33,5 +34,5 @@
         {/each}
       </MasonryColumn>
     {/each}
-  </Masonry>
+  </MasonryContainer>
 {/await}

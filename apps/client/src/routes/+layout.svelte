@@ -1,15 +1,23 @@
 <script lang="ts">
-  import { Theme, Header, SearchBar } from 'ui/components';
+  import {
+    Theme,
+    HeaderRoot,
+    HeaderLogo,
+    HeaderSettings,
+    HeaderNavbar,
+    SearchBar
+  } from 'ui/components';
 </script>
 
 <Theme>
-  <Header>
+  <HeaderRoot>
+    <HeaderLogo slot="logo" />
+    <HeaderNavbar slot="navbar" />
+    <HeaderSettings slot="settings" />
     <SearchBar slot="gadget" />
-  </Header>
+  </HeaderRoot>
 
-  <main
-    class="overflow-x-auto p-4"
-  >
+  <main class="overflow-x-auto p-4">
     <slot />
   </main>
 </Theme>

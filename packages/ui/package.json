@@ -9,8 +9,7 @@
   "scripts": {
     "lint": "prettier --check --ignore-path=../../.prettierignore . && eslint \".\"",
     "format": "prettier --write --ignore-path=../../.prettierignore .",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "test": "vitest"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.10",
@@ -18,25 +17,18 @@
     "marked": "^9.1.1"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^7.4.6",
-    "@storybook/addon-interactions": "^7.4.6",
-    "@storybook/addon-links": "^7.4.6",
-    "@storybook/addon-themes": "^7.4.6",
-    "@storybook/blocks": "^7.4.6",
-    "@storybook/svelte": "^7.4.6",
-    "@storybook/svelte-vite": "^7.4.6",
-    "@storybook/testing-library": "^0.2.2",
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "@testing-library/svelte": "^4.1.0",
+    "@vitest/coverage-v8": "^1.2.2",
     "autoprefixer": "^10.4.16",
     "daisyui": "^3.9.2",
     "eslint-config-custom": "*",
-    "eslint-plugin-storybook": "^0.6.14",
+    "jsdom": "^24.0.0",
     "postcss": "^8.4.31",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "storybook": "^7.4.6",
-    "svelte": "^3.9.2",
+    "svelte": "^4.2.9",
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "^3.3.3",
-    "vite": "^4.4.11"
+    "vite": "^5.0.12",
+    "vitest": "^1.2.2"
   }
 }
