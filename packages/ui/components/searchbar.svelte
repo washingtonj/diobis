@@ -42,7 +42,9 @@
 
       <input
         class="bg-transparent w-full h-full text-sm text-white outline-none"
-        placeholder={searchCriterias.length === 0 ? 'Create your search criteria to filter the jobs' : ''}
+        placeholder={searchCriterias.length === 0
+          ? 'Create your search criteria to filter the jobs'
+          : ''}
         on:keydown={handleKeyboardEvent}
       />
     </div>
