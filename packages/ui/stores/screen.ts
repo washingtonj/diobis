@@ -1,4 +1,5 @@
 import { writable, get } from 'svelte/store';
+import { renderOnClient } from '../functions';
 
 type ScreenSize = (typeof screenSizes)[number];
 type FontSize = (typeof fontSizes)[number];
@@ -54,7 +55,8 @@ export function nextFontSize() {
   fontSize.set(nextFontSizeName);
 }
 
-_onMediaQueryChange();
-
-window.addEventListener('resize', _onMediaQueryChange);
-fontSize.subscribe(_changeFontSizeOnDOM);
+renderOnClient(() => {
+  _onMediaQueryChange();
+  window.addEventListener('resize', _onMediaQueryChange);
+  fontSize.subscribe(_changeFontSizeOnDOM);
+});

@@ -30,13 +30,13 @@
   <meta name="twitter:image:alt" content="Diobis - Uncover tech jobs" />
 </svelte:head>
 
-{#await data.payload()}
+{#await Promise.resolve(data.jobs)}
   <div class="mt-32 flex items-center justify-center">
     <span class="loading loading-spinner text-primary" />
   </div>
-{:then response}
+{:then data}
   <MasonryContainer>
-    {#each createMasonry(response, columnsByScreenType).chuck() as column}
+    {#each createMasonry(data, columnsByScreenType).chuck() as column}
       <MasonryColumn>
         {#each column as job}
           <JobCard

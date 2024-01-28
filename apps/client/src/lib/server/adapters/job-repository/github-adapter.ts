@@ -1,5 +1,5 @@
-import type { JobRepository } from '$lib/interfaces';
-import type { JobEntity } from '$lib/entities';
+import type { JobRepository } from '$lib/server/interfaces';
+import type { JobEntity } from '$lib/server/entities';
 
 import { repositories } from './github-settings';
 import { fromGitHubResponse } from './github-transform';

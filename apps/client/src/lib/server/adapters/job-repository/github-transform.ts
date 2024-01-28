@@ -1,4 +1,4 @@
-import type { JobEntity } from '$lib/entities';
+import type { JobEntity } from '$lib/server/entities';
 import type { GitHubResponse } from './github-responses';
 
 export function fromGitHubResponse(response: GitHubResponse, repository: string): JobEntity {

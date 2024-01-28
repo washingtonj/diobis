@@ -1,4 +1,5 @@
 import { writable, get } from 'svelte/store';
+import { renderOnClient } from '../functions';
 
 type Themes = (typeof availableThemes)[number];
 
@@ -28,4 +29,6 @@ export function nextTheme() {
   currentTheme.set(nextThemeName);
 }
 
-currentTheme.subscribe(_changeThemeOnDOM);
+renderOnClient(() => {
+  currentTheme.subscribe(_changeThemeOnDOM);
+});
