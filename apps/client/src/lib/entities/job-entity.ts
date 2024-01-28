@@ -5,7 +5,7 @@ export interface JobEntity {
   tags: string[];
   createdAt: string;
   quantityOfComments: number;
-  quantityOfLikes: number;
+  quantityOfInteractions: number;
   source: string;
   sourceUrl: string;
 }

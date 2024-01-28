@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { relativeDate } from '../functions';
+
   export let title: string;
   export let shortDescription: string;
   export let tags: string[];
   export let postedAt: string;
   export let comments: number;
-  export let likes: number;
+  export let interactions: number;
   export let source: string;
   export let avatar: string;
   export let sourceUrl: string;
@@ -33,7 +35,7 @@
     <div class="flex gap-4 mt-2">
       <span>
         <span class="text-xs text-base-content">Posted</span>
-        <span class="text-xs font-bold">{postedAt}</span>
+        <span class="text-xs font-bold">{relativeDate(postedAt)}</span>
       </span>
 
       <span>
@@ -42,8 +44,8 @@
       </span>
 
       <span>
-        <span class="text-xs text-base-content">Likes</span>
-        <span class="text-xs font-bold">{likes}</span>
+        <span class="text-xs text-base-content">Interactions</span>
+        <span class="text-xs font-bold">{interactions}</span>
       </span>
     </div>
   </div>

@@ -8,7 +8,11 @@ export function fromGitHubResponse(response: GitHubResponse, repository: string)
     source: `GH/${repository}/${response.user.login}`,
     tags: response.labels.map((label) => label.name),
     quantityOfComments: response.comments,
-    quantityOfLikes: response.reactions.heart,
+    quantityOfInteractions:
+      response.reactions.confused +
+      response.reactions.eyes +
+      response.reactions.heart +
+      response.reactions.rocket,
     createdAt: response.created_at,
     userAvatar: response.user.avatar_url,
     sourceUrl: response.html_url
