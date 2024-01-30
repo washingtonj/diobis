@@ -10,14 +10,21 @@
   export let source: string;
   export let avatar: string;
   export let sourceUrl: string;
+
+  const splitSource = source.split('/');
 </script>
 
 <a href={sourceUrl} class="cursor-pointer flex items-center h-max gap-6 p-6 rounded-md bg-neutral">
   <div class="flex flex-col text-white">
     <div class="flex items-center gap-4 mb-4">
       <img src={avatar} alt="User Avatar" class="w-6 h-6 rounded-full" />
-      <h3 class="text-xs uppercase">
-        {source}
+      <h3 class="text-xs">
+        {#each splitSource as split}
+          {split}
+          {#if split !== splitSource[splitSource.length - 1]}
+            <span class="mr-1 text-primary">/</span>
+          {/if}
+        {/each}
       </h3>
     </div>
 
