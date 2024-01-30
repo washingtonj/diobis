@@ -12,17 +12,17 @@ export const fontSize = writable<FontSize>('mid');
 
 function _onMediaQueryChange() {
   const isMobile = window.matchMedia('(max-width: 767px)').matches;
-  const isTablet = window.matchMedia('(min-width: 768px) and (max-width: 1023px)').matches;
-  const isUltra = window.matchMedia('(min-width: 2048px)').matches;
+  const isTablet = window.matchMedia('(max-width: 1023px)').matches;
+  const isWide = window.matchMedia('(max-width: 1500px)').matches;
 
   if (isMobile) {
     screenSize.set('small');
   } else if (isTablet) {
     screenSize.set('mid');
-  } else if (isUltra) {
-    screenSize.set('ultrawide');
-  } else {
+  } else if (isWide) {
     screenSize.set('wide');
+  } else {
+    screenSize.set('ultrawide');
   }
 }
 

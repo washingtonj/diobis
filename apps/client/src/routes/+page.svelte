@@ -7,8 +7,8 @@
   export let data: PageData;
 
   $: columnsByScreenType = {
-    ultrawide: 5,
-    wide: 4,
+    ultrawide: 4,
+    wide: 3,
     mid: 2,
     small: 1
   }[$screenSize];
