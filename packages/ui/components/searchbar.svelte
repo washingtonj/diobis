@@ -2,6 +2,7 @@
   import { SearchOutline, CloseSolid } from 'flowbite-svelte-icons';
 
   export let searchCriterias = [];
+  export let onSearch: (searchCriterias: string[]) => void;
 
   function handleKeyboardEvent(event: KeyboardEvent) {
     const target = event.target as HTMLInputElement;
@@ -9,12 +10,14 @@
     if (event.key === 'Enter') {
       searchCriterias = [...searchCriterias, target.value];
       target.value = '';
+      onSearch(searchCriterias);
       return;
     }
 
     if (event.key === 'Backspace' && target.value === '') {
       searchCriterias.pop();
       searchCriterias = [...searchCriterias];
+      onSearch(searchCriterias);
       return;
     }
   }
@@ -22,6 +25,7 @@
   function handleRemoveCriteria(index: number) {
     searchCriterias.splice(index, 1);
     searchCriterias = [...searchCriterias];
+    onSearch(searchCriterias);
   }
 </script>
 

@@ -2,16 +2,28 @@
   import { JobCard, MasonryContainer, MasonryColumn } from 'ui/components';
   import { createMasonry } from 'ui/functions';
   import { screenSize } from 'ui/stores';
+  import { searchKeys } from '$lib/stores';
   import type { PageData } from './$types';
 
   export let data: PageData;
 
-  $: columnsByScreenType = {
+  const screenSizeColumns = {
     ultrawide: 4,
     wide: 3,
     mid: 2,
     small: 1
-  }[$screenSize];
+  };
+
+  function filterJobsBySearchKeys(data: PageData['jobs'], searchKeys: string[]) {
+    return data.filter((job) => {
+      return searchKeys.every((key) => {
+        return job.title.toLowerCase().includes(key.toLowerCase());
+      });
+    });
+  }
+
+  $: filtredData = filterJobsBySearchKeys(data.jobs, $searchKeys);
+  $: columnsByScreenType = screenSizeColumns[$screenSize];
 </script>
 
 <svelte:head>
@@ -34,9 +46,9 @@
   <div class="mt-32 flex items-center justify-center">
     <span class="loading loading-spinner text-primary" />
   </div>
-{:then data}
+{:then _}
   <MasonryContainer>
-    {#each createMasonry(data, columnsByScreenType).chuck() as column}
+    {#each createMasonry(filtredData, columnsByScreenType).chuck() as column}
       <MasonryColumn>
         {#each column as job}
           <JobCard
