@@ -7,7 +7,7 @@
   function handleKeyboardEvent(event: KeyboardEvent) {
     const target = event.target as HTMLInputElement;
 
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && target.value !== '') {
       searchCriterias = [...searchCriterias, target.value];
       target.value = '';
       onSearch(searchCriterias);
@@ -46,9 +46,7 @@
 
       <input
         class="bg-transparent w-full h-full text-sm text-white outline-none"
-        placeholder={searchCriterias.length === 0
-          ? 'Create your search criteria to filter the jobs'
-          : ''}
+        placeholder={searchCriterias.length === 0 ? 'Insert a search criteria and press Enter' : ''}
         on:keydown={handleKeyboardEvent}
       />
     </div>

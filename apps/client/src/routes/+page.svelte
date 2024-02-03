@@ -15,11 +15,21 @@
   };
 
   function filterJobsBySearchKeys(data: PageData['jobs'], searchKeys: string[]) {
-    return data.filter((job) => {
-      return searchKeys.every((key) => {
-        return job.title.toLowerCase().includes(key.toLowerCase());
-      });
-    });
+    if (!searchKeys.length) return data;
+
+    return searchKeys
+      .map((searchKey) => {
+        return data.filter((job) => {
+          const title = job.title.toLowerCase();
+          const tags = job.tags.join(' ').toLowerCase();
+          const source = job.source.toLowerCase();
+
+          return (
+            tags.includes(searchKey) || title.includes(searchKey) || source.includes(searchKey)
+          );
+        });
+      })
+      .flat();
   }
 
   $: filtredData = filterJobsBySearchKeys(data.jobs, $searchKeys);
