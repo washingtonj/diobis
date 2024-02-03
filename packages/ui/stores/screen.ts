@@ -1,5 +1,7 @@
 import { writable, get } from 'svelte/store';
-import { renderOnClient } from '../functions';
+import { renderOnClient, storageSync } from '../functions';
+
+const LOCAL_STORAGE_FONT_SIZE_KEY = 'app-font-size';
 
 type ScreenSize = (typeof screenSizes)[number];
 type FontSize = (typeof fontSizes)[number];
@@ -59,4 +61,5 @@ renderOnClient(() => {
   _onMediaQueryChange();
   window.addEventListener('resize', _onMediaQueryChange);
   fontSize.subscribe(_changeFontSizeOnDOM);
+  storageSync(LOCAL_STORAGE_FONT_SIZE_KEY, fontSize);
 });

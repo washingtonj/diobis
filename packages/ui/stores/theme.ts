@@ -1,5 +1,7 @@
 import { writable, get } from 'svelte/store';
-import { renderOnClient } from '../functions';
+import { renderOnClient, storageSync } from '../functions';
+
+const LOCAL_STORAGE_THEME_KEY = 'app-theme';
 
 type Themes = (typeof availableThemes)[number];
 
@@ -30,5 +32,9 @@ export function nextTheme() {
 }
 
 renderOnClient(() => {
-  currentTheme.subscribe(_changeThemeOnDOM);
+  currentTheme.subscribe((theme) => {
+    _changeThemeOnDOM(theme);
+  });
+
+  storageSync(LOCAL_STORAGE_THEME_KEY, currentTheme);
 });
