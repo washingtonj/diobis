@@ -18,11 +18,13 @@
     if (!searchKeys.length) return data;
 
     return searchKeys
-      .map((searchKey) => {
+      .map((key) => {
         return data.filter((job) => {
           const title = job.title.toLowerCase();
           const tags = job.tags.join(' ').toLowerCase();
           const source = job.source.toLowerCase();
+
+          const searchKey = key.toLowerCase();
 
           return (
             tags.includes(searchKey) || title.includes(searchKey) || source.includes(searchKey)
